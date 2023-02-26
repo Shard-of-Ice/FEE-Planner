@@ -34,6 +34,21 @@ export class StatBlock {
     this.mov = mov;
   }
 
+  static make(stats: number[]) {
+    return new StatBlock(
+      stats[0],
+      stats[1],
+      stats[2],
+      stats[3],
+      stats[4],
+      stats[5],
+      stats[6],
+      stats[7],
+      stats[8],
+      stats[9]
+    );
+  }
+
   static add(a: StatBlock, b: StatBlock): StatBlock {
     return new StatBlock(
       a.hp + b.hp,
