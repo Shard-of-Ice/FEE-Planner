@@ -1,19 +1,16 @@
 import { defineStore } from 'pinia';
+import { Unit } from './datatypes';
 
-export const useCounterStore = defineStore('counter', {
-  state: () => ({
-    counter: 0
+interface UnitStoreState {
+  unitList: Unit[];
+}
+
+export const useUnitStore = defineStore('unit', {
+  state: (): UnitStoreState => ({
+    unitList: [],
   }),
 
-  getters: {
-    doubleCount (state) {
-      return state.counter * 2;
-    }
-  },
+  getters: {},
 
-  actions: {
-    increment () {
-      this.counter++;
-    }
-  }
+  actions: {},
 });
