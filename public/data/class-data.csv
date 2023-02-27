@@ -1,0 +1,96 @@
+Name;Type;Tier;Skill
+Dragon Child;Dragon;Base;
+Divine Dragon;Dragon;Advanced;Divine Spirit
+Noble (Alfred);Cavalry;Base;
+Noble (Céline);Mystical;Base;
+Avenir;Cavalry;Advanced;Golden Lotus
+Vidame;Mystical;Advanced;Ignis
+Lord (Diamant);Backup;Base;
+Lord (Alcryst);Covert;Base;
+Successeur;Backup;Advanced;Sol
+Tireur d'élite;Covert;Advanced;Luna
+Wing Tamer;Flying;Base;
+Lindwurm;Flying;Advanced;Grasping Void
+Sleipnir Rider;Flying;Advanced;World Tree
+Sentinel (Timerra);Backup;Base;
+Sentinel (Fogado);Cavalry;Base;
+Picket;Backup;Advanced;Sandstorm
+Cupido;Cavalry;Advanced;Back at You
+Dancer;Qi Adept;Special;Special Dance
+Fell Child;Dragon;Special;Fell Spirit
+Lance Cavalier;Cavalry;Base;
+Sword Cavalier;Cavalry;Base;
+Axe Cavalier;Cavalry;Base;
+Paladin (Lance);Cavalry;Advanced;Pivot
+Paladin (Sword);Cavalry;Advanced;Pivot
+Paladin (Axe);Cavalry;Advanced;Pivot
+Wolf Knight (Sword);Cavalry;Advanced;Hobble
+Wolf Knight (Axe);Cavalry;Advanced;Hobble
+Wolf Knight (Lance);Cavalry;Advanced;Hobble
+Martial Monk;Qi Adept;Base;
+Martial Master;Qi Adept;Advanced;Diffuse Healer
+High Priest;Mystical;Advanced;Self-Healing
+Mage;Mystical;Base;
+Sage;Mystical;Advanced;Spell Harmony
+Mage Knight (Sword);Cavalry;Advanced;Chaos Style
+Mage Knight (Lance);Cavalry;Advanced;Chaos Style
+Mage Knight (Axe);Cavalry;Advanced;Chaos Style
+Sword Fighter;Backup;Base;
+Lance Fighter;Backup;Base;
+Axe Fighter;Backup;Base;
+Hero (Lance);Backup;Advanced;Brave Assist
+Hero (Axe);Backup;Advanced;Brave Assist
+Swordmaster;Backup;Advanced;Run Through
+Halberdier;Back Up;Advanced;Pincer Attack
+Royal Knight;Cavalry;Advanced;Reforge
+Berserker;Backup;Advanced;Smash+
+Warrior;Backup;Advanced;Merciless
+Archer;Covert;Base;
+Sniper;Covert;Advanced;No Distractions
+Bow Knight (Sword);Cavalry;Advanced;Careful Aim
+Bow Knight (Lance);Cavalry;Advanced;Careful Aim
+Bow Knight (Axe);Cavalry;Advanced;Careful Aim
+Lance Flier;Flying;Base;
+Sword Flier;Flying;Base;
+Axe Flier;Flying;Base;
+Griffin Knight (Lance);Flying;Advanced;Clear the Way
+Griffin Knight (Sword);Flying;Advanced;Clear the Way
+Griffin Knight (Axe);Flying;Advanced;Clear the Way
+Wyvern Knight (Lance, Axe);Flying;Advanced;Air Raid
+Wyvern Knight (Sword, Axe);Flying;Advanced;Air Raid
+Wyvern Knight (Sword, Lance);Flying;Advanced;Air Raid
+Sword Armor;Armored;Base;
+Lance Armor;Armored;Base;
+Axe Armor;Armored;Base;
+General (Sword);Armored;Advanced;Swap
+General (Lance);Armored;Advanced;Swap
+General (Axe);Armored;Advanced;Swap
+???????Great Knight (Sword, Axe);Cavalry;Advanced;Allied Defense
+Great Knight (Sword, Lance);Cavalry;Advanced;Allied Defense
+Great Knight (Lance, Axe);Cavalry;Advanced;Allied Defense
+Thief;Covert;Special;Pass
+Barbarian;Backup;Base;
+Enchanter;Qi Adept;Advanced;Convoy
+Melusine;Flying;Advanced;Soulblade
+Corrupted Wyrm;Dragon;Base;
+Phantom Wyrm;Dragon;Base;
+Phantom Wyvern;Flying;Base;
+Fell Child (Alear);Dragon;Advanced;Dark Spirit
+Fell Monarch;Dragon;Advanced;Dark Spirit
+Great Fell Dragon;Dragon;Advanced;Dark Spirit
+Emblem Marth;Backup;Base;
+Emblem Celica;Mystical;Base;
+Emblem Sigurd;Cavalry;Base;
+Emblem Leif;Backup;Base;
+Emblem Roy;Backup;Base;
+Emblem Lyn;Backup;Base;
+Emblem Eirika;Backup;Base;
+Emblem Ike;Armored;Base;
+Emblem Micaiah;Mystical;Base;
+Emblem Lucina;Backup;Base;
+Emblem Corrin;Dragon;Base;
+Emblem Byleth;Backup;Base;
+Emblem Tiki;Dragon;Base;
+Emblem Hector;Armored;Base;
+Emblem Soren;Mystical;Base;
+Emblem Camilla;Flying;Base;

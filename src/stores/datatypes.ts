@@ -49,19 +49,27 @@ export class StatBlock {
     );
   }
 
-  static add(a: StatBlock, b: StatBlock): StatBlock {
+  static binaryOperator(
+    a: StatBlock,
+    b: StatBlock,
+    operator: (a: number, b: number) => number
+  ): StatBlock {
     return new StatBlock(
-      a.hp + b.hp,
-      a.str + b.str,
-      a.mag + b.mag,
-      a.dex + b.dex,
-      a.spd + b.spd,
-      a.def + b.def,
-      a.res + b.res,
-      a.lck + b.lck,
-      a.bld + b.bld,
-      a.mov + b.mov
+      operator(a.hp, b.hp),
+      operator(a.str, b.str),
+      operator(a.mag, b.mag),
+      operator(a.dex, b.dex),
+      operator(a.spd, b.spd),
+      operator(a.def, b.def),
+      operator(a.res, b.res),
+      operator(a.lck, b.lck),
+      operator(a.bld, b.bld),
+      operator(a.mov, b.mov)
     );
+  }
+
+  static add(a: StatBlock, b: StatBlock): StatBlock {
+    return StatBlock.binaryOperator(a, b, (a, b) => a + b);
   }
 
   static multiply(a: StatBlock, b: number): StatBlock {
@@ -137,6 +145,7 @@ export interface Class {
   type: ClassType;
   bases: StatBlock;
   growths: StatBlock;
+  caps: StatBlock;
 }
 
 export class Character {
@@ -146,6 +155,7 @@ export class Character {
   startingInternalLevel: number;
   bases: StatBlock;
   growths: StatBlock;
+  caps: StatBlock;
 
   constructor(
     name: string,
@@ -153,7 +163,8 @@ export class Character {
     startingLevel: number,
     startingInternalLevel: number,
     bases: StatBlock,
-    growths: StatBlock
+    growths: StatBlock,
+    caps: StatBlock
   ) {
     this.name = name;
     this.startingClass = startingClass;
@@ -161,6 +172,7 @@ export class Character {
     this.startingInternalLevel = startingInternalLevel;
     this.bases = bases;
     this.growths = growths;
+    this.caps = caps;
   }
 
   getStartingTotalLevel(): number {
@@ -187,6 +199,10 @@ export class Unit {
     return StatBlock.add(this.character.growths, this.class.growths);
   }
 
+  getTotalCaps(): StatBlock {
+    return StatBlock.add(this.character.caps, this.class.caps);
+  }
+
   getInternalLevel(): number {
     let internalLevel = this.character.startingInternalLevel;
     if (this.class != this.character.startingClass) {
@@ -206,6 +222,7 @@ export class Unit {
   }
 
   getStats(): StatBlock {
+    // Stat gains in starting class
     let levelsStartingClass = 0;
     if (this.class.tier == ClassTier.Advanced) {
       levelsStartingClass = Math.max(
@@ -229,20 +246,29 @@ export class Unit {
       levelsCurrentCLass -= this.character.startingLevel;
     }
 
+    // Stat gains in current class
     const currentClassGrowthsPoints = StatBlock.multiply(
       this.getTotalGrowths(),
       levelsCurrentCLass
     );
 
+    // All stat gains
     const totalGrowthsPoints = StatBlock.add(
       startingClassGrowthsPoints,
       currentClassGrowthsPoints
     );
-    const currentStats = StatBlock.add(
+    const uncappedStats = StatBlock.add(
       StatBlock.add(this.character.bases, this.class.bases),
       StatBlock.multiply(totalGrowthsPoints, 1 / 100)
     );
 
-    return currentStats;
+    // Applying stat caps
+    const cappedStats = StatBlock.binaryOperator(
+      uncappedStats,
+      this.getTotalCaps(),
+      Math.min
+    );
+
+    return cappedStats;
   }
 }
