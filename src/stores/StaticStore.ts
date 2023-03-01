@@ -1,12 +1,21 @@
 import { defineStore } from 'pinia';
-import { Character, Class, StatBlock } from './datatypes';
+import { Character, Class, ClassTier, ClassType, StatBlock } from './datatypes';
 
 interface StaticStoreState {
-  classList: Class[];
-  characterList: Character[];
+  classes: { [key: string]: Class };
+  characters: { [key: string]: Character };
 }
 
-type StatBlockDict = { [id: string]: StatBlock };
+function getClassByName(className: string, state: StaticStoreState) {
+  for (const classId in state.classes) {
+    const cl = state.classes[classId];
+    if (cl.name == className) {
+      return cl;
+    }
+  }
+  // default
+  return state.classes[Object.keys(state.classes)[0]];
+}
 
 type StringDict = { [key: string]: string };
 type StringDictDict = { [id: string]: StringDict };
@@ -14,7 +23,7 @@ type StringDictDict = { [id: string]: StringDict };
 function readCsv(url: string): Promise<StringDictDict> {
   const result: StringDictDict = {};
 
-  return new Promise<StringDictDict>(function (resolve, reject) {
+  return new Promise<StringDictDict>(function (resolve) {
     // some async operation here
     fetch(url, {
       method: 'get',
@@ -45,40 +54,67 @@ function readCsv(url: string): Promise<StringDictDict> {
   });
 }
 
-function readStatBlocks(url: string): Promise<StatBlockDict> {
-  const result: StatBlockDict = {};
+function statBlockFromDict(
+  data: StringDict,
+  prefix = '',
+  suffix = ''
+): StatBlock {
+  return new StatBlock(
+    Number(data[prefix + 'HP' + suffix] ?? '0'),
+    Number(data[prefix + 'Str' + suffix] ?? '0'),
+    Number(data[prefix + 'Mag' + suffix] ?? '0'),
+    Number(data[prefix + 'Dex' + suffix] ?? '0'),
+    Number(data[prefix + 'Spd' + suffix] ?? '0'),
+    Number(data[prefix + 'Lck' + suffix] ?? '0'),
+    Number(data[prefix + 'Def' + suffix] ?? '0'),
+    Number(data[prefix + 'Res' + suffix] ?? '0'),
+    Number(data[prefix + 'Bld' + suffix] ?? '0'),
+    Number(data[prefix + 'Mov' + suffix] ?? '0')
+  );
+}
 
-  return new Promise<StatBlockDict>(function (resolve, reject) {
-    // some async operation here
-    fetch(url, {
-      method: 'get',
-      headers: {
-        'content-type': 'text/csv;charset=UTF-8',
-        //'Authorization': //in case you need authorisation
-      },
-    })
-      .then((data) => data.text())
-      .then((text) => {
-        text.split('\n').forEach((line) => {
-          if (!(line.startsWith('Name') || line.length < 20)) {
-            const fields = line.split(';');
-            const name = fields[0];
-            const stats = StatBlock.make(
-              fields.slice(1).map((s: string): number => parseInt(s))
-            );
-            result[name] = stats;
-          }
-        });
-        // resolve the promise with some value
-        resolve(result);
-      });
-  });
+function classFromDict(data: StringDict): Class {
+  return new Class(
+    data['Name'],
+    ClassTier.fromString(data['Class Tier']),
+    ClassType.fromString(data['Class Type']),
+    statBlockFromDict(data, 'Base '),
+    statBlockFromDict(data, '', ' Growth'),
+    statBlockFromDict(data, '', ' Cap')
+  );
+}
+
+function readAllClasses(data: StringDictDict, state: StaticStoreState) {
+  for (const key in data) {
+    state.classes[key] = classFromDict(data[key]);
+  }
+}
+
+function characterFromDict(
+  data: StringDict,
+  state: StaticStoreState
+): Character {
+  return new Character(
+    data['Name'],
+    getClassByName(data['Class'], state),
+    Number(data['Level']),
+    Number(data['Internal Level']),
+    statBlockFromDict(data, 'Base '),
+    statBlockFromDict(data, '', ' Growth'),
+    statBlockFromDict(data, '', ' Cap')
+  );
+}
+
+function readAllCharacters(data: StringDictDict, state: StaticStoreState) {
+  for (const key in data) {
+    state.characters[key] = characterFromDict(data[key], state);
+  }
 }
 
 export const useStaticStore = defineStore('static', {
   state: (): StaticStoreState => ({
-    classList: [],
-    characterList: [],
+    classes: {},
+    characters: {},
   }),
 
   getters: {},
@@ -89,32 +125,11 @@ export const useStaticStore = defineStore('static', {
         readCsv('../data/classes.csv'),
         readCsv('../data/characters.csv'),
       ]).then((values) => {
-        const classesRaw = values[0];
-        const charactersRaw = values[1];
-        console.log(classesRaw);
-        console.log(charactersRaw);
+        readAllClasses(values[0], this);
+        readAllCharacters(values[1], this);
+        console.log(this.classes);
+        console.log(this.characters);
       });
-      // Promise.all([
-      //   readStatBlocks('../data/class-bases.csv'),
-      //   readStatBlocks('../data/class-growths.csv'),
-      //   readStatBlocks('../data/class-caps.csv'),
-      //   readStatBlocks('../data/character-bases.csv'),
-      //   readStatBlocks('../data/character-growths.csv'),
-      //   readStatBlocks('../data/character-caps.csv'),
-      // ]).then((values) => {
-      //   const classBases = values[0];
-      //   const classGrowths = values[1];
-      //   const classCaps = values[2];
-      //   const characterBases = values[3];
-      //   const characterGrowths = values[4];
-      //   const characterCaps = values[5];
-      //   console.log(classBases);
-      //   console.log(classGrowths);
-      //   console.log(classCaps);
-      //   console.log(characterBases);
-      //   console.log(characterGrowths);
-      //   console.log(characterCaps);
-      // });
     },
   },
 });

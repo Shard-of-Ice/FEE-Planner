@@ -92,10 +92,27 @@ export class ClassTier {
   static Base = new ClassTier('Base');
   static Advanced = new ClassTier('Advanced');
   static Special = new ClassTier('Special');
+  static None = new ClassTier('None');
+
+  static all: ClassTier[] = [
+    ClassTier.Base,
+    ClassTier.Advanced,
+    ClassTier.Special,
+  ];
 
   readonly name: string;
   private constructor(name: string) {
     this.name = name;
+  }
+
+  static fromString(str: string): ClassTier {
+    for (const type of ClassTier.all) {
+      if (type.name == str) {
+        return type;
+      }
+    }
+    // default
+    return ClassTier.None;
   }
 
   equals(other: ClassTier): boolean {
@@ -128,10 +145,32 @@ export class ClassType {
   static Flying = new ClassType('Flying');
   static Armor = new ClassType('Armor');
   static QiAdept = new ClassType('QiAdept');
+  static None = new ClassType('None');
+
+  static all: ClassType[] = [
+    ClassType.Dragon,
+    ClassType.Cavalry,
+    ClassType.Mystical,
+    ClassType.Backup,
+    ClassType.Covert,
+    ClassType.Flying,
+    ClassType.Armor,
+    ClassType.QiAdept,
+  ];
 
   readonly name: string;
   private constructor(name: string) {
     this.name = name;
+  }
+
+  static fromString(str: string): ClassType {
+    for (const type of ClassType.all) {
+      if (type.name == str) {
+        return type;
+      }
+    }
+    // default
+    return ClassType.None;
   }
 
   equals(other: ClassType): boolean {
@@ -139,13 +178,29 @@ export class ClassType {
   }
 }
 
-export interface Class {
+export class Class {
   name: string;
   tier: ClassTier;
   type: ClassType;
   bases: StatBlock;
   growths: StatBlock;
   caps: StatBlock;
+
+  constructor(
+    name: string,
+    tier: ClassTier,
+    type: ClassType,
+    bases: StatBlock,
+    growths: StatBlock,
+    caps: StatBlock
+  ) {
+    this.name = name;
+    this.tier = tier;
+    this.type = type;
+    this.bases = bases;
+    this.growths = growths;
+    this.caps = caps;
+  }
 }
 
 export class Character {
