@@ -1,3 +1,4 @@
+import { useStaticStore } from './StaticStore';
 import { defineStore } from 'pinia';
 import { Unit } from './datatypes';
 
@@ -12,5 +13,14 @@ export const useUnitStore = defineStore('unit', {
 
   getters: {},
 
-  actions: {},
+  actions: {
+    loadDefaultTeam() {
+      const staticStore = useStaticStore();
+
+      for (const key of staticStore.playableCharacters) {
+        const character = staticStore.characters[key];
+        this.unitList.push(new Unit(character));
+      }
+    },
+  },
 });

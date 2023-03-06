@@ -208,6 +208,7 @@ export class Character {
   startingClass: Class;
   startingLevel: number;
   startingInternalLevel: number;
+  startingSP: number;
   bases: StatBlock;
   growths: StatBlock;
   caps: StatBlock;
@@ -217,6 +218,7 @@ export class Character {
     startingClass: Class,
     startingLevel: number,
     startingInternalLevel: number,
+    startingSP: number,
     bases: StatBlock,
     growths: StatBlock,
     caps: StatBlock
@@ -225,6 +227,7 @@ export class Character {
     this.startingClass = startingClass;
     this.startingLevel = startingLevel;
     this.startingInternalLevel = startingInternalLevel;
+    this.startingSP = startingSP;
     this.bases = bases;
     this.growths = growths;
     this.caps = caps;

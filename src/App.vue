@@ -5,6 +5,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useStaticStore } from './stores/StaticStore';
+import { useUnitStore } from './stores/UnitStore';
 
 export default {
   defineComponent: {
@@ -13,7 +14,10 @@ export default {
 
   mounted() {
     const staticStore = useStaticStore();
-    staticStore.loadStaticStore();
+    const unitStore = useUnitStore();
+    staticStore.loadStaticStore().then(() => {
+      unitStore.loadDefaultTeam();
+    });
   },
 };
 </script>

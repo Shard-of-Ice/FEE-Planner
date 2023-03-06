@@ -4,6 +4,7 @@ import { Character, Class, ClassTier, ClassType, StatBlock } from './datatypes';
 interface StaticStoreState {
   classes: { [key: string]: Class };
   characters: { [key: string]: Character };
+  playableCharacters: string[];
 }
 
 function getClassByName(className: string, state: StaticStoreState) {
@@ -99,6 +100,7 @@ function characterFromDict(
     getClassByName(data['Class'], state),
     Number(data['Level']),
     Number(data['Internal Level']),
+    Number(data['SP']),
     statBlockFromDict(data, 'Base '),
     statBlockFromDict(data, '', ' Growth'),
     statBlockFromDict(data, '', ' Cap')
@@ -108,6 +110,9 @@ function characterFromDict(
 function readAllCharacters(data: StringDictDict, state: StaticStoreState) {
   for (const key in data) {
     state.characters[key] = characterFromDict(data[key], state);
+    if (state.characters[key].startingSP > 0) {
+      state.playableCharacters.push(key);
+    }
   }
 }
 
@@ -115,20 +120,19 @@ export const useStaticStore = defineStore('static', {
   state: (): StaticStoreState => ({
     classes: {},
     characters: {},
+    playableCharacters: [],
   }),
 
   getters: {},
 
   actions: {
-    loadStaticStore() {
-      Promise.all([
+    async loadStaticStore() {
+      await Promise.all([
         readCsv('../data/classes.csv'),
         readCsv('../data/characters.csv'),
       ]).then((values) => {
         readAllClasses(values[0], this);
         readAllCharacters(values[1], this);
-        console.log(this.classes);
-        console.log(this.characters);
       });
     },
   },
