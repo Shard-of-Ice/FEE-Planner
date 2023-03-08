@@ -21,7 +21,13 @@
       </q-tabs>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+    <q-drawer
+      ref="leftDrawer"
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      bordered
+    >
       <q-list bordered separator>
         <q-item
           class="q-pa-none"
@@ -51,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { useUnitStore } from 'src/stores/UnitStore';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { Unit } from 'src/stores/datatypes';
@@ -68,6 +74,8 @@ export default {
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
+    const leftDrawer: Ref<QDrawer | null> = ref(null);
+
     function toggleLeftDrawer() {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     }
@@ -76,8 +84,18 @@ export default {
       rightDrawerOpen.value = !rightDrawerOpen.value;
     }
 
+    const mobileMode = computed(
+      () =>
+        leftDrawer.value &&
+        leftDrawer.value.breakpoint &&
+        leftDrawer.value.breakpoint > window.innerWidth
+    );
+
     return {
       unitStore,
+      leftDrawer,
+
+      mobileMode,
 
       leftDrawerOpen,
       toggleLeftDrawer,
@@ -87,6 +105,11 @@ export default {
 
       pick(unit: Unit) {
         appStateStore.selectUnit(unit);
+        console.log(leftDrawer.value);
+        console.log(window.innerWidth);
+        if (mobileMode.value) {
+          toggleLeftDrawer();
+        }
       },
     };
   },
