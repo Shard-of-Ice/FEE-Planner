@@ -1,116 +1,94 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          Quasar App
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          </q-avatar>
+          Fire Emblem Engage Planner
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
+
+      <q-tabs align="center">
+        <q-route-tab to="/" label="Page One" />
+        <q-route-tab to="/" label="Page Two" />
+        <q-route-tab to="/" label="Page Three" />
+      </q-tabs>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+      <q-list bordered separator>
+        <q-item
+          class="q-pa-none"
+          clickable
+          v-ripple
+          v-for="[index, unit] of unitStore.unitList.entries()"
+          :key="index"
+          @click="pick(unit)"
         >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+          <unit-list-item :unit="unit" class="full-width" />
+        </q-item>
       </q-list>
+    </q-drawer>
+
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+      <!-- drawer content -->
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar> </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
+import { ref } from 'vue';
+import { useUnitStore } from 'src/stores/UnitStore';
+import { useAppStateStore } from 'src/stores/AppStateStore';
+import { Unit } from 'src/stores/datatypes';
+import UnitListItem from '../components/UnitListItem.vue';
+import { QDrawer } from 'quasar';
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+export default {
+  components: { UnitListItem },
 
-export default defineComponent({
-  name: 'MainLayout',
+  setup() {
+    const unitStore = useUnitStore();
+    const appStateStore = useAppStateStore();
 
-  components: {
-    EssentialLink
-  },
+    const leftDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(false);
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+    function toggleLeftDrawer() {
+      leftDrawerOpen.value = !leftDrawerOpen.value;
+    }
+
+    function toggleRightDrawer() {
+      rightDrawerOpen.value = !rightDrawerOpen.value;
+    }
 
     return {
-      essentialLinks: linksList,
+      unitStore,
+
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-});
+      toggleLeftDrawer,
+
+      rightDrawerOpen,
+      toggleRightDrawer,
+
+      pick(unit: Unit) {
+        appStateStore.selectUnit(unit);
+      },
+    };
+  },
+};
 </script>

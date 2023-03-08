@@ -66,9 +66,9 @@ function statBlockFromDict(
     Number(data[prefix + 'Mag' + suffix] ?? '0'),
     Number(data[prefix + 'Dex' + suffix] ?? '0'),
     Number(data[prefix + 'Spd' + suffix] ?? '0'),
-    Number(data[prefix + 'Lck' + suffix] ?? '0'),
     Number(data[prefix + 'Def' + suffix] ?? '0'),
     Number(data[prefix + 'Res' + suffix] ?? '0'),
+    Number(data[prefix + 'Lck' + suffix] ?? '0'),
     Number(data[prefix + 'Bld' + suffix] ?? '0'),
     Number(data[prefix + 'Mov' + suffix] ?? '0')
   );
@@ -97,11 +97,11 @@ function characterFromDict(
 ): Character {
   return new Character(
     data['Name'],
-    getClassByName(data['Class'], state),
+    getClassByName(data['Initial Class'], state),
     Number(data['Level']),
     Number(data['Internal Level']),
     Number(data['SP']),
-    statBlockFromDict(data, 'Base '),
+    statBlockFromDict(data, '', ' Base'),
     statBlockFromDict(data, '', ' Growth'),
     statBlockFromDict(data, '', ' Cap')
   );

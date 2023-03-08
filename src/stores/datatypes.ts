@@ -34,18 +34,16 @@ export class StatBlock {
     this.mov = mov;
   }
 
-  static make(stats: number[]) {
-    return new StatBlock(
-      stats[0],
-      stats[1],
-      stats[2],
-      stats[3],
-      stats[4],
-      stats[5],
-      stats[6],
-      stats[7],
-      stats[8],
-      stats[9]
+  get rating() {
+    return (
+      this.str +
+      this.mag +
+      this.dex +
+      this.spd +
+      this.def +
+      this.res +
+      this.lck +
+      this.bld
     );
   }
 
@@ -70,6 +68,10 @@ export class StatBlock {
 
   static add(a: StatBlock, b: StatBlock): StatBlock {
     return StatBlock.binaryOperator(a, b, (a, b) => a + b);
+  }
+
+  static substract(a: StatBlock, b: StatBlock): StatBlock {
+    return StatBlock.binaryOperator(a, b, (a, b) => a - b);
   }
 
   static multiply(a: StatBlock, b: number): StatBlock {
@@ -119,7 +121,7 @@ export class ClassTier {
     return this.name == other.name;
   }
 
-  maxLevel(): number {
+  get maxLevel(): number {
     if (this.equals(ClassTier.Special)) {
       return 40;
     } else {
@@ -127,7 +129,7 @@ export class ClassTier {
     }
   }
 
-  promotionLevel(): number {
+  get promotionLevel(): number {
     if (this.equals(ClassTier.Special)) {
       return 21;
     } else {
@@ -242,50 +244,55 @@ export class Unit {
   character: Character;
   class: Class;
   level: number;
+  sp: number;
 
   constructor(character: Character) {
     this.character = character;
     this.class = character.startingClass;
     this.level = character.startingLevel;
+    this.sp = character.startingSP;
   }
 
-  getTotalBases(): StatBlock {
-    return StatBlock.add(this.character.bases, this.class.bases);
+  get totalBases(): StatBlock {
+    return StatBlock.add(
+      this.character.bases,
+      StatBlock.substract(this.class.bases, this.character.startingClass.bases)
+    );
   }
 
-  getTotalGrowths(): StatBlock {
+  get totalGrowths(): StatBlock {
     return StatBlock.add(this.character.growths, this.class.growths);
   }
 
-  getTotalCaps(): StatBlock {
+  get totalCaps(): StatBlock {
     return StatBlock.add(this.character.caps, this.class.caps);
   }
 
-  getInternalLevel(): number {
+  get internalLevel(): number {
     let internalLevel = this.character.startingInternalLevel;
     if (this.class != this.character.startingClass) {
       internalLevel += this.character.startingLevel;
       if (this.class.tier == ClassTier.Advanced) {
         internalLevel = Math.min(
           internalLevel,
-          this.character.startingClass.tier.promotionLevel()
+          this.character.startingClass.tier.promotionLevel
         );
       }
     }
     return internalLevel;
   }
 
-  getTotalLevel(): number {
-    return this.getInternalLevel() + this.level;
+  get totalLevel(): number {
+    return this.internalLevel + this.level;
   }
 
-  getStats(): StatBlock {
+  get stats(): StatBlock {
     // Stat gains in starting class
     let levelsStartingClass = 0;
     if (this.class.tier == ClassTier.Advanced) {
       levelsStartingClass = Math.max(
         0,
-        this.character.startingClass.tier.promotionLevel() -
+        this.character.startingClass.tier.promotionLevel -
           this.character.startingLevel
       );
     }
@@ -306,7 +313,7 @@ export class Unit {
 
     // Stat gains in current class
     const currentClassGrowthsPoints = StatBlock.multiply(
-      this.getTotalGrowths(),
+      this.totalGrowths,
       levelsCurrentCLass
     );
 
@@ -316,14 +323,14 @@ export class Unit {
       currentClassGrowthsPoints
     );
     const uncappedStats = StatBlock.add(
-      StatBlock.add(this.character.bases, this.class.bases),
+      this.totalBases,
       StatBlock.multiply(totalGrowthsPoints, 1 / 100)
     );
 
     // Applying stat caps
     const cappedStats = StatBlock.binaryOperator(
       uncappedStats,
-      this.getTotalCaps(),
+      this.totalCaps,
       Math.min
     );
 
