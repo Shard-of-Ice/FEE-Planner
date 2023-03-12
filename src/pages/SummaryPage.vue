@@ -83,11 +83,11 @@ export default {
       }),
       combatStats: computed(() => {
         return {
-          Atk: 0,
-          Hit: 0,
-          Avo: 0,
-          Crit: 0,
-          Ddg: 0,
+          Atk: unit.value?.atk,
+          Hit: unit.value?.hit,
+          Avo: unit.value?.avo,
+          Crit: unit.value?.crit,
+          Ddg: unit.value?.ddg,
         };
       }),
       allowedClasses: computed(() =>

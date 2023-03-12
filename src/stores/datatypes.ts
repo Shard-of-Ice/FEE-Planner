@@ -1,3 +1,5 @@
+import { stat } from 'fs';
+
 export class StatBlock {
   hp: number;
   str: number;
@@ -367,5 +369,28 @@ export class Unit {
     );
 
     return cappedStats;
+  }
+
+  get atk(): number {
+    // Placeholder until equipment is added
+    return Math.max(this.stats.str, this.stats.mag);
+  }
+
+  get hit(): number {
+    // Placeholder until equipment is added
+    return 100 + 2 * this.stats.dex + Math.floor(this.stats.lck / 2);
+  }
+
+  get avo(): number {
+    return 2 * this.stats.spd + Math.floor(this.stats.lck / 2);
+  }
+
+  get crit(): number {
+    // Placeholder until equipment is added
+    return Math.floor(this.stats.dex / 2);
+  }
+
+  get ddg(): number {
+    return this.stats.lck;
   }
 }
