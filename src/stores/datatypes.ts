@@ -317,7 +317,8 @@ export class Unit {
   }
 
   get totalLevel(): number {
-    return this.internalLevel + this.level;
+    // If internal lvl > 0, we take away 1 because promotion lvl is not a real lvl
+    return Math.max(0, this.internalLevel - 1) + this.level;
   }
 
   get stats(): StatBlock {
