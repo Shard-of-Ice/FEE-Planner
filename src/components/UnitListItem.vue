@@ -1,20 +1,18 @@
 <template>
   <q-item class="q-pa-none">
-    <q-item-section avatar class="q-pa-none q-ml-md">
-      <q-img
-        src="https://cdn.fireemblemwiki.org/thumb/5/5a/FEE_Alear_male_portrait.png/97px-FEE_Alear_male_portrait.png"
-      />
+    <q-item-section class="q-pa-none">
+      <q-img :src="portrait_url" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label class="q-ma-md">{{ unit.character.name }}</q-item-label>
+      <q-item-label class="unit-name">{{ unit.character.name }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script lang="ts">
 import { Unit } from 'src/stores/datatypes';
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   name: 'UnitListItem',
@@ -23,11 +21,23 @@ export default defineComponent({
       type: Unit,
       required: true,
     },
-
-    icon: {
-      type: String,
-      default: '',
-    },
+  },
+  setup(props) {
+    return {
+      portrait_url: computed(() => {
+        let char_name_url = props.unit.character.name.toLowerCase();
+        if (char_name_url == 'alear') {
+          char_name_url += '_f';
+        }
+        return `/img/cropped_portraits/${char_name_url}.png`;
+      }),
+    };
   },
 });
 </script>
+
+<style>
+.unit-name {
+  font-size: 1.5rem;
+}
+</style>
