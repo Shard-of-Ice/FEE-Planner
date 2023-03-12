@@ -66,6 +66,24 @@ export class StatBlock {
     );
   }
 
+  static unaryOperator(
+    a: StatBlock,
+    operator: (a: number) => number
+  ): StatBlock {
+    return new StatBlock(
+      operator(a.hp),
+      operator(a.str),
+      operator(a.mag),
+      operator(a.dex),
+      operator(a.spd),
+      operator(a.def),
+      operator(a.res),
+      operator(a.lck),
+      operator(a.bld),
+      operator(a.mov)
+    );
+  }
+
   static add(a: StatBlock, b: StatBlock): StatBlock {
     return StatBlock.binaryOperator(a, b, (a, b) => a + b);
   }
@@ -75,18 +93,11 @@ export class StatBlock {
   }
 
   static multiply(a: StatBlock, b: number): StatBlock {
-    return new StatBlock(
-      a.hp * b,
-      a.str * b,
-      a.mag * b,
-      a.dex * b,
-      a.spd * b,
-      a.def * b,
-      a.res * b,
-      a.lck * b,
-      a.bld * b,
-      a.mov * b
-    );
+    return StatBlock.unaryOperator(a, (a) => a * b);
+  }
+
+  static floor(a: StatBlock): StatBlock {
+    return StatBlock.unaryOperator(a, Math.floor);
   }
 }
 
@@ -114,6 +125,7 @@ export class ClassTier {
       }
     }
     // default
+    console.warn('Unknown class tier ' + str);
     return ClassTier.None;
   }
 
@@ -146,7 +158,7 @@ export class ClassType {
   static Covert = new ClassType('Covert');
   static Flying = new ClassType('Flying');
   static Armor = new ClassType('Armor');
-  static QiAdept = new ClassType('QiAdept');
+  static QiAdept = new ClassType('Qi Adept');
   static None = new ClassType('None');
 
   static all: ClassType[] = [
@@ -172,6 +184,7 @@ export class ClassType {
       }
     }
     // default
+    console.warn('Unknown class type ' + str);
     return ClassType.None;
   }
 
@@ -187,6 +200,9 @@ export class Class {
   bases: StatBlock;
   growths: StatBlock;
   caps: StatBlock;
+  isPlayable: boolean;
+  femaleOnly: boolean;
+  exclusiveCharacterName: string;
 
   constructor(
     name: string,
@@ -194,7 +210,10 @@ export class Class {
     type: ClassType,
     bases: StatBlock,
     growths: StatBlock,
-    caps: StatBlock
+    caps: StatBlock,
+    isPlayable: boolean,
+    femaleOnly: boolean,
+    exclusiveCharacterName: string
   ) {
     this.name = name;
     this.tier = tier;
@@ -202,6 +221,9 @@ export class Class {
     this.bases = bases;
     this.growths = growths;
     this.caps = caps;
+    this.isPlayable = isPlayable;
+    this.femaleOnly = femaleOnly;
+    this.exclusiveCharacterName = exclusiveCharacterName;
   }
 }
 
@@ -214,6 +236,7 @@ export class Character {
   bases: StatBlock;
   growths: StatBlock;
   caps: StatBlock;
+  isFemale: boolean;
 
   constructor(
     name: string,
@@ -223,7 +246,8 @@ export class Character {
     startingSP: number,
     bases: StatBlock,
     growths: StatBlock,
-    caps: StatBlock
+    caps: StatBlock,
+    isFemale: boolean
   ) {
     this.name = name;
     this.startingClass = startingClass;
@@ -233,10 +257,20 @@ export class Character {
     this.bases = bases;
     this.growths = growths;
     this.caps = caps;
+    this.isFemale = isFemale;
   }
 
-  getStartingTotalLevel(): number {
+  get startingTotalLevel(): number {
     return this.startingInternalLevel + this.startingLevel;
+  }
+
+  canUseClass(clss: Class): boolean {
+    let canUse = clss.isPlayable;
+    canUse &&= !clss.femaleOnly || this.isFemale;
+    canUse &&=
+      clss.exclusiveCharacterName == '' ||
+      clss.exclusiveCharacterName == this.name;
+    return canUse;
   }
 }
 
@@ -272,8 +306,8 @@ export class Unit {
     let internalLevel = this.character.startingInternalLevel;
     if (this.class != this.character.startingClass) {
       internalLevel += this.character.startingLevel;
-      if (this.class.tier == ClassTier.Advanced) {
-        internalLevel = Math.min(
+      if (this.class.tier.equals(ClassTier.Advanced)) {
+        internalLevel = Math.max(
           internalLevel,
           this.character.startingClass.tier.promotionLevel
         );
@@ -288,14 +322,8 @@ export class Unit {
 
   get stats(): StatBlock {
     // Stat gains in starting class
-    let levelsStartingClass = 0;
-    if (this.class.tier == ClassTier.Advanced) {
-      levelsStartingClass = Math.max(
-        0,
-        this.character.startingClass.tier.promotionLevel -
-          this.character.startingLevel
-      );
-    }
+    const levelsStartingClass =
+      this.internalLevel - this.character.startingInternalLevel;
 
     const startingClassGrowths = StatBlock.add(
       this.character.growths,
@@ -324,7 +352,7 @@ export class Unit {
     );
     const uncappedStats = StatBlock.add(
       this.totalBases,
-      StatBlock.multiply(totalGrowthsPoints, 1 / 100)
+      StatBlock.floor(StatBlock.multiply(totalGrowthsPoints, 1 / 100))
     );
 
     // Applying stat caps

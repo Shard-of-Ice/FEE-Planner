@@ -7,11 +7,20 @@ interface StaticStoreState {
   playableCharacters: string[];
 }
 
-function getClassByName(className: string, state: StaticStoreState) {
+function getClassByName(
+  className: string,
+  state: StaticStoreState,
+  characterName: string
+) {
   for (const classId in state.classes) {
-    const cl = state.classes[classId];
-    if (cl.name == className) {
-      return cl;
+    const clss = state.classes[classId];
+    // We filter out classes with the same name, but for the wrong character
+    if (
+      clss.name == className &&
+      (clss.exclusiveCharacterName == '' ||
+        clss.exclusiveCharacterName == characterName)
+    ) {
+      return clss;
     }
   }
   // default
@@ -81,7 +90,10 @@ function classFromDict(data: StringDict): Class {
     ClassType.fromString(data['Class Type']),
     statBlockFromDict(data, 'Base '),
     statBlockFromDict(data, '', ' Growth'),
-    statBlockFromDict(data, '', ' Cap')
+    statBlockFromDict(data, '', ' Cap'),
+    data['Flag'].length > 4,
+    data['Flag'] == 'Female-only',
+    data['Exclusive User']
   );
 }
 
@@ -97,13 +109,14 @@ function characterFromDict(
 ): Character {
   return new Character(
     data['Name'],
-    getClassByName(data['Initial Class'], state),
+    getClassByName(data['Initial Class'], state, data['Name']),
     Number(data['Level']),
     Number(data['Internal Level']),
     Number(data['SP']),
     statBlockFromDict(data, '', ' Base'),
     statBlockFromDict(data, '', ' Growth'),
-    statBlockFromDict(data, '', ' Cap')
+    statBlockFromDict(data, '', ' Cap'),
+    data['Gender'] == 'Female'
   );
 }
 

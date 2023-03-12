@@ -2,11 +2,20 @@
   <q-page class="column items-start">
     <div class="col-2" v-if="unit">
       <h2>{{ unit.character.name }}</h2>
-      <p>{{ unit.class.name }}</p>
+      <q-select
+        outlined
+        v-model="unit.class"
+        :options="allowedClasses"
+        :option-label="
+          (c) => (Object(c) === c && 'name' in c ? c.name : '- Null -')
+        "
+        label="Class"
+      />
       <p>{{ unit.class.type.name }}</p>
       <div class="row justify-between full-width">
         <p class="col-2">Level</p>
         <p class="col-1 text-right">{{ unit.level }}</p>
+        <p class="col-1 text-left">({{ unit.totalLevel }})</p>
         <p class="col-2">Mov</p>
         <p class="col-1 text-right">{{ unit.stats.mov }}</p>
       </div>
@@ -35,13 +44,17 @@
 <script>
 import { computed } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
+import { useStaticStore } from 'src/stores/StaticStore';
 
 export default {
   setup() {
     const appStateStore = useAppStateStore();
+    const staticStore = useStaticStore();
+
+    const unit = computed(() => appStateStore.selectedUnit);
 
     return {
-      unit: computed(() => appStateStore.selectedUnit),
+      unit,
       basicStats: computed(() => {
         return {
           Str: appStateStore.selectedUnit.stats.str,
@@ -62,6 +75,11 @@ export default {
           Ddg: 0,
         };
       }),
+      allowedClasses: computed(() =>
+        Object.values(staticStore.classes).filter(
+          (clss) => unit.value && unit.value.character.canUseClass(clss)
+        )
+      ),
     };
   },
 };
