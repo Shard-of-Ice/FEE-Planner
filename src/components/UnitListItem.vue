@@ -5,7 +5,7 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label class="unit-name">{{ unit.character.name }}</q-item-label>
+      <q-item-label class="text-big">{{ unit.character.name }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -35,9 +35,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.unit-name {
-  font-size: 1.5rem;
-}
-</style>

@@ -27,10 +27,11 @@
       v-model="leftDrawerOpen"
       side="left"
       bordered
+      class="background-blue-dark"
     >
       <q-list bordered separator>
         <q-item
-          class="q-pa-none"
+          class="q-pa-none q-mx-md q-my-xs background-blue-medium"
           clickable
           v-ripple
           v-for="[index, unit] of unitStore.unitList.entries()"

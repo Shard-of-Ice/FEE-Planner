@@ -1,1 +1,14 @@
 // app global css in SCSS form
+
+.background-blue-dark {
+  background: $blue-dark;
+}
+
+.background-blue-medium {
+  background: $blue-medium;
+  color: white;
+}
+
+.text-big {
+  font-size: 1.4rem;
+}
