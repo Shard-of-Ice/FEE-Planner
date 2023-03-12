@@ -321,6 +321,9 @@ export class Unit {
   }
 
   get stats(): StatBlock {
+    // Innate growth points
+    const startingGrowthPoints = this.character.growths;
+
     // Stat gains in starting class
     const levelsStartingClass =
       this.internalLevel - this.character.startingInternalLevel;
@@ -334,12 +337,12 @@ export class Unit {
       levelsStartingClass
     );
 
+    // Stat gains in current class
     let levelsCurrentCLass = this.level;
     if (this.class == this.character.startingClass) {
       levelsCurrentCLass -= this.character.startingLevel;
     }
 
-    // Stat gains in current class
     const currentClassGrowthsPoints = StatBlock.multiply(
       this.totalGrowths,
       levelsCurrentCLass
@@ -347,8 +350,8 @@ export class Unit {
 
     // All stat gains
     const totalGrowthsPoints = StatBlock.add(
-      startingClassGrowthsPoints,
-      currentClassGrowthsPoints
+      startingGrowthPoints,
+      StatBlock.add(startingClassGrowthsPoints, currentClassGrowthsPoints)
     );
     const uncappedStats = StatBlock.add(
       this.totalBases,
