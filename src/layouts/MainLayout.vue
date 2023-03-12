@@ -105,8 +105,6 @@ export default {
 
       pick(unit: Unit) {
         appStateStore.selectUnit(unit);
-        console.log(leftDrawer.value);
-        console.log(window.innerWidth);
         if (mobileMode.value) {
           toggleLeftDrawer();
         }
