@@ -1,56 +1,80 @@
 <template>
-  <q-page class="column items-start">
-    <div class="col-2" v-if="unit">
-      <h2>{{ unit.character.name }}</h2>
-      <q-select
-        outlined
-        v-model="unit.class"
-        :options="allowedClasses"
-        :option-label="
-          (c) => (Object(c) === c && 'name' in c ? c.name : '- Null -')
-        "
-        label="Class"
-      />
-      <p>{{ unit.class.type.name }}</p>
-      <div class="row justify-between full-width">
-        <q-select
-          outlined
-          class="col-6"
-          v-model="unit.level"
-          :options="allowedLevels"
-          :option-label="
-            (l) =>
-              '' +
-              l +
-              ' (' +
-              ((unit?.totalLevel || 1) - (unit?.level || 1) + l) +
-              ')'
-          "
-          label="Level"
-        />
-        <p class="col-2">Mov</p>
-        <p class="col-1 text-right">{{ unit.stats.mov }}</p>
+  <q-page class="row">
+    <div class="col-auto column" v-if="unit">
+      <div class="stats-column q-pa-sm" />
+      <div class="character-name-header">
+        <h2 class="col-3 character-name-text q-mx-md">
+          {{ unit.character.name }}
+        </h2>
       </div>
-      <p>HP {{ unit.stats.hp }} / {{ unit.stats.hp }}</p>
-      <p>Bld {{ unit.stats.bld }}</p>
-      <p>SP {{ unit.sp }}</p>
-      <h3>Combat Stats</h3>
-      <template v-for="(statValue, statName) in combatStats" :key="statName">
-        <div class="row justify-between full-width">
-          <div class="col-3">{{ statName }}</div>
-          <div class="col-1 text-right">{{ statValue }}</div>
+      <div class="col stats-column">
+        <div class="column background-blue-gray text-medium q-my-md q-px-md">
+          <q-select
+            class="q-mb-sm"
+            dark
+            dense
+            v-model="unit.class"
+            :options="allowedClasses"
+            :option-label="
+              (c) => (Object(c) === c && 'name' in c ? c.name : '- Null -')
+            "
+          />
+          <div>{{ unit.class.type.name }}</div>
+          <div class="row justify-between items-baseline full-width">
+            <div class="col-2">Lvl</div>
+            <q-select
+              dark
+              dense
+              class="col-4 q-mb-sm"
+              v-model="unit.level"
+              :options="allowedLevels"
+              :option-label="
+                (l) =>
+                  '' +
+                  l +
+                  ' (' +
+                  ((unit?.totalLevel || 1) - (unit?.level || 1) + l) +
+                  ')'
+              "
+            />
+            <div class="col-1" />
+            <div class="col-2">Mov</div>
+            <div class="col-3 text-right">{{ unit.stats.mov }}</div>
+          </div>
         </div>
-      </template>
-      <h3>Basic Stats</h3>
-      <template v-for="(statValue, statName) in basicStats" :key="statName">
-        <div class="row justify-between full-width">
-          <div class="col-3">{{ statName }}</div>
-          <div class="col-1 text-right">{{ statValue }}</div>
+        <div class="column q-px-md">
+          <stat-display
+            stat-name="HP"
+            :stat-value="'' + unit.stats.hp + ' / ' + unit.stats.hp"
+          />
+          <stat-display
+            stat-name="Bld"
+            :stat-value="unit.stats.bld.toString()"
+          />
+          <stat-display stat-name="SP" :stat-value="unit.sp.toString()" />
+          <h3 class="stats-header">Combat Stats</h3>
+          <stat-display
+            v-for="(statValue, statName) in combatStats"
+            :key="statName"
+            :stat-name="statName"
+            :stat-value="(statValue || 0).toString()"
+          />
+          <h3 class="stats-header">Basic Stats</h3>
+          <stat-display
+            v-for="(statValue, statName) in basicStats"
+            :key="statName"
+            :stat-name="statName"
+            :stat-value="(statValue || 0).toString()"
+          />
+          <stat-display
+            class="q-mt-sm"
+            stat-name="Rating"
+            :stat-value="unit.stats.rating.toString()"
+          />
         </div>
-      </template>
-      <p>Rating {{ unit.stats.rating }}</p>
-    </div></q-page
-  >
+      </div>
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -58,8 +82,11 @@ import { computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { useStaticStore } from 'src/stores/StaticStore';
 import { Unit } from 'src/stores/datatypes';
+import StatDisplay from 'src/components/StatDisplay.vue';
 
 export default {
+  components: { StatDisplay },
+
   setup() {
     const appStateStore = useAppStateStore();
     const staticStore = useStaticStore();

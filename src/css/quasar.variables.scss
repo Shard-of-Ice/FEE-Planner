@@ -17,12 +17,36 @@ $secondary: #26a69a;
 $accent: #9c27b0;
 
 $dark: #1d1d1d;
-$dark-page: #16140d;
+$dark-page: #121212;
 
 $positive: #21ba45;
 $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
 
+$blue-lightest: #3c86c2;
+$blue-light: #255090;
 $blue-medium: #29395a;
 $blue-dark: #1b283e;
+$blue-gray: #4b5876;
+$gray-light: #cccccc;
+
+$header-gradient: linear-gradient(
+  90deg,
+  rgba(45, 100, 210, 1) 0%,
+  hsl(226, 63%, 26%) 50%,
+  rgba(45, 60, 90, 1) 100%
+);
+
+$title-gradient: linear-gradient(
+  90deg,
+  rgba(60, 134, 194, 1) 0%,
+  rgba(36, 81, 161, 1) 50%,
+  rgba(25, 45, 110, 0) 100%
+);
+
+$title-border-gradient: linear-gradient(
+  90deg,
+  rgba(208, 226, 233, 1) 50%,
+  rgba(208, 226, 233, 0) 100%
+);
