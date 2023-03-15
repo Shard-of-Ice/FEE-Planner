@@ -29,18 +29,28 @@
       bordered
       class="background-blue-dark"
     >
-      <q-list bordered separator>
-        <q-item
-          class="q-pa-none q-mx-md q-my-xs background-blue-medium"
-          clickable
-          v-ripple
-          v-for="[index, unit] of unitStore.unitList.entries()"
-          :key="index"
-          @click="pick(unit)"
-        >
-          <unit-list-item :unit="unit" class="full-width" />
-        </q-item>
-      </q-list>
+      <q-scroll-area
+        class="fit"
+        :thumb-style="{
+          right: '3px',
+          borderRadius: '3px',
+          background: 'white',
+          width: '10px',
+        }"
+      >
+        <q-list bordered separator>
+          <q-item
+            class="q-pa-none q-mx-md q-my-xs background-blue-medium"
+            clickable
+            v-ripple
+            v-for="[index, unit] of unitStore.unitList.entries()"
+            :key="index"
+            @click="pick(unit)"
+          >
+            <unit-list-item :unit="unit" class="full-width" />
+          </q-item>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
