@@ -25,7 +25,7 @@
             <q-select
               dark
               dense
-              class="col-4 q-mb-sm"
+              class="col-5 q-mb-sm"
               v-model="unit.level"
               :options="allowedLevels"
               :option-label="
@@ -39,7 +39,7 @@
             />
             <div class="col-1" />
             <div class="col-2">Mov</div>
-            <div class="col-3 text-right">{{ unit.stats.mov }}</div>
+            <div class="col-2 text-right">{{ unit.stats.mov }}</div>
           </div>
         </div>
         <div class="column q-px-md">
