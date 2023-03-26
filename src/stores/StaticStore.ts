@@ -141,8 +141,8 @@ export const useStaticStore = defineStore('static', {
   actions: {
     async loadStaticStore() {
       await Promise.all([
-        readCsv('/data/classes.csv'),
-        readCsv('/data/characters.csv'),
+        readCsv('data/classes.csv'),
+        readCsv('data/characters.csv'),
       ]).then((values) => {
         readAllClasses(values[0], this);
         readAllCharacters(values[1], this);
