@@ -29,7 +29,7 @@ export default defineComponent({
         if (char_name_url == 'alear') {
           char_name_url += '_f';
         }
-        return `/img/cropped_portraits/${char_name_url}.png`;
+        return `img/cropped_portraits/${char_name_url}.png`;
       }),
     };
   },
