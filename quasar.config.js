@@ -67,7 +67,7 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: process.env.NODE_ENV === 'development' ? '/' : '/FEE-Planner',
+      publicPath: '/FEE-Planner',
       // analyze: true,
       // env: {},
       // rawDefine: {}
