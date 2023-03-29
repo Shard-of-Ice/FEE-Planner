@@ -74,6 +74,32 @@
         </div>
       </div>
     </div>
+    <!-- <div class="col column" v-if="unit">
+      <div class="col row" v-if="unit">
+        <q-img
+          style="height: 80%"
+          class="col"
+          fit="cover"
+          position="0% 0%"
+          :src="bust_url"
+        />
+      </div>
+    </div> -->
+    <div
+      class="col column"
+      style="overflow-x: hidden; margin-left: -20px"
+      v-if="unit"
+    >
+      <div class="col row items-end" v-if="unit">
+        <q-img
+          fit="contain"
+          position="0% 0%"
+          class="col"
+          style="height: 70vh; width: 3000px"
+          :src="bust_url"
+        />
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -132,6 +158,13 @@ export default {
           min = unit.value?.character.startingLevel;
         }
         return Array.from({ length: max - min + 1 }, (_, i) => min + i);
+      }),
+      bust_url: computed(() => {
+        let char_name_url = unit.value?.character.name.toLowerCase();
+        if (char_name_url == 'alear') {
+          char_name_url += '_male';
+        }
+        return `img/busts/${char_name_url}.png`;
       }),
     };
   },
