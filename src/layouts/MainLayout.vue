@@ -2,23 +2,36 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="page-header" height-hint="98">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-btn
+          dense
+          flat
+          round
+          icon="menu"
+          @click="toggleLeftDrawer"
+          v-if="mobileMode"
+        />
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Fire Emblem Engage Planner
+          <img
+            src="img/misc/Fire_Emblem_logo.png"
+            style="
+              height: 40px;
+              filter: invert(1);
+              margin-right: -180px;
+              margin-top: 5px;
+            "
+          />
+          Engage Planner
         </q-toolbar-title>
 
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        <!-- <q-btn dense flat round icon="menu" @click="toggleRightDrawer" /> -->
       </q-toolbar>
 
-      <q-tabs align="center">
+      <!-- <q-tabs align="center">
         <q-route-tab to="/" label="Page One" />
         <q-route-tab to="/" label="Page Two" />
         <q-route-tab to="/" label="Page Three" />
-      </q-tabs>
+      </q-tabs> -->
     </q-header>
 
     <q-drawer
