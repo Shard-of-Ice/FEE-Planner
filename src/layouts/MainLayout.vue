@@ -53,16 +53,18 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
-      <!-- drawer content -->
-    </q-drawer>
+    <!-- <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+    </q-drawer> -->
 
     <q-page-container class="dark-page">
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="page-footer text-white">
-      <q-toolbar> </q-toolbar>
+    <q-footer
+      elevated
+      class="page-footer text-white q-py-md q-px-lg text-right"
+    >
+      Thanks to VincentASM and their co-contributors who provided the data.
     </q-footer>
   </q-layout>
 </template>
