@@ -1,7 +1,12 @@
 <template>
   <div class="row justify-between full-width">
     <div class="col-5 stats-label">{{ statName }}</div>
-    <div class="col-5 text-right stats-value">{{ statValue }}</div>
+    <div class="col-5 text-right stats-value">
+      <span v-if="statName == 'HP'">{{ statValue }}/</span>
+      <span :class="statValue == maxValue && 'text-positive'">{{
+        statValue
+      }}</span>
+    </div>
   </div>
 </template>
 
@@ -16,8 +21,12 @@ export default defineComponent({
       required: true,
     },
     statValue: {
-      type: String,
+      type: Number,
       required: true,
+    },
+    maxValue: {
+      type: Number,
+      default: -1,
     },
   },
 });

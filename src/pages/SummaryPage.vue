@@ -45,31 +45,34 @@
         <div class="column q-px-md">
           <stat-display
             stat-name="HP"
-            :stat-value="'' + unit.stats.hp + ' / ' + unit.stats.hp"
+            :stat-value="unit.stats.hp"
+            :max-value="unit.totalCaps.hp"
           />
           <stat-display
             stat-name="Bld"
-            :stat-value="unit.stats.bld.toString()"
+            :stat-value="unit.stats.bld"
+            :max-value="unit.totalCaps.bld"
           />
-          <stat-display stat-name="SP" :stat-value="unit.sp.toString()" />
+          <stat-display stat-name="SP" :stat-value="unit.sp" />
           <h3 class="stats-header">Combat Stats</h3>
           <stat-display
             v-for="(statValue, statName) in combatStats"
             :key="statName"
             :stat-name="statName"
-            :stat-value="(statValue || 0).toString()"
+            :stat-value="statValue || 0"
           />
           <h3 class="stats-header">Basic Stats</h3>
           <stat-display
             v-for="(statValue, statName) in basicStats"
             :key="statName"
             :stat-name="statName"
-            :stat-value="(statValue || 0).toString()"
+            :stat-value="unit.stats.get(statName)"
+            :max-value="unit.totalCaps.get(statName)"
           />
           <stat-display
             class="q-mt-sm"
             stat-name="Rating"
-            :stat-value="unit.stats.rating.toString()"
+            :stat-value="unit.stats.rating"
           />
         </div>
       </div>
@@ -136,11 +139,11 @@ export default {
       }),
       combatStats: computed(() => {
         return {
-          Atk: unit.value?.atk,
-          Hit: unit.value?.hit,
-          Avo: unit.value?.avo,
-          Crit: unit.value?.crit,
-          Ddg: unit.value?.ddg,
+          Atk: unit.value?.atk || 0,
+          Hit: unit.value?.hit || 0,
+          Avo: unit.value?.avo || 0,
+          Crit: unit.value?.crit || 0,
+          Ddg: unit.value?.ddg || 0,
         };
       }),
       allowedClasses: computed(() =>

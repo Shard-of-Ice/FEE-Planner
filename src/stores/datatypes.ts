@@ -1,5 +1,3 @@
-import { stat } from 'fs';
-
 export class StatBlock {
   hp: number;
   str: number;
@@ -34,6 +32,25 @@ export class StatBlock {
     this.lck = lck;
     this.bld = bld;
     this.mov = mov;
+  }
+
+  static statNames: string[] = [
+    'hp',
+    'str',
+    'mag',
+    'dex',
+    'spd',
+    'def',
+    'res',
+    'lck',
+    'bld',
+    'mov',
+  ];
+
+  get(statName: string): number {
+    return Number(
+      (this as StatBlock)[statName.toLowerCase() as keyof StatBlock]
+    );
   }
 
   get rating() {
