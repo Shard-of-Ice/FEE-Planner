@@ -8,7 +8,7 @@
           round
           icon="menu"
           @click="toggleLeftDrawer"
-          v-if="mobileMode"
+          class="lt-md"
         />
 
         <q-toolbar-title>
@@ -83,17 +83,18 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, Ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { useUnitStore } from 'src/stores/UnitStore';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { Unit } from 'src/stores/datatypes';
 import UnitListItem from '../components/UnitListItem.vue';
-import { QDrawer } from 'quasar';
+import { QDrawer, useQuasar } from 'quasar';
 
 export default {
   components: { UnitListItem },
 
   setup() {
+    const $q = useQuasar();
     const unitStore = useUnitStore();
     const appStateStore = useAppStateStore();
 
@@ -110,18 +111,9 @@ export default {
       rightDrawerOpen.value = !rightDrawerOpen.value;
     }
 
-    const mobileMode = computed(
-      () =>
-        leftDrawer.value &&
-        leftDrawer.value.breakpoint &&
-        leftDrawer.value.breakpoint > window.innerWidth
-    );
-
     return {
       unitStore,
       leftDrawer,
-
-      mobileMode,
 
       leftDrawerOpen,
       toggleLeftDrawer,
@@ -131,7 +123,7 @@ export default {
 
       pick(unit: Unit) {
         appStateStore.selectUnit(unit);
-        if (mobileMode.value) {
+        if ($q.screen.lt.md) {
           toggleLeftDrawer();
         }
       },
