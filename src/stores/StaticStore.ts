@@ -115,7 +115,7 @@ function characterFromDict(
     Number(data['SP']),
     statBlockFromDict(data, '', ' Base'),
     statBlockFromDict(data, '', ' Growth'),
-    statBlockFromDict(data, '', ' Cap'),
+    statBlockFromDict(data, '', ' Cap+'),
     data['Gender'] == 'Female'
   );
 }
