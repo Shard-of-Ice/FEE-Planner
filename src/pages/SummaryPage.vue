@@ -31,7 +31,7 @@
               :option-label="
                 (l) =>
                   '' +
-                  l +
+                  (l <= (unit?.class.tier.maxLevel || 20) ? l : l - 19) +
                   ' (' +
                   ((unit?.totalLevel || 1) - (unit?.level || 1) + l) +
                   ')'
@@ -113,7 +113,7 @@
 import { computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { useStaticStore } from 'src/stores/StaticStore';
-import { Unit } from 'src/stores/datatypes';
+import { ClassTier, ClassType, Unit } from 'src/stores/datatypes';
 import StatDisplay from 'src/components/StatDisplay.vue';
 
 export default {
@@ -157,6 +157,10 @@ export default {
       allowedLevels: computed(() => {
         let min = 1;
         let max = unit.value?.class.tier.maxLevel || 1;
+        if (!unit.value?.class.tier.equals(ClassTier.Base)) {
+          // 19 extra levels from reclassing into the same class
+          max += 19;
+        }
         if (
           unit.value &&
           unit.value.class == unit.value.character.startingClass
