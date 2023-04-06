@@ -92,6 +92,20 @@
         />
       </div>
     </div>
+    <div class="col column self-center items-center" v-else>
+      <div class="row items-end" style="font-size: 42px; opacity: 0.1">
+        <img
+          src="img/misc/Fire_Emblem_logo.png"
+          style="
+            height: 80px;
+            filter: invert(1);
+            margin-right: -350px;
+            margin-bottom: 10px;
+          "
+        />
+        Engage Planner
+      </div>
+    </div>
   </q-page>
 </template>
 
