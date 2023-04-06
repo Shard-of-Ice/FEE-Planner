@@ -77,17 +77,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="col column" v-if="unit">
-      <div class="col row" v-if="unit">
-        <q-img
-          style="height: 80%"
-          class="col"
-          fit="cover"
-          position="0% 0%"
-          :src="bust_url"
-        />
-      </div>
-    </div> -->
     <div
       class="col column"
       style="overflow-x: hidden; margin-left: -20px"
