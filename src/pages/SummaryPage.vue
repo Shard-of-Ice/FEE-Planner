@@ -170,8 +170,8 @@ export default {
         return Array.from({ length: max - min + 1 }, (_, i) => min + i);
       }),
       bust_url: computed(() => {
-        let char_name_url = unit.value?.character.name.toLowerCase();
-        if (char_name_url == 'alear') {
+        let char_name_url = unit.value?.character.name;
+        if (char_name_url == 'Alear') {
           char_name_url += '_male';
         }
         return `img/busts/${char_name_url}.png`;
