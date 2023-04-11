@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia';
-import { Character, Class, ClassTier, ClassType, StatBlock } from './datatypes';
+import {
+  Character,
+  Class,
+  ClassTier,
+  ClassType,
+  StatBlock,
+} from '../utils/datatypes';
 
 interface StaticStoreState {
   classes: { [key: string]: Class };
@@ -85,6 +91,7 @@ function statBlockFromDict(
 
 function classFromDict(data: StringDict): Class {
   return new Class(
+    data['ID'],
     data['Name'],
     ClassTier.fromString(data['Class Tier']),
     ClassType.fromString(data['Class Type']),
@@ -108,6 +115,7 @@ function characterFromDict(
   state: StaticStoreState
 ): Character {
   return new Character(
+    data['ID'],
     data['Name'],
     getClassByName(data['Initial Class'], state, data['Name']),
     Number(data['Level']),
@@ -136,7 +144,14 @@ export const useStaticStore = defineStore('static', {
     playableCharacters: [],
   }),
 
-  getters: {},
+  getters: {
+    getAllowedClasses(state: StaticStoreState) {
+      return (character: Character) =>
+        Object.values(state.classes).filter((clss) =>
+          character.canUseClass(clss)
+        );
+    },
+  },
 
   actions: {
     async loadStaticStore() {

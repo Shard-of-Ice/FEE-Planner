@@ -213,6 +213,7 @@ export class ClassType {
 }
 
 export class Class {
+  id: string;
   name: string;
   tier: ClassTier;
   type: ClassType;
@@ -224,6 +225,7 @@ export class Class {
   exclusiveCharacterName: string;
 
   constructor(
+    id: string,
     name: string,
     tier: ClassTier,
     type: ClassType,
@@ -234,6 +236,7 @@ export class Class {
     femaleOnly: boolean,
     exclusiveCharacterName: string
   ) {
+    this.id = id;
     this.name = name;
     this.tier = tier;
     this.type = type;
@@ -248,6 +251,7 @@ export class Class {
 
 export class Character {
   name: string;
+  id: string;
   startingClass: Class;
   startingLevel: number;
   startingInternalLevel: number;
@@ -258,6 +262,7 @@ export class Character {
   isFemale: boolean;
 
   constructor(
+    id: string,
     name: string,
     startingClass: Class,
     startingLevel: number,
@@ -268,6 +273,7 @@ export class Character {
     caps: StatBlock,
     isFemale: boolean
   ) {
+    this.id = id;
     this.name = name;
     this.startingClass = startingClass;
     this.startingLevel = startingLevel;
@@ -299,10 +305,14 @@ export class Unit {
   level: number;
   sp: number;
 
-  constructor(character: Character) {
+  constructor(
+    character: Character,
+    level: number | null = null,
+    clss: Class | null = null
+  ) {
     this.character = character;
-    this.class = character.startingClass;
-    this.level = character.startingLevel;
+    this.class = clss || character.startingClass;
+    this.level = level || character.startingLevel;
     this.sp = character.startingSP;
   }
 

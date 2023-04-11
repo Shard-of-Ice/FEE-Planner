@@ -113,7 +113,7 @@
 import { computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { useStaticStore } from 'src/stores/StaticStore';
-import { ClassTier, ClassType, Unit } from 'src/stores/datatypes';
+import { ClassTier, Unit } from 'src/utils/datatypes';
 import StatDisplay from 'src/components/StatDisplay.vue';
 
 export default {

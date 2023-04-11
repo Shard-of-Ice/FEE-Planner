@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useUnitStore } from './UnitStore';
-import { StatBlock, Unit } from './datatypes';
+import { StatBlock, Unit } from '../utils/datatypes';
 
 type SingleStatRanking = { [key: number]: number };
 type MultipleStatRanking = { [key: string]: SingleStatRanking };

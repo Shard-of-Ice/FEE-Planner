@@ -1,9 +1,40 @@
 import { useStaticStore } from './StaticStore';
 import { defineStore } from 'pinia';
-import { Unit } from './datatypes';
+import { Unit } from '../utils/datatypes';
+import { Base64 } from 'src/utils/Base64';
 
 interface UnitStoreState {
   unitList: Unit[];
+}
+
+function unitToBase64(unit: Unit): string {
+  const staticStore = useStaticStore();
+  const characterNumber = staticStore.playableCharacters.indexOf(
+    unit.character.id
+  );
+  const classNumber = staticStore
+    .getAllowedClasses(unit.character)
+    .indexOf(unit.class);
+  const level = unit.level;
+  return Base64.fromTinyIntArray([characterNumber, classNumber, level]);
+}
+
+function unitFromBAse64(str: string): Unit {
+  const staticStore = useStaticStore();
+  const [characterNumber, classNumber, level] = Base64.toTinyIntArray(str);
+  const character =
+    staticStore.characters[staticStore.playableCharacters[characterNumber]];
+  const clss = staticStore.getAllowedClasses(character)[classNumber];
+
+  console.log({
+    characterNumber: characterNumber,
+    character: character,
+    classNumber: classNumber,
+    clss: clss,
+    level: level,
+  });
+
+  return new Unit(character, level, clss);
 }
 
 export const useUnitStore = defineStore('unit', {
@@ -11,7 +42,11 @@ export const useUnitStore = defineStore('unit', {
     unitList: [],
   }),
 
-  getters: {},
+  getters: {
+    toBase64(): string {
+      return Array.from(this.unitList, (unit) => unitToBase64(unit)).join();
+    },
+  },
 
   actions: {
     loadDefaultTeam() {
@@ -21,6 +56,12 @@ export const useUnitStore = defineStore('unit', {
         const character = staticStore.characters[key];
         this.unitList.push(new Unit(character));
       }
+    },
+
+    loadTeamFromBase64(base64: string) {
+      this.unitList = Array.from(base64.match(/.{3}/g) || [], (str) =>
+        unitFromBAse64(str)
+      );
     },
   },
 });

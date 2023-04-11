@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Unit } from './datatypes';
+import { Unit } from '../utils/datatypes';
 
 interface AppStateStoreState {
   selectedUnit: Unit | null;
