@@ -131,7 +131,8 @@ function characterFromDict(
 function readAllCharacters(data: StringDictDict, state: StaticStoreState) {
   for (const key in data) {
     state.characters[key] = characterFromDict(data[key], state);
-    if (state.characters[key].startingSP > 0) {
+    if (state.characters[key].startingSP > 0 && !key.endsWith('竜化')) {
+      // The second check is for Nel and Rafal transformed, otherwise they appear 2 times
       state.playableCharacters.push(key);
     }
   }
