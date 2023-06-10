@@ -86,7 +86,7 @@
 import { ref, Ref } from 'vue';
 import { useUnitStore } from 'src/stores/UnitStore';
 import { useAppStateStore } from 'src/stores/AppStateStore';
-import { Unit } from 'src/stores/datatypes';
+import { Unit } from 'src/utils/datatypes';
 import UnitListItem from '../components/UnitListItem.vue';
 import { QDrawer, useQuasar } from 'quasar';
 
