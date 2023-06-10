@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Unit } from 'src/utils/datatypes';
+import { Unit } from 'src/models/Unit';
 import { defineComponent, computed } from 'vue';
 
 export default defineComponent({

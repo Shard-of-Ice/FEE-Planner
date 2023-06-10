@@ -1,11 +1,7 @@
 import { defineStore } from 'pinia';
-import {
-  Character,
-  Class,
-  ClassTier,
-  ClassType,
-  StatBlock,
-} from '../utils/datatypes';
+import { Character } from 'src/models/Character';
+import { Class, ClassTier, ClassType } from 'src/models/Class';
+import { StatBlock } from 'src/models/StatBlock';
 
 interface StaticStoreState {
   classes: { [key: string]: Class };

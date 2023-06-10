@@ -36,7 +36,7 @@
 <script lang="ts">
 import { computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
-import { Unit } from 'src/utils/datatypes';
+import { Unit } from 'src/models/Unit';
 import UnitSummary from 'src/components/UnitSummary.vue';
 
 export default {

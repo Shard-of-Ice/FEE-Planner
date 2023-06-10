@@ -82,7 +82,8 @@
 import { defineComponent, computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
 import { useStaticStore } from 'src/stores/StaticStore';
-import { ClassTier, Unit } from 'src/utils/datatypes';
+import { Unit } from 'src/models/Unit';
+import { ClassTier } from 'src/models/Class';
 import StatDisplay from 'src/components/StatDisplay.vue';
 
 export default defineComponent({

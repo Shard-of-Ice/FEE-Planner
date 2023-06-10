@@ -1,6 +1,6 @@
 import { useStaticStore } from './StaticStore';
 import { defineStore } from 'pinia';
-import { Unit } from '../utils/datatypes';
+import { Unit } from '../models/Unit';
 import { Base64 } from 'src/utils/Base64';
 
 interface UnitStoreState {
