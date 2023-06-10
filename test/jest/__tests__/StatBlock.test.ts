@@ -20,7 +20,7 @@ function makeRandomStatBlock(floored = true): StatBlock {
 }
 
 describe('StatBlock', () => {
-  it('should add stats', async () => {
+  it('should add stats', () => {
     const statBlockA = makeRandomStatBlock();
     const statBlockB = makeRandomStatBlock();
     const statBlockAdd = StatBlock.add(statBlockA, statBlockB);
@@ -33,7 +33,7 @@ describe('StatBlock', () => {
 });
 
 describe('StatBlock', () => {
-  it('should substract stats', async () => {
+  it('should substract stats', () => {
     const statBlockA = makeRandomStatBlock();
     const statBlockB = makeRandomStatBlock();
     const statBlockSub = StatBlock.substract(statBlockA, statBlockB);
