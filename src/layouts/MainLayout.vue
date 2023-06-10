@@ -75,7 +75,7 @@
 
     <q-footer
       elevated
-      class="page-footer text-white q-py-md q-px-lg text-right"
+      class="page-footer text-white q-py-sm q-px-lg text-right"
     >
       Thanks to VincentASM and their co-contributors who provided the data.
     </q-footer>
