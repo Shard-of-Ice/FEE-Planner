@@ -145,7 +145,8 @@ function weaponFromDict(data: StringDict): Weapon {
     Number(data['Weight']),
     Number(data['Avoid']),
     Number(data['Dodge']),
-    data['Rank']
+    data['Rank'],
+    data['Playable'] != '0'
   );
 }
 

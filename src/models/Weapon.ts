@@ -9,6 +9,7 @@ export class Weapon {
   avoid: number;
   dodge: number;
   rank: string;
+  playable = false;
 
   constructor(
     id: string,
@@ -20,7 +21,8 @@ export class Weapon {
     weight: number,
     avoid: number,
     dodge: number,
-    rank: string
+    rank: string,
+    playable: boolean
   ) {
     this.id = id;
     this.name = name;
@@ -32,6 +34,7 @@ export class Weapon {
     this.avoid = avoid;
     this.dodge = dodge;
     this.rank = rank;
+    this.playable = playable;
   }
 }
 
