@@ -1,55 +1,14 @@
 import { describe, expect, it } from '@jest/globals';
-import { CharacterDict, ClassDict } from '../../../src/utils/CsvParsing';
 import { beforeAll } from '@jest/globals';
-import {
-  readAllCharacters,
-  readAllClasses,
-  readCsv,
-} from 'src/utils/CsvParsing';
-import { promises as fs } from 'fs';
 import { StatBlock } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
-
-interface Idata {
-  classes: ClassDict;
-  characters: CharacterDict;
-}
-
-const data: Idata = {
-  classes: {},
-  characters: {},
-};
+import data from './Data';
 
 beforeAll(() => {
-  return Promise.all([
-    fs.readFile('public/data/classes.csv'),
-    fs.readFile('public/data/characters.csv'),
-  ]).then((buffers) => {
-    data.classes = readAllClasses(readCsv(buffers[0].toString()));
-    data.characters = readAllCharacters(
-      readCsv(buffers[1].toString()),
-      data.classes
-    );
-  });
+  return data.loadFromDisk();
 });
 
-describe('Class', () => {
-  it('should load classes', () => {
-    expect(Object.keys(data.classes).length).toBeGreaterThan(0);
-  });
-});
-
-describe('Character', () => {
-  it('should load characters', () => {
-    expect(Object.keys(data.characters).length).toBeGreaterThan(0);
-  });
-
-  it('should have the right starting class', () => {
-    expect(data.characters['PID_リュール'].startingClass.name).toEqual(
-      'Dragon Child'
-    );
-  });
-
+describe('Unit', () => {
   it('should have the right starting stats', () => {
     const alear = data.characters['PID_リュール'];
     const alearUnit = new Unit(alear);
