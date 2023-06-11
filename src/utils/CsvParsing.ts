@@ -1,7 +1,7 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
-import { Weapon } from 'src/models/Weapon';
+import { Weapon, WeaponType } from 'src/models/Weapon';
 
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
@@ -135,7 +135,18 @@ export function readAllCharacters(
 }
 
 function weaponFromDict(data: StringDict): Weapon {
-  return new Weapon();
+  return new Weapon(
+    data['ID'],
+    data['Name'],
+    WeaponType.fromString(data['Type']),
+    Number(data['Might']),
+    Number(data['Hit']),
+    Number(data['Critical']),
+    Number(data['Weight']),
+    Number(data['Avoid']),
+    Number(data['Dodge']),
+    data['Rank']
+  );
 }
 
 export function readAllWeapons(data: StringDictDict): WeaponDict {

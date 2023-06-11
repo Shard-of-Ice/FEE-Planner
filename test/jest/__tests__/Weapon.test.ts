@@ -11,3 +11,18 @@ describe('Weapon', () => {
     expect(Object.keys(data.weapons).length).toBeGreaterThan(0);
   });
 });
+
+describe('Weapon', () => {
+  it('should load iron sword', () => {
+    const ironSword = data.weapons['IID_鉄の剣'];
+    expect(ironSword.name).toEqual('Iron Sword');
+    expect(ironSword.type.name).toEqual('Sword');
+    expect(ironSword.might).toEqual(5);
+    expect(ironSword.hit).toEqual(90);
+    expect(ironSword.critical).toEqual(0);
+    expect(ironSword.weight).toEqual(5);
+    expect(ironSword.avoid).toEqual(0);
+    expect(ironSword.dodge).toEqual(0);
+    expect(ironSword.rank).toEqual('D');
+  });
+});

@@ -17,8 +17,10 @@ class Data {
 
   loadFromDisk() {
     if (this.loaded) {
+      console.log('Already loaded');
       return Promise.resolve();
     }
+    console.log('Not already loaded');
     return Promise.all([
       fs.readFile('public/data/classes.csv'),
       fs.readFile('public/data/characters.csv'),
