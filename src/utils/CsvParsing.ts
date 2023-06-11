@@ -1,12 +1,14 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
+import { Weapon } from 'src/models/Weapon';
 
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
 
 export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
+export type WeaponDict = { [key: string]: Weapon };
 
 export function readCsvFromUrl(url: string): Promise<StringDictDict> {
   return new Promise<StringDictDict>(function (resolve) {
@@ -130,4 +132,16 @@ export function readAllCharacters(
     characters[key] = characterFromDict(data[key], classes);
   }
   return characters;
+}
+
+function weaponFromDict(data: StringDict): Weapon {
+  return new Weapon();
+}
+
+export function readAllWeapons(data: StringDictDict): WeaponDict {
+  const weapons: WeaponDict = {};
+  for (const key in data) {
+    weapons[key] = weaponFromDict(data[key]);
+  }
+  return weapons;
 }

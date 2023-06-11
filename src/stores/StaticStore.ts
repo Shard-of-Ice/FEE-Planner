@@ -1,16 +1,20 @@
 import { defineStore } from 'pinia';
 import { Character } from 'src/models/Character';
-import { Class } from 'src/models/Class';
 import {
+  CharacterDict,
+  ClassDict,
+  WeaponDict,
   readAllCharacters,
   readAllClasses,
+  readAllWeapons,
   readCsvFromUrl,
 } from 'src/utils/CsvParsing';
 
 interface StaticStoreState {
-  classes: { [key: string]: Class };
-  characters: { [key: string]: Character };
+  classes: ClassDict;
+  characters: CharacterDict;
   playableCharacters: string[];
+  weapons: WeaponDict;
 }
 
 function isPlayable(key: string, character: Character) {
@@ -23,6 +27,7 @@ export const useStaticStore = defineStore('static', {
     classes: {},
     characters: {},
     playableCharacters: [],
+    weapons: {},
   }),
 
   getters: {
@@ -39,12 +44,14 @@ export const useStaticStore = defineStore('static', {
       await Promise.all([
         readCsvFromUrl('data/classes.csv'),
         readCsvFromUrl('data/characters.csv'),
+        readCsvFromUrl('data/weapons.csv'),
       ]).then((values) => {
         this.classes = readAllClasses(values[0]);
         this.characters = readAllCharacters(values[1], this.classes);
         this.playableCharacters = Object.keys(this.characters).filter((key) =>
           isPlayable(key, this.characters[key])
         );
+        this.weapons = readAllWeapons(values[2]);
       });
     },
   },
