@@ -83,8 +83,10 @@ export class ClassType {
         return type;
       }
     }
-    // default
-    console.warn('Unknown class type ' + str);
+    // default, we log a warning if the value is not a reasonable representation of None
+    if (str != 'none' && str != '---') {
+      console.warn('Unknown class type ' + str);
+    }
     return ClassType.None;
   }
 

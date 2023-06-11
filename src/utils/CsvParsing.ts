@@ -1,7 +1,12 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
-import { Weapon, WeaponProficiency, WeaponType } from 'src/models/Weapon';
+import {
+  ProficiencyLevel,
+  Weapon,
+  WeaponProficiency,
+  WeaponType,
+} from 'src/models/Weapon';
 
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
@@ -79,14 +84,14 @@ function weaponProficiencyFromString(str: string): WeaponProficiency {
     const [typeStr, levelStr] = splits;
     return {
       weaponType: WeaponType.fromString(typeStr),
-      level: levelStr,
+      level: ProficiencyLevel.fromString(levelStr),
     };
   }
   // else
   console.warn(`Could not parse weapon proficiency : ${str}`);
   return {
     weaponType: WeaponType.None,
-    level: 'D',
+    level: ProficiencyLevel.None,
   };
 }
 
@@ -171,7 +176,7 @@ function weaponFromDict(data: StringDict): Weapon {
     Number(data['Weight']),
     Number(data['Avoid']),
     Number(data['Dodge']),
-    data['Rank'],
+    ProficiencyLevel.fromString(data['Rank']),
     data['Playable'] != '0'
   );
 }

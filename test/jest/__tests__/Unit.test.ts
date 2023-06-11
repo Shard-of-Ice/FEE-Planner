@@ -84,4 +84,45 @@ describe('Unit', () => {
       );
     }
   });
+
+  it('should not let a player character equip an unplayable weapon', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const liberationPrologue = data.weapons['IID_リベラシオン_M000'];
+
+    expect(alearUnit.canEquip(liberationPrologue)).toBeFalsy();
+  });
+
+  it('should let alear equip an iron sword', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const ironSword = data.weapons['IID_鉄の剣'];
+
+    expect(alearUnit.canEquip(ironSword)).toBeTruthy();
+  });
+
+  it('should not let alear equip an iron bow', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const ironBow = data.weapons['IID_鉄の弓'];
+
+    expect(alearUnit.canEquip(ironBow)).toBeFalsy();
+  });
+
+  it('should not let unpromoted alear equip a brave sword', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const braveSword = data.weapons['IID_勇者の剣'];
+
+    expect(alearUnit.canEquip(braveSword)).toBeFalsy();
+  });
+
+  it('should let promoted alear equip a brave sword', () => {
+    const alear = data.characters['PID_リュール'];
+    const promotedClass = data.classes['JID_神竜ノ王'];
+    const alearUnit = new Unit(alear, 1, promotedClass);
+    const braveSword = data.weapons['IID_勇者の剣'];
+
+    expect(alearUnit.canEquip(braveSword)).toBeTruthy();
+  });
 });

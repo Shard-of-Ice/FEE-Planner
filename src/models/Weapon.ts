@@ -8,7 +8,7 @@ export class Weapon {
   weight: number;
   avoid: number;
   dodge: number;
-  rank: string;
+  rank: ProficiencyLevel;
   playable = false;
 
   constructor(
@@ -21,7 +21,7 @@ export class Weapon {
     weight: number,
     avoid: number,
     dodge: number,
-    rank: string,
+    rank: ProficiencyLevel,
     playable: boolean
   ) {
     this.id = id;
@@ -85,5 +85,58 @@ export class WeaponType {
 
 export interface WeaponProficiency {
   weaponType: WeaponType;
-  level: string;
+  level: ProficiencyLevel;
+}
+
+export class ProficiencyLevel {
+  static D = new ProficiencyLevel('D', 1);
+  static Dplus = new ProficiencyLevel('D+', 2);
+  static C = new ProficiencyLevel('C', 3);
+  static Cplus = new ProficiencyLevel('C+', 4);
+  static B = new ProficiencyLevel('B', 5);
+  static Bplus = new ProficiencyLevel('B+', 6);
+  static A = new ProficiencyLevel('A', 7);
+  static Aplus = new ProficiencyLevel('A+', 8);
+  static S = new ProficiencyLevel('S', 9);
+  static None = new ProficiencyLevel('None', 0);
+
+  static all: ProficiencyLevel[] = [
+    ProficiencyLevel.D,
+    ProficiencyLevel.Dplus,
+    ProficiencyLevel.C,
+    ProficiencyLevel.Cplus,
+    ProficiencyLevel.B,
+    ProficiencyLevel.Bplus,
+    ProficiencyLevel.A,
+    ProficiencyLevel.Aplus,
+    ProficiencyLevel.S,
+  ];
+
+  readonly name: string;
+  readonly value: number;
+  private constructor(name: string, value: number) {
+    this.name = name;
+    this.value = value;
+  }
+
+  static fromString(str: string): ProficiencyLevel {
+    for (const type of ProficiencyLevel.all) {
+      if (type.name == str) {
+        return type;
+      }
+    }
+    // default, we log a warning if the value is not a reasonable representation of None
+    if (str != '-') {
+      console.warn('Unknown proficiency level ' + str);
+    }
+    return ProficiencyLevel.None;
+  }
+
+  equals(other: ProficiencyLevel) {
+    return this.value === other.value;
+  }
+
+  greaterOrEqualTo(other: ProficiencyLevel) {
+    return this.value >= other.value;
+  }
 }

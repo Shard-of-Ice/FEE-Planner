@@ -127,4 +127,14 @@ export class Unit {
   get ddg(): number {
     return this.stats.lck;
   }
+
+  canEquip(weapon: Weapon): boolean {
+    return (
+      weapon.playable &&
+      this.class.weaponProficiencies.filter(
+        (p) =>
+          p.weaponType == weapon.type && p.level.greaterOrEqualTo(weapon.rank)
+      ).length > 0
+    );
+  }
 }
