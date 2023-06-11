@@ -93,6 +93,22 @@ describe('Unit', () => {
     expect(alearUnit.canEquip(liberationPrologue)).toBeFalsy();
   });
 
+  it('should let alear equip Libération (weapon exclusive to him)', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const liberation = data.weapons['IID_リベラシオン'];
+
+    expect(alearUnit.canEquip(liberation)).toBeTruthy();
+  });
+
+  it('should not let alear equip Obscurité (weapon exclusive to Veyle)', () => {
+    const alear = data.characters['PID_リュール'];
+    const alearUnit = new Unit(alear);
+    const obscurite = data.weapons['IID_オヴスキュリテ'];
+
+    expect(alearUnit.canEquip(obscurite)).toBeFalsy();
+  });
+
   it('should let alear equip an iron sword', () => {
     const alear = data.characters['PID_リュール'];
     const alearUnit = new Unit(alear);

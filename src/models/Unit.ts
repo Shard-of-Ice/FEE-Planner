@@ -130,7 +130,12 @@ export class Unit {
 
   canEquip(weapon: Weapon): boolean {
     return (
-      weapon.playable &&
+      // The weapon is useable by the player
+      weapon.isPlayable &&
+      // The weapon is not exclusive, or is exclusive to this character
+      (weapon.exclusiveCharacterName == '' ||
+        weapon.exclusiveCharacterName == this.character.name) &&
+      // This character has enough proficiency to use the weapon
       this.class.weaponProficiencies.filter(
         (p) =>
           p.weaponType == weapon.type && p.level.greaterOrEqualTo(weapon.rank)

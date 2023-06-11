@@ -177,7 +177,8 @@ function weaponFromDict(data: StringDict): Weapon {
     Number(data['Avoid']),
     Number(data['Dodge']),
     ProficiencyLevel.fromString(data['Rank']),
-    data['Playable'] != '0'
+    data['Playable'] != '0',
+    data['Exclusive User'] || ''
   );
 }
 

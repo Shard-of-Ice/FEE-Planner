@@ -9,7 +9,8 @@ export class Weapon {
   avoid: number;
   dodge: number;
   rank: ProficiencyLevel;
-  playable = false;
+  isPlayable = false;
+  exclusiveCharacterName: string;
 
   constructor(
     id: string,
@@ -22,7 +23,8 @@ export class Weapon {
     avoid: number,
     dodge: number,
     rank: ProficiencyLevel,
-    playable: boolean
+    isPlayable: boolean,
+    exclusiveCharacterName: string
   ) {
     this.id = id;
     this.name = name;
@@ -34,7 +36,8 @@ export class Weapon {
     this.avoid = avoid;
     this.dodge = dodge;
     this.rank = rank;
-    this.playable = playable;
+    this.isPlayable = isPlayable;
+    this.exclusiveCharacterName = exclusiveCharacterName;
   }
 }
 
