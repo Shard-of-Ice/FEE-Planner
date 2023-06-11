@@ -82,3 +82,8 @@ export class WeaponType {
     return this.name == other.name;
   }
 }
+
+export interface WeaponProficiency {
+  weaponType: WeaponType;
+  level: string;
+}

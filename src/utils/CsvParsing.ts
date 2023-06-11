@@ -1,7 +1,7 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
-import { Weapon, WeaponType } from 'src/models/Weapon';
+import { Weapon, WeaponProficiency, WeaponType } from 'src/models/Weapon';
 
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
@@ -65,6 +65,31 @@ function statBlockFromDict(
   );
 }
 
+function weaponProficienciesFromString(str: string): WeaponProficiency[] {
+  if (str.length < 4) {
+    return [];
+  }
+  // else
+  return str.split(', ').map(weaponProficiencyFromString);
+}
+
+function weaponProficiencyFromString(str: string): WeaponProficiency {
+  const splits = str.split(' ');
+  if (splits.length === 2) {
+    const [typeStr, levelStr] = splits;
+    return {
+      weaponType: WeaponType.fromString(typeStr),
+      level: levelStr,
+    };
+  }
+  // else
+  console.warn(`Could not parse weapon proficiency : ${str}`);
+  return {
+    weaponType: WeaponType.None,
+    level: 'D',
+  };
+}
+
 function classFromDict(data: StringDict): Class {
   return new Class(
     data['ID'],
@@ -74,6 +99,7 @@ function classFromDict(data: StringDict): Class {
     statBlockFromDict(data, 'Base '),
     statBlockFromDict(data, '', ' Growth'),
     statBlockFromDict(data, '', ' Cap'),
+    weaponProficienciesFromString(data['Max Weapons']),
     data['Flag'].length > 4,
     data['Flag'] == 'Female-only',
     data['Exclusive User']
