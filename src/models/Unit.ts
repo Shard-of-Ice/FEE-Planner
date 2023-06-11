@@ -106,26 +106,34 @@ export class Unit {
   }
 
   get atk(): number {
-    // Placeholder until equipment is added
-    return Math.max(this.stats.str, this.stats.mag);
+    // Placeholder until proper phys/mag separation is added
+    return (
+      (this.weapon?.might || 100) + Math.max(this.stats.str, this.stats.mag)
+    );
   }
 
   get hit(): number {
-    // Placeholder until equipment is added
-    return 100 + 2 * this.stats.dex + Math.floor(this.stats.lck / 2);
+    return (
+      (this.weapon?.hit || 100) +
+      2 * this.stats.dex +
+      Math.floor(this.stats.lck / 2)
+    );
   }
 
   get avo(): number {
-    return 2 * this.stats.spd + Math.floor(this.stats.lck / 2);
+    return (
+      (this.weapon?.avoid || 0) +
+      2 * this.stats.spd +
+      Math.floor(this.stats.lck / 2)
+    );
   }
 
   get crit(): number {
-    // Placeholder until equipment is added
-    return Math.floor(this.stats.dex / 2);
+    return (this.weapon?.critical || 0) + Math.floor(this.stats.dex / 2);
   }
 
   get ddg(): number {
-    return this.stats.lck;
+    return (this.weapon?.dodge || 0) + this.stats.lck;
   }
 
   canEquip(weapon: Weapon): boolean {

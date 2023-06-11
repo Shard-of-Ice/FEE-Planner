@@ -141,4 +141,25 @@ describe('Unit', () => {
 
     expect(alearUnit.canEquip(braveSword)).toBeTruthy();
   });
+
+  it('sould calculate battle statistics correctly', () => {
+    const alear = data.characters['PID_リュール'];
+    const ironSword = data.weapons['IID_鉄の剣'];
+    const alearUnit = new Unit(alear, null, null, ironSword);
+    const expected = {
+      atk: 11,
+      hit: 102,
+      avo: 16,
+      crit: 2,
+      ddg: 5,
+    };
+    const actual = {
+      atk: alearUnit.atk,
+      hit: alearUnit.hit,
+      avo: alearUnit.avo,
+      crit: alearUnit.crit,
+      ddg: alearUnit.ddg,
+    };
+    expect(actual).toEqual(expected);
+  });
 });
