@@ -215,9 +215,9 @@ function forgingUpgradeFromDict(data: StringDict): ForgingUpgrade {
   return new ForgingUpgrade(
     Number(data['Upgrade Level']) || 0,
     Number(data['Might+']) || 0,
+    Number(data['Weight+']) || 0,
     Number(data['Hit+']) || 0,
-    Number(data['Critical+']) || 0,
-    Number(data['Weight+']) || 0
+    Number(data['Critical+']) || 0
   );
 }
 
@@ -230,7 +230,8 @@ export function readAllForgingUpgrades(
     const weaponName = lineDict['Base Weapon'];
     const forgingLevel = Number(lineDict['Upgrade Level']);
     if (forgingLevel === 1) {
-      forgingUpgrades[weaponName] = [];
+      // We add level 0 to make our life easier
+      forgingUpgrades[weaponName] = [new ForgingUpgrade(0, 0, 0, 0, 0)];
     }
     forgingUpgrades[weaponName].push(forgingUpgradeFromDict(lineDict));
   }

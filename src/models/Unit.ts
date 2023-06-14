@@ -1,20 +1,20 @@
 import { Character } from './Character';
 import { Class, ClassTier } from './Class';
 import { StatBlock } from './StatBlock';
-import { WeaponData } from './Weapon';
+import { Weapon, WeaponData } from './Weapon';
 
 export class Unit {
   character: Character;
   class: Class;
   level: number;
   sp: number;
-  weapon: WeaponData | null;
+  weapon: Weapon | null;
 
   constructor(
     character: Character,
     level: number | null = null,
     clss: Class | null = null,
-    weapon: WeaponData | null = null
+    weapon: Weapon | null = null
   ) {
     this.character = character;
     this.class = clss || character.startingClass;

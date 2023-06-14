@@ -31,17 +31,18 @@ describe('WeaponData', () => {
 
   it('should have forging upgrades', () => {
     const ironSword = data.weapons['IID_鋼の剣'];
-    expect(ironSword.forgingUpgrades.length).toEqual(5);
+    expect(ironSword.forgingUpgrades.length).toEqual(6);
   });
 
   it('should have correct steel sword forging upgrades', () => {
     const ironSword = data.weapons['IID_鋼の剣'];
     const expectedUpgrades = [
+      new ForgingUpgrade(0, 0, 0, 0, 0),
       new ForgingUpgrade(1, 2, 0, 0, 0),
-      new ForgingUpgrade(2, 2, 5, 0, 0),
-      new ForgingUpgrade(3, 4, 5, 0, -1),
-      new ForgingUpgrade(4, 4, 10, 5, -1),
-      new ForgingUpgrade(5, 6, 10, 5, -2),
+      new ForgingUpgrade(2, 2, 0, 5, 0),
+      new ForgingUpgrade(3, 4, -1, 5, 0),
+      new ForgingUpgrade(4, 4, -1, 10, 5),
+      new ForgingUpgrade(5, 6, -2, 10, 5),
     ];
 
     for (let i = 0; i < expectedUpgrades.length; i++) {

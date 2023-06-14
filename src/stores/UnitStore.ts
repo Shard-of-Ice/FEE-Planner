@@ -44,7 +44,9 @@ export const useUnitStore = defineStore('unit', {
 
   getters: {
     toBase64(): string {
-      return Array.from(this.unitList, (unit) => unitToBase64(unit)).join();
+      return Array.from(this.unitList as Unit[], (unit: Unit) =>
+        unitToBase64(unit)
+      ).join();
     },
   },
 
