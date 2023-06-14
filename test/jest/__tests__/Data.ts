@@ -3,8 +3,10 @@ import {
   CharacterDict,
   ClassDict,
   WeaponDataDict,
+  csvToDict,
   readAllCharacters,
   readAllClasses,
+  readAllForgingUpgrades,
   readAllWeapons,
   readCsv,
 } from 'src/utils/CsvParsing';
@@ -15,23 +17,28 @@ class Data {
   weapons: WeaponDataDict = {};
   loaded = false;
 
-  loadFromDisk() {
+  async loadFromDisk() {
     if (this.loaded) {
-      return Promise.resolve();
+      return;
     }
-    return Promise.all([
+
+    const buffers = await Promise.all([
       fs.readFile('public/data/classes.csv'),
       fs.readFile('public/data/characters.csv'),
       fs.readFile('public/data/weapons.csv'),
-    ]).then((buffers) => {
-      this.classes = readAllClasses(readCsv(buffers[0].toString()));
-      this.characters = readAllCharacters(
-        readCsv(buffers[1].toString()),
-        this.classes
-      );
-      this.weapons = readAllWeapons(readCsv(buffers[2].toString()));
-      this.loaded = true;
-    });
+      fs.readFile('public/data/forging.csv'),
+    ]);
+
+    const [classes, characters, weapons, forging] = buffers.map((b) =>
+      readCsv(b.toString())
+    );
+
+    this.classes = readAllClasses(csvToDict(classes));
+    this.characters = readAllCharacters(csvToDict(characters), this.classes);
+    const forgingUpgrades = readAllForgingUpgrades(forging);
+    this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
+
+    this.loaded = true;
   }
 }
 

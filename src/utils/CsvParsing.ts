@@ -2,6 +2,7 @@ import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
 import {
+  ForgingUpgrade,
   ProficiencyLevel,
   WeaponData,
   WeaponProficiency,
@@ -14,9 +15,10 @@ export type StringDictDict = { [id: string]: StringDict };
 export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
 export type WeaponDataDict = { [key: string]: WeaponData };
+export type ForgingUpgradeListDict = { [key: string]: ForgingUpgrade[] };
 
-export function readCsvFromUrl(url: string): Promise<StringDictDict> {
-  return new Promise<StringDictDict>(function (resolve) {
+export function readCsvFromUrl(url: string): Promise<Iterable<StringDict>> {
+  return new Promise<Iterable<StringDict>>(function (resolve) {
     fetch(url, {
       method: 'get',
       headers: {
@@ -30,12 +32,10 @@ export function readCsvFromUrl(url: string): Promise<StringDictDict> {
   });
 }
 
-export function readCsv(text: string): StringDictDict {
-  const result: StringDictDict = {};
-
+export function* readCsv(text: string): Generator<StringDict> {
   const lines = text.split('\n');
   const header = lines[0].split(';');
-  lines.slice(1).forEach((line) => {
+  for (const line of lines.slice(1)) {
     if (!(line.startsWith('Name') || line.length < 20)) {
       const values = line.split(';');
       if (values.length == header.length) {
@@ -43,10 +43,21 @@ export function readCsv(text: string): StringDictDict {
         for (let i = 0; i < header.length; ++i) {
           lineDict[header[i]] = values[i];
         }
-        result[lineDict['ID']] = lineDict;
+        yield lineDict;
       }
     }
-  });
+  }
+}
+
+export function csvToDict(
+  data: Iterable<StringDict>,
+  keyName = 'ID'
+): StringDictDict {
+  const result: StringDictDict = {};
+
+  for (const lineDict of data) {
+    result[lineDict[keyName]] = lineDict;
+  }
 
   return result;
 }
@@ -165,7 +176,10 @@ export function readAllCharacters(
   return characters;
 }
 
-function weaponFromDict(data: StringDict): WeaponData {
+function weaponFromDict(
+  data: StringDict,
+  forgingUpgrades: ForgingUpgrade[]
+): WeaponData {
   return new WeaponData(
     data['ID'],
     data['Name'],
@@ -178,14 +192,48 @@ function weaponFromDict(data: StringDict): WeaponData {
     Number(data['Dodge']),
     ProficiencyLevel.fromString(data['Rank']),
     data['Playable'] != '0',
-    data['Exclusive User'] || ''
+    data['Exclusive User'] || '',
+    forgingUpgrades
   );
 }
 
-export function readAllWeapons(data: StringDictDict): WeaponDataDict {
+export function readAllWeapons(
+  data: StringDictDict,
+  forgingUpgrades: ForgingUpgradeListDict
+): WeaponDataDict {
   const weapons: WeaponDataDict = {};
   for (const key in data) {
-    weapons[key] = weaponFromDict(data[key]);
+    weapons[key] = weaponFromDict(
+      data[key],
+      forgingUpgrades[data[key]['Name']] || []
+    );
   }
   return weapons;
+}
+
+function forgingUpgradeFromDict(data: StringDict): ForgingUpgrade {
+  return new ForgingUpgrade(
+    Number(data['Upgrade Level']) || 0,
+    Number(data['Might+']) || 0,
+    Number(data['Hit+']) || 0,
+    Number(data['Critical+']) || 0,
+    Number(data['Weight+']) || 0
+  );
+}
+
+export function readAllForgingUpgrades(
+  data: Iterable<StringDict>
+): ForgingUpgradeListDict {
+  const forgingUpgrades: ForgingUpgradeListDict = {};
+
+  for (const lineDict of data) {
+    const weaponName = lineDict['Base Weapon'];
+    const forgingLevel = Number(lineDict['Upgrade Level']);
+    if (forgingLevel === 1) {
+      forgingUpgrades[weaponName] = [];
+    }
+    forgingUpgrades[weaponName].push(forgingUpgradeFromDict(lineDict));
+  }
+
+  return forgingUpgrades;
 }

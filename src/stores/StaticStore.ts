@@ -4,8 +4,10 @@ import {
   CharacterDict,
   ClassDict,
   WeaponDataDict,
+  csvToDict,
   readAllCharacters,
   readAllClasses,
+  readAllForgingUpgrades,
   readAllWeapons,
   readCsvFromUrl,
 } from 'src/utils/CsvParsing';
@@ -45,13 +47,19 @@ export const useStaticStore = defineStore('static', {
         readCsvFromUrl('data/classes.csv'),
         readCsvFromUrl('data/characters.csv'),
         readCsvFromUrl('data/weapons.csv'),
+        readCsvFromUrl('data/forging.csv'),
       ]).then((values) => {
-        this.classes = readAllClasses(values[0]);
-        this.characters = readAllCharacters(values[1], this.classes);
+        const [classes, characters, weapons, forging] = values;
+        this.classes = readAllClasses(csvToDict(classes));
+        this.characters = readAllCharacters(
+          csvToDict(characters),
+          this.classes
+        );
         this.playableCharacters = Object.keys(this.characters).filter((key) =>
           isPlayable(key, this.characters[key])
         );
-        this.weapons = readAllWeapons(values[2]);
+        const forgingUpgrades = readAllForgingUpgrades(forging);
+        this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
       });
     },
   },

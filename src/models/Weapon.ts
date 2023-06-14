@@ -11,6 +11,7 @@ export class WeaponData {
   rank: ProficiencyLevel;
   isPlayable = false;
   exclusiveCharacterName: string;
+  forgingUpgrades: ForgingUpgrade[];
 
   constructor(
     id: string,
@@ -24,7 +25,8 @@ export class WeaponData {
     dodge: number,
     rank: ProficiencyLevel,
     isPlayable: boolean,
-    exclusiveCharacterName: string
+    exclusiveCharacterName: string,
+    forgingUpgrades: ForgingUpgrade[]
   ) {
     this.id = id;
     this.name = name;
@@ -38,6 +40,7 @@ export class WeaponData {
     this.rank = rank;
     this.isPlayable = isPlayable;
     this.exclusiveCharacterName = exclusiveCharacterName;
+    this.forgingUpgrades = forgingUpgrades;
   }
 }
 
@@ -141,5 +144,27 @@ export class ProficiencyLevel {
 
   greaterOrEqualTo(other: ProficiencyLevel) {
     return this.value >= other.value;
+  }
+}
+
+export class ForgingUpgrade {
+  level: number;
+  might: number;
+  hit: number;
+  critical: number;
+  weight: number;
+
+  constructor(
+    level: number,
+    might: number,
+    hit: number,
+    critical: number,
+    weight: number
+  ) {
+    this.level = level;
+    this.might = might;
+    this.hit = hit;
+    this.critical = critical;
+    this.weight = weight;
   }
 }
