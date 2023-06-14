@@ -1,4 +1,4 @@
-export class Weapon {
+export class WeaponData {
   id: string;
   name: string;
   type: WeaponType;

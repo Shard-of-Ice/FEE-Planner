@@ -3,7 +3,7 @@ import { Character } from 'src/models/Character';
 import {
   CharacterDict,
   ClassDict,
-  WeaponDict,
+  WeaponDataDict,
   readAllCharacters,
   readAllClasses,
   readAllWeapons,
@@ -14,7 +14,7 @@ interface StaticStoreState {
   classes: ClassDict;
   characters: CharacterDict;
   playableCharacters: string[];
-  weapons: WeaponDict;
+  weapons: WeaponDataDict;
 }
 
 function isPlayable(key: string, character: Character) {

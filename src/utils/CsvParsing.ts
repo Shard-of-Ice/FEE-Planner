@@ -3,7 +3,7 @@ import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
 import {
   ProficiencyLevel,
-  Weapon,
+  WeaponData,
   WeaponProficiency,
   WeaponType,
 } from 'src/models/Weapon';
@@ -13,7 +13,7 @@ export type StringDictDict = { [id: string]: StringDict };
 
 export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
-export type WeaponDict = { [key: string]: Weapon };
+export type WeaponDataDict = { [key: string]: WeaponData };
 
 export function readCsvFromUrl(url: string): Promise<StringDictDict> {
   return new Promise<StringDictDict>(function (resolve) {
@@ -165,8 +165,8 @@ export function readAllCharacters(
   return characters;
 }
 
-function weaponFromDict(data: StringDict): Weapon {
-  return new Weapon(
+function weaponFromDict(data: StringDict): WeaponData {
+  return new WeaponData(
     data['ID'],
     data['Name'],
     WeaponType.fromString(data['Type']),
@@ -182,8 +182,8 @@ function weaponFromDict(data: StringDict): Weapon {
   );
 }
 
-export function readAllWeapons(data: StringDictDict): WeaponDict {
-  const weapons: WeaponDict = {};
+export function readAllWeapons(data: StringDictDict): WeaponDataDict {
+  const weapons: WeaponDataDict = {};
   for (const key in data) {
     weapons[key] = weaponFromDict(data[key]);
   }

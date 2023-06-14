@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import {
   CharacterDict,
   ClassDict,
-  WeaponDict,
+  WeaponDataDict,
   readAllCharacters,
   readAllClasses,
   readAllWeapons,
@@ -12,7 +12,7 @@ import {
 class Data {
   classes: ClassDict = {};
   characters: CharacterDict = {};
-  weapons: WeaponDict = {};
+  weapons: WeaponDataDict = {};
   loaded = false;
 
   loadFromDisk() {

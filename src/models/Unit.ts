@@ -1,20 +1,20 @@
 import { Character } from './Character';
 import { Class, ClassTier } from './Class';
 import { StatBlock } from './StatBlock';
-import { Weapon } from './Weapon';
+import { WeaponData } from './Weapon';
 
 export class Unit {
   character: Character;
   class: Class;
   level: number;
   sp: number;
-  weapon: Weapon | null;
+  weapon: WeaponData | null;
 
   constructor(
     character: Character,
     level: number | null = null,
     clss: Class | null = null,
-    weapon: Weapon | null = null
+    weapon: WeaponData | null = null
   ) {
     this.character = character;
     this.class = clss || character.startingClass;
@@ -136,7 +136,7 @@ export class Unit {
     return (this.weapon?.dodge || 0) + this.stats.lck;
   }
 
-  canEquip(weapon: Weapon): boolean {
+  canEquip(weapon: WeaponData): boolean {
     return (
       // The weapon is useable by the player
       weapon.isPlayable &&
