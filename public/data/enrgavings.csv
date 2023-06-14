@@ -1,4 +1,4 @@
-﻿Name;ID;Emblem Name;Might+;Weight+;Hit+;Critical+;Avoid+;Dodge+
+Name;ID;Emblem Name;Might+;Weight+;Hit+;Critical+;Avoid+;Dodge+
 Marth;GID_マルス;Beginnings;1;--;10;10;5;5
 Sigurd;GID_シグルド;Holy;1;-1;--;--;20;--
 Celica;GID_セリカ;Echoes;-1;-1;--;--;--;50

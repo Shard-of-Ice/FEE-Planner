@@ -1,4 +1,4 @@
-﻿Base Weapon;Upgrade Level;New Weapon;Iron;Steel;Silver;Price;Might+;Weight+;Hit+;Critical+
+Base Weapon;Upgrade Level;New Weapon;Iron;Steel;Silver;Price;Might+;Weight+;Hit+;Critical+
 Slim Sword;1;Slim Sword+1;5;--;--;100;1;--;--;--
 Slim Sword;2;Slim Sword+2;10;--;--;100;1;--;5;--
 Slim Sword;3;Slim Sword+3;15;--;--;300;2;--;10;--
