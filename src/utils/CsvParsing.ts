@@ -2,6 +2,7 @@ import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { StatBlock } from 'src/models/StatBlock';
 import {
+  Engraving,
   ForgingUpgrade,
   ProficiencyLevel,
   WeaponData,
@@ -16,6 +17,7 @@ export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
 export type WeaponDataDict = { [key: string]: WeaponData };
 export type ForgingUpgradeListDict = { [key: string]: ForgingUpgrade[] };
+export type EngravingDict = { [key: string]: Engraving };
 
 export function readCsvFromUrl(url: string): Promise<Iterable<StringDict>> {
   return new Promise<Iterable<StringDict>>(function (resolve) {
@@ -237,4 +239,24 @@ export function readAllForgingUpgrades(
   }
 
   return forgingUpgrades;
+}
+
+function engravingFromDict(data: StringDict): Engraving {
+  return new Engraving(
+    data['Name'],
+    Number(data['Might+']) || 0,
+    Number(data['Weight+']) || 0,
+    Number(data['Hit+']) || 0,
+    Number(data['Critical+']) || 0,
+    Number(data['Avoid+']) || 0,
+    Number(data['Dodge+']) || 0
+  );
+}
+
+export function readAllEngravings(data: StringDictDict): EngravingDict {
+  const engravings: EngravingDict = {};
+  for (const key in data) {
+    engravings[key] = engravingFromDict(data[key]);
+  }
+  return engravings;
 }

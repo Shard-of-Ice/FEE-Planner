@@ -3,6 +3,7 @@ import { beforeAll } from '@jest/globals';
 import { StatBlock } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
 import data from './Data';
+import { Weapon } from 'src/models/Weapon';
 
 beforeAll(() => {
   return data.loadFromDisk();
@@ -145,7 +146,7 @@ describe('Unit', () => {
   it('sould calculate battle statistics correctly', () => {
     const alear = data.characters['PID_リュール'];
     const ironSword = data.weapons['IID_鉄の剣'];
-    const alearUnit = new Unit(alear, null, null, ironSword);
+    const alearUnit = new Unit(alear, null, null, new Weapon(ironSword, 0));
     const expected = {
       atk: 11,
       hit: 102,

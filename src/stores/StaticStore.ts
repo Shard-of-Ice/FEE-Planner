@@ -3,10 +3,12 @@ import { Character } from 'src/models/Character';
 import {
   CharacterDict,
   ClassDict,
+  EngravingDict,
   WeaponDataDict,
   csvToDict,
   readAllCharacters,
   readAllClasses,
+  readAllEngravings,
   readAllForgingUpgrades,
   readAllWeapons,
   readCsvFromUrl,
@@ -17,6 +19,7 @@ interface StaticStoreState {
   characters: CharacterDict;
   playableCharacters: string[];
   weapons: WeaponDataDict;
+  engravings: EngravingDict;
 }
 
 function isPlayable(key: string, character: Character) {
@@ -30,6 +33,7 @@ export const useStaticStore = defineStore('static', {
     characters: {},
     playableCharacters: [],
     weapons: {},
+    engravings: {},
   }),
 
   getters: {
@@ -43,24 +47,23 @@ export const useStaticStore = defineStore('static', {
 
   actions: {
     async loadStaticStore() {
-      await Promise.all([
-        readCsvFromUrl('data/classes.csv'),
-        readCsvFromUrl('data/characters.csv'),
-        readCsvFromUrl('data/weapons.csv'),
-        readCsvFromUrl('data/forging.csv'),
-      ]).then((values) => {
-        const [classes, characters, weapons, forging] = values;
-        this.classes = readAllClasses(csvToDict(classes));
-        this.characters = readAllCharacters(
-          csvToDict(characters),
-          this.classes
-        );
-        this.playableCharacters = Object.keys(this.characters).filter((key) =>
-          isPlayable(key, this.characters[key])
-        );
-        const forgingUpgrades = readAllForgingUpgrades(forging);
-        this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
-      });
+      const [classes, characters, weapons, forging, engravings] =
+        await Promise.all([
+          readCsvFromUrl('data/classes.csv'),
+          readCsvFromUrl('data/characters.csv'),
+          readCsvFromUrl('data/weapons.csv'),
+          readCsvFromUrl('data/forging.csv'),
+          readCsvFromUrl('data/engravings.csv'),
+        ]);
+
+      this.classes = readAllClasses(csvToDict(classes));
+      this.characters = readAllCharacters(csvToDict(characters), this.classes);
+      this.playableCharacters = Object.keys(this.characters).filter((key) =>
+        isPlayable(key, this.characters[key])
+      );
+      const forgingUpgrades = readAllForgingUpgrades(forging);
+      this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
+      this.engravings = readAllEngravings(csvToDict(engravings));
     },
   },
 });

@@ -2,6 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { beforeAll } from '@jest/globals';
 import data from './Data';
 import {
+  Engraving,
   ForgingUpgrade,
   ProficiencyLevel,
   WeaponType,
@@ -12,7 +13,7 @@ beforeAll(() => {
 });
 
 describe('WeaponData', () => {
-  it('should load weapons', () => {
+  it('should load weapon data', () => {
     expect(Object.keys(data.weapons).length).toBeGreaterThan(0);
   });
 
@@ -50,5 +51,17 @@ describe('WeaponData', () => {
       const actual = ironSword.forgingUpgrades[i];
       expect(actual).toEqual(expected);
     }
+  });
+});
+
+describe('Engraving', () => {
+  it('should load', () => {
+    expect(Object.keys(data.engravings).length).toBeGreaterThan(0);
+  });
+
+  it('should have correct data for Marth', () => {
+    expect(data.engravings['GID_マルス']).toEqual(
+      new Engraving('Marth', 1, 0, 10, 10, 5, 5)
+    );
   });
 });
