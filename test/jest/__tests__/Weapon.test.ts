@@ -5,6 +5,7 @@ import {
   Engraving,
   ForgingUpgrade,
   ProficiencyLevel,
+  Weapon,
   WeaponType,
 } from 'src/models/Weapon';
 
@@ -31,12 +32,12 @@ describe('WeaponData', () => {
   });
 
   it('should have forging upgrades', () => {
-    const ironSword = data.weapons['IID_鋼の剣'];
-    expect(ironSword.forgingUpgrades.length).toEqual(6);
+    const steelSword = data.weapons['IID_鋼の剣'];
+    expect(steelSword.forgingUpgrades.length).toEqual(6);
   });
 
   it('should have correct steel sword forging upgrades', () => {
-    const ironSword = data.weapons['IID_鋼の剣'];
+    const steelSword = data.weapons['IID_鋼の剣'];
     const expectedUpgrades = [
       new ForgingUpgrade(0, 0, 0, 0, 0),
       new ForgingUpgrade(1, 2, 0, 0, 0),
@@ -48,9 +49,34 @@ describe('WeaponData', () => {
 
     for (let i = 0; i < expectedUpgrades.length; i++) {
       const expected = expectedUpgrades[i];
-      const actual = ironSword.forgingUpgrades[i];
+      const actual = steelSword.forgingUpgrades[i];
       expect(actual).toEqual(expected);
     }
+  });
+
+  it('should calculate final stats correctly', () => {
+    const steelSword = data.weapons['IID_鋼の剣'];
+    const alearEngraving = data.engravings['GID_リュール'];
+    const steelSwordPlus1Marth = new Weapon(steelSword, 4, alearEngraving);
+
+    const expected = {
+      might: 9 + 4 - 1,
+      hit: 85 + 10 + 20,
+      critical: 5 + 5 + 20,
+      weight: 8 - 1 - 1,
+      avoid: 0 + 0 + 20,
+      dodge: 0 + 0 + 20,
+    };
+    const actual = {
+      might: steelSwordPlus1Marth.might,
+      hit: steelSwordPlus1Marth.hit,
+      critical: steelSwordPlus1Marth.critical,
+      weight: steelSwordPlus1Marth.weight,
+      avoid: steelSwordPlus1Marth.avoid,
+      dodge: steelSwordPlus1Marth.dodge,
+    };
+
+    expect(actual).toEqual(expected);
   });
 });
 
@@ -60,8 +86,7 @@ describe('Engraving', () => {
   });
 
   it('should have correct data for Marth', () => {
-    expect(data.engravings['GID_マルス']).toEqual(
-      new Engraving('Marth', 1, 0, 10, 10, 5, 5)
-    );
+    const marthEngraving = data.engravings['GID_マルス'];
+    expect(marthEngraving).toEqual(new Engraving('Marth', 1, 0, 10, 10, 5, 5));
   });
 });
