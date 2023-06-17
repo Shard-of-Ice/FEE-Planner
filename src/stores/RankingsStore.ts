@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useUnitStore } from './UnitStore';
-import { StatBlock } from 'src/models/StatBlock';
+import { CharacterStats } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
 
 type SingleStatRanking = { [key: number]: number };
@@ -10,8 +10,8 @@ interface RankingsStoreState {
   rankings: MultipleStatRanking;
 }
 
-function addStatsToRankings(state: RankingsStoreState, stats: StatBlock) {
-  for (const statName of StatBlock.statNames) {
+function addStatsToRankings(state: RankingsStoreState, stats: CharacterStats) {
+  for (const statName of CharacterStats.getStatNames()) {
     if (!state.rankings[statName]) {
       state.rankings[statName] = {};
     }
@@ -28,7 +28,7 @@ function addUnitToRankings(state: RankingsStoreState, unit: Unit) {
 
 function calculateRankingsInTeam(state: RankingsStoreState) {
   const unitStore = useUnitStore();
-  for (const unit of unitStore.unitList) {
+  for (const unit of unitStore.unitList as Unit[]) {
     addUnitToRankings(state, unit);
   }
 }

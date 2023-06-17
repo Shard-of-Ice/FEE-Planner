@@ -65,8 +65,8 @@
           v-for="(statValue, statName) in basicStats"
           :key="statName"
           :stat-name="statName"
-          :stat-value="unit.stats.get(statName)"
-          :max-value="unit.totalCaps.get(statName)"
+          :stat-value="unit.stats.get(statName.toLowerCase())"
+          :max-value="unit.totalCaps.get(statName.toLowerCase())"
         />
         <stat-display
           class="q-mt-sm"

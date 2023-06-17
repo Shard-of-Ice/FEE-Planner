@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { beforeAll } from '@jest/globals';
-import { StatBlock } from 'src/models/StatBlock';
+import { CharacterStats } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
 import data from './Data';
 import { Weapon } from 'src/models/Weapon';
@@ -13,7 +13,18 @@ describe('Unit', () => {
   it('should have the right starting stats', () => {
     const alear = data.characters['PID_リュール'];
     const alearUnit = new Unit(alear);
-    const alearStats = new StatBlock(22, 6, 0, 5, 7, 5, 3, 5, 4, 4);
+    const alearStats = new CharacterStats({
+      hp: 22,
+      str: 6,
+      mag: 0,
+      dex: 5,
+      spd: 7,
+      def: 5,
+      res: 3,
+      lck: 5,
+      bld: 4,
+      mov: 4,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -23,7 +34,18 @@ describe('Unit', () => {
   it('should have the right level 10 stats', () => {
     const alear = data.characters['PID_リュール'];
     const alearUnit = new Unit(alear, 10);
-    const alearStats = new StatBlock(28, 10, 2, 10, 13, 9, 6, 7, 4, 4);
+    const alearStats = new CharacterStats({
+      hp: 28,
+      str: 10,
+      mag: 2,
+      dex: 10,
+      spd: 13,
+      def: 9,
+      res: 6,
+      lck: 7,
+      bld: 4,
+      mov: 4,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -34,7 +56,18 @@ describe('Unit', () => {
     const alear = data.characters['PID_リュール'];
     const mageClass = data.classes['JID_マージ'];
     const alearUnit = new Unit(alear, 10, mageClass);
-    const alearStats = new StatBlock(25, 5, 12, 14, 12, 5, 12, 8, 4, 4);
+    const alearStats = new CharacterStats({
+      hp: 25,
+      str: 5,
+      mag: 12,
+      dex: 14,
+      spd: 12,
+      def: 5,
+      res: 12,
+      lck: 8,
+      bld: 4,
+      mov: 4,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -45,7 +78,18 @@ describe('Unit', () => {
     const alear = data.characters['PID_リュール'];
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 1, promotedClass);
-    const alearStats = new StatBlock(32, 13, 3, 13, 15, 12, 9, 10, 8, 5);
+    const alearStats = new CharacterStats({
+      hp: 32,
+      str: 13,
+      mag: 3,
+      dex: 13,
+      spd: 15,
+      def: 12,
+      res: 9,
+      lck: 10,
+      bld: 8,
+      mov: 5,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -56,7 +100,18 @@ describe('Unit', () => {
     const alear = data.characters['PID_リュール'];
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 20, promotedClass);
-    const alearStats = new StatBlock(45, 21, 7, 23, 28, 22, 17, 16, 10, 5);
+    const alearStats = new CharacterStats({
+      hp: 45,
+      str: 21,
+      mag: 7,
+      dex: 23,
+      spd: 28,
+      def: 22,
+      res: 17,
+      lck: 16,
+      bld: 10,
+      mov: 5,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -67,7 +122,18 @@ describe('Unit', () => {
     const alear = data.characters['PID_リュール'];
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 39, promotedClass);
-    const alearStats = new StatBlock(58, 30, 11, 34, 40, 33, 24, 23, 11, 5);
+    const alearStats = new CharacterStats({
+      hp: 58,
+      str: 30,
+      mag: 11,
+      dex: 34,
+      spd: 40,
+      def: 33,
+      res: 24,
+      lck: 23,
+      bld: 11,
+      mov: 5,
+    });
 
     for (const statName in Object.keys(alearStats)) {
       expect(alearUnit.stats.get(statName)).toEqual(alearStats.get(statName));
@@ -79,7 +145,7 @@ describe('Unit', () => {
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 99, promotedClass);
 
-    for (const statName of StatBlock.statNames) {
+    for (const statName of CharacterStats.getStatNames()) {
       expect(alearUnit.stats.get(statName)).toBeLessThanOrEqual(
         alearUnit.totalCaps.get(statName)
       );

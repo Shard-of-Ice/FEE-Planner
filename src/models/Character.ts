@@ -1,5 +1,5 @@
 import { Class } from './Class';
-import { StatBlock } from './StatBlock';
+import { CharacterStats } from './StatBlock';
 
 export class Character {
   name: string;
@@ -8,9 +8,9 @@ export class Character {
   startingLevel: number;
   startingInternalLevel: number;
   startingSP: number;
-  bases: StatBlock;
-  growths: StatBlock;
-  caps: StatBlock;
+  bases: CharacterStats;
+  growths: CharacterStats;
+  caps: CharacterStats;
   isFemale: boolean;
 
   constructor(
@@ -20,9 +20,9 @@ export class Character {
     startingLevel: number,
     startingInternalLevel: number,
     startingSP: number,
-    bases: StatBlock,
-    growths: StatBlock,
-    caps: StatBlock,
+    bases: CharacterStats,
+    growths: CharacterStats,
+    caps: CharacterStats,
     isFemale: boolean
   ) {
     this.id = id;

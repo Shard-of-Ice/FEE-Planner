@@ -1,6 +1,6 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
-import { StatBlock } from 'src/models/StatBlock';
+import { CharacterStats } from 'src/models/StatBlock';
 import {
   Engraving,
   ForgingUpgrade,
@@ -64,23 +64,23 @@ export function csvToDict(
   return result;
 }
 
-function statBlockFromDict(
+function characterStatsFromDict(
   data: StringDict,
   prefix = '',
   suffix = ''
-): StatBlock {
-  return new StatBlock(
-    Number(data[prefix + 'HP' + suffix] ?? '0'),
-    Number(data[prefix + 'Str' + suffix] ?? '0'),
-    Number(data[prefix + 'Mag' + suffix] ?? '0'),
-    Number(data[prefix + 'Dex' + suffix] ?? '0'),
-    Number(data[prefix + 'Spd' + suffix] ?? '0'),
-    Number(data[prefix + 'Def' + suffix] ?? '0'),
-    Number(data[prefix + 'Res' + suffix] ?? '0'),
-    Number(data[prefix + 'Lck' + suffix] ?? '0'),
-    Number(data[prefix + 'Bld' + suffix] ?? '0'),
-    Number(data[prefix + 'Mov' + suffix] ?? '0')
-  );
+): CharacterStats {
+  return new CharacterStats({
+    hp: Number(data[prefix + 'HP' + suffix] ?? '0'),
+    str: Number(data[prefix + 'Str' + suffix] ?? '0'),
+    mag: Number(data[prefix + 'Mag' + suffix] ?? '0'),
+    dex: Number(data[prefix + 'Dex' + suffix] ?? '0'),
+    spd: Number(data[prefix + 'Spd' + suffix] ?? '0'),
+    def: Number(data[prefix + 'Def' + suffix] ?? '0'),
+    res: Number(data[prefix + 'Res' + suffix] ?? '0'),
+    lck: Number(data[prefix + 'Lck' + suffix] ?? '0'),
+    bld: Number(data[prefix + 'Bld' + suffix] ?? '0'),
+    mov: Number(data[prefix + 'Mov' + suffix] ?? '0'),
+  });
 }
 
 function weaponProficienciesFromString(str: string): WeaponProficiency[] {
@@ -114,9 +114,9 @@ function classFromDict(data: StringDict): Class {
     data['Name'],
     ClassTier.fromString(data['Class Tier']),
     ClassType.fromString(data['Class Type']),
-    statBlockFromDict(data, 'Base '),
-    statBlockFromDict(data, '', ' Growth'),
-    statBlockFromDict(data, '', ' Cap'),
+    characterStatsFromDict(data, 'Base '),
+    characterStatsFromDict(data, '', ' Growth'),
+    characterStatsFromDict(data, '', ' Cap'),
     weaponProficienciesFromString(data['Max Weapons']),
     data['Flag'].length > 4,
     data['Flag'] == 'Female-only',
@@ -160,9 +160,9 @@ function characterFromDict(data: StringDict, classes: ClassDict): Character {
     Number(data['Level']),
     Number(data['Internal Level']),
     Number(data['SP']),
-    statBlockFromDict(data, '', ' Base'),
-    statBlockFromDict(data, '', ' Growth'),
-    statBlockFromDict(data, '', ' Cap+'),
+    characterStatsFromDict(data, '', ' Base'),
+    characterStatsFromDict(data, '', ' Growth'),
+    characterStatsFromDict(data, '', ' Cap+'),
     data['Gender'] == 'Female'
   );
 }

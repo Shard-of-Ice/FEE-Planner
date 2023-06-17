@@ -1,6 +1,6 @@
 import { Character } from './Character';
 import { Class, ClassTier } from './Class';
-import { StatBlock } from './StatBlock';
+import { CharacterStats } from './StatBlock';
 import { Weapon, WeaponData } from './Weapon';
 
 export class Unit {
@@ -23,19 +23,22 @@ export class Unit {
     this.weapon = weapon;
   }
 
-  get totalBases(): StatBlock {
-    return StatBlock.add(
+  get totalBases(): CharacterStats {
+    return CharacterStats.add(
       this.character.bases,
-      StatBlock.substract(this.class.bases, this.character.startingClass.bases)
+      CharacterStats.substract(
+        this.class.bases,
+        this.character.startingClass.bases
+      )
     );
   }
 
-  get totalGrowths(): StatBlock {
-    return StatBlock.add(this.character.growths, this.class.growths);
+  get totalGrowths(): CharacterStats {
+    return CharacterStats.add(this.character.growths, this.class.growths);
   }
 
-  get totalCaps(): StatBlock {
-    return StatBlock.add(this.character.caps, this.class.caps);
+  get totalCaps(): CharacterStats {
+    return CharacterStats.add(this.character.caps, this.class.caps);
   }
 
   get internalLevel(): number {
@@ -57,7 +60,7 @@ export class Unit {
     return Math.max(0, this.internalLevel - 1) + this.level;
   }
 
-  get stats(): StatBlock {
+  get stats(): CharacterStats {
     // Innate growth points
     const startingGrowthPoints = this.character.growths;
 
@@ -65,11 +68,11 @@ export class Unit {
     const levelsStartingClass =
       this.internalLevel - this.character.startingInternalLevel;
 
-    const startingClassGrowths = StatBlock.add(
+    const startingClassGrowths = CharacterStats.add(
       this.character.growths,
       this.class.growths
     );
-    const startingClassGrowthsPoints = StatBlock.multiply(
+    const startingClassGrowthsPoints = CharacterStats.multiply(
       startingClassGrowths,
       levelsStartingClass
     );
@@ -80,23 +83,23 @@ export class Unit {
       levelsCurrentCLass -= this.character.startingLevel;
     }
 
-    const currentClassGrowthsPoints = StatBlock.multiply(
+    const currentClassGrowthsPoints = CharacterStats.multiply(
       this.totalGrowths,
       levelsCurrentCLass
     );
 
     // All stat gains
-    const totalGrowthsPoints = StatBlock.add(
+    const totalGrowthsPoints = CharacterStats.add(
       startingGrowthPoints,
-      StatBlock.add(startingClassGrowthsPoints, currentClassGrowthsPoints)
+      CharacterStats.add(startingClassGrowthsPoints, currentClassGrowthsPoints)
     );
-    const uncappedStats = StatBlock.add(
+    const uncappedStats = CharacterStats.add(
       this.totalBases,
-      StatBlock.floor(StatBlock.multiply(totalGrowthsPoints, 1 / 100))
+      CharacterStats.floor(CharacterStats.multiply(totalGrowthsPoints, 1 / 100))
     );
 
     // Applying stat caps
-    const cappedStats = StatBlock.binaryOperator(
+    const cappedStats = CharacterStats.binaryOperator(
       uncappedStats,
       this.totalCaps,
       Math.min

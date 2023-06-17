@@ -1,56 +1,110 @@
-export class StatBlock {
-  hp: number;
-  str: number;
-  mag: number;
-  dex: number;
-  spd: number;
-  def: number;
-  res: number;
-  lck: number;
-  bld: number;
-  mov: number;
+type NumberDict = { [key: string]: number };
 
-  constructor(
-    hp: number,
-    str: number,
-    mag: number,
-    dex: number,
-    spd: number,
-    def: number,
-    res: number,
-    lck: number,
-    bld: number,
-    mov: number
-  ) {
-    this.hp = hp;
-    this.str = str;
-    this.mag = mag;
-    this.dex = dex;
-    this.spd = spd;
-    this.def = def;
-    this.res = res;
-    this.lck = lck;
-    this.bld = bld;
-    this.mov = mov;
+interface Factory<T> {
+  makeEmpty(): T;
+  make(data: NumberDict): T;
+}
+
+class GetSetAble {
+  get(statName: string): number {
+    return (this[statName as keyof typeof this] as number) || 0;
   }
 
-  static statNames: string[] = [
-    'hp',
-    'str',
-    'mag',
-    'dex',
-    'spd',
-    'def',
-    'res',
-    'lck',
-    'bld',
-    'mov',
-  ];
+  set(statName: string, value: number) {
+    (this[statName as keyof typeof this] as number) = value;
+  }
 
-  get(statName: string): number {
-    return Number(
-      (this as StatBlock)[statName.toLowerCase() as keyof StatBlock]
-    );
+  getStatNames(): string[] {
+    return Object.getOwnPropertyNames(this);
+  }
+
+  setAll(data: NumberDict) {
+    for (const key in data) {
+      this.set(key, data[key]);
+    }
+  }
+}
+
+abstract class FactoryAndGetSetable<T>
+  extends GetSetAble
+  implements Factory<T>
+{
+  makeEmpty(): T {
+    return this.make({});
+  }
+  abstract make(data: NumberDict): T;
+}
+
+abstract class BaseStatBlock<
+  T extends FactoryAndGetSetable<T>
+> extends GetSetAble {
+  static binaryOperator<T extends FactoryAndGetSetable<T>>(
+    a: T,
+    b: T,
+    operator: (a: number, b: number) => number
+  ): T {
+    const res = a.makeEmpty();
+    Object.getOwnPropertyNames(a).forEach((statName) => {
+      res.set(statName, operator(a.get(statName), b.get(statName)));
+    });
+    return res;
+  }
+
+  static unaryOperator<T extends FactoryAndGetSetable<T>>(
+    a: T,
+    operator: (a: number) => number
+  ): T {
+    const res = a.makeEmpty();
+    Object.getOwnPropertyNames(a).forEach((statName) => {
+      res.set(statName, operator(a.get(statName)));
+    });
+    return res;
+  }
+
+  static add<T extends FactoryAndGetSetable<T>>(a: T, b: T): T {
+    return BaseStatBlock.binaryOperator<T>(a, b, (a, b) => a + b);
+  }
+
+  static substract<T extends FactoryAndGetSetable<T>>(a: T, b: T): T {
+    return BaseStatBlock.binaryOperator<T>(a, b, (a, b) => a - b);
+  }
+
+  static multiply<T extends FactoryAndGetSetable<T>>(a: T, b: number): T {
+    return BaseStatBlock.unaryOperator<T>(a, (a) => a * b);
+  }
+
+  static floor<T extends FactoryAndGetSetable<T>>(a: T): T {
+    return BaseStatBlock.unaryOperator<T>(a, Math.floor);
+  }
+}
+
+export class CharacterStats extends BaseStatBlock<CharacterStats> {
+  hp = 0;
+  str = 0;
+  mag = 0;
+  dex = 0;
+  spd = 0;
+  def = 0;
+  res = 0;
+  lck = 0;
+  bld = 0;
+  mov = 0;
+
+  constructor(data: NumberDict) {
+    super();
+    this.setAll(data);
+  }
+
+  makeEmpty(): CharacterStats {
+    return this.make({});
+  }
+
+  make(data: NumberDict): CharacterStats {
+    return new CharacterStats(data);
+  }
+
+  static getStatNames(): string[] {
+    return new CharacterStats({}).getStatNames();
   }
 
   get rating() {
@@ -65,57 +119,30 @@ export class StatBlock {
       this.bld
     );
   }
+}
 
-  static binaryOperator(
-    a: StatBlock,
-    b: StatBlock,
-    operator: (a: number, b: number) => number
-  ): StatBlock {
-    return new StatBlock(
-      operator(a.hp, b.hp),
-      operator(a.str, b.str),
-      operator(a.mag, b.mag),
-      operator(a.dex, b.dex),
-      operator(a.spd, b.spd),
-      operator(a.def, b.def),
-      operator(a.res, b.res),
-      operator(a.lck, b.lck),
-      operator(a.bld, b.bld),
-      operator(a.mov, b.mov)
-    );
+export class WeaponStats extends BaseStatBlock<WeaponStats> {
+  might = 0;
+  hit = 0;
+  critical = 0;
+  weight = 0;
+  avoid = 0;
+  dodge = 0;
+
+  constructor(data: NumberDict) {
+    super();
+    this.setAll(data);
   }
 
-  static unaryOperator(
-    a: StatBlock,
-    operator: (a: number) => number
-  ): StatBlock {
-    return new StatBlock(
-      operator(a.hp),
-      operator(a.str),
-      operator(a.mag),
-      operator(a.dex),
-      operator(a.spd),
-      operator(a.def),
-      operator(a.res),
-      operator(a.lck),
-      operator(a.bld),
-      operator(a.mov)
-    );
+  makeEmpty(): WeaponStats {
+    return this.make({});
   }
 
-  static add(a: StatBlock, b: StatBlock): StatBlock {
-    return StatBlock.binaryOperator(a, b, (a, b) => a + b);
+  make(data: NumberDict): WeaponStats {
+    return new WeaponStats(data);
   }
 
-  static substract(a: StatBlock, b: StatBlock): StatBlock {
-    return StatBlock.binaryOperator(a, b, (a, b) => a - b);
-  }
-
-  static multiply(a: StatBlock, b: number): StatBlock {
-    return StatBlock.unaryOperator(a, (a) => a * b);
-  }
-
-  static floor(a: StatBlock): StatBlock {
-    return StatBlock.unaryOperator(a, Math.floor);
+  static getStatNames(): string[] {
+    return new WeaponStats({}).getStatNames();
   }
 }
