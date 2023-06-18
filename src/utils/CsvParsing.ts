@@ -1,6 +1,6 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
-import { CharacterStats } from 'src/models/StatBlock';
+import { CharacterStats, WeaponStats } from 'src/models/StatBlock';
 import {
   Engraving,
   ForgingUpgrade,
@@ -70,16 +70,31 @@ function characterStatsFromDict(
   suffix = ''
 ): CharacterStats {
   return new CharacterStats({
-    hp: Number(data[prefix + 'HP' + suffix] ?? '0'),
-    str: Number(data[prefix + 'Str' + suffix] ?? '0'),
-    mag: Number(data[prefix + 'Mag' + suffix] ?? '0'),
-    dex: Number(data[prefix + 'Dex' + suffix] ?? '0'),
-    spd: Number(data[prefix + 'Spd' + suffix] ?? '0'),
-    def: Number(data[prefix + 'Def' + suffix] ?? '0'),
-    res: Number(data[prefix + 'Res' + suffix] ?? '0'),
-    lck: Number(data[prefix + 'Lck' + suffix] ?? '0'),
-    bld: Number(data[prefix + 'Bld' + suffix] ?? '0'),
-    mov: Number(data[prefix + 'Mov' + suffix] ?? '0'),
+    hp: Number(data[prefix + 'HP' + suffix] ?? '0') || 0,
+    str: Number(data[prefix + 'Str' + suffix] ?? '0') || 0,
+    mag: Number(data[prefix + 'Mag' + suffix] ?? '0') || 0,
+    dex: Number(data[prefix + 'Dex' + suffix] ?? '0') || 0,
+    spd: Number(data[prefix + 'Spd' + suffix] ?? '0') || 0,
+    def: Number(data[prefix + 'Def' + suffix] ?? '0') || 0,
+    res: Number(data[prefix + 'Res' + suffix] ?? '0') || 0,
+    lck: Number(data[prefix + 'Lck' + suffix] ?? '0') || 0,
+    bld: Number(data[prefix + 'Bld' + suffix] ?? '0') || 0,
+    mov: Number(data[prefix + 'Mov' + suffix] ?? '0') || 0,
+  });
+}
+
+function weaponStatsFromDict(
+  data: StringDict,
+  prefix = '',
+  suffix = ''
+): WeaponStats {
+  return new WeaponStats({
+    might: Number(data[prefix + 'Might' + suffix] ?? '0') || 0,
+    hit: Number(data[prefix + 'Hit' + suffix] ?? '0') || 0,
+    critical: Number(data[prefix + 'Critical' + suffix] ?? '0') || 0,
+    weight: Number(data[prefix + 'Weight' + suffix] ?? '0') || 0,
+    avoid: Number(data[prefix + 'Avoid' + suffix] ?? '0') || 0,
+    dodge: Number(data[prefix + 'Dodge' + suffix] ?? '0') || 0,
   });
 }
 
@@ -186,12 +201,7 @@ function weaponFromDict(
     data['ID'],
     data['Name'],
     WeaponType.fromString(data['Type']),
-    Number(data['Might']),
-    Number(data['Hit']),
-    Number(data['Critical']),
-    Number(data['Weight']),
-    Number(data['Avoid']),
-    Number(data['Dodge']),
+    weaponStatsFromDict(data),
     ProficiencyLevel.fromString(data['Rank']),
     data['Playable'] != '0',
     data['Exclusive User'] || '',
@@ -216,10 +226,7 @@ export function readAllWeapons(
 function forgingUpgradeFromDict(data: StringDict): ForgingUpgrade {
   return new ForgingUpgrade(
     Number(data['Upgrade Level']) || 0,
-    Number(data['Might+']) || 0,
-    Number(data['Weight+']) || 0,
-    Number(data['Hit+']) || 0,
-    Number(data['Critical+']) || 0
+    weaponStatsFromDict(data, '', '+')
   );
 }
 
@@ -233,7 +240,7 @@ export function readAllForgingUpgrades(
     const forgingLevel = Number(lineDict['Upgrade Level']);
     if (forgingLevel === 1) {
       // We add level 0 to make our life easier
-      forgingUpgrades[weaponName] = [new ForgingUpgrade(0, 0, 0, 0, 0)];
+      forgingUpgrades[weaponName] = [new ForgingUpgrade(0, new WeaponStats())];
     }
     forgingUpgrades[weaponName].push(forgingUpgradeFromDict(lineDict));
   }
@@ -242,15 +249,7 @@ export function readAllForgingUpgrades(
 }
 
 function engravingFromDict(data: StringDict): Engraving {
-  return new Engraving(
-    data['Name'],
-    Number(data['Might+']) || 0,
-    Number(data['Weight+']) || 0,
-    Number(data['Hit+']) || 0,
-    Number(data['Critical+']) || 0,
-    Number(data['Avoid+']) || 0,
-    Number(data['Dodge+']) || 0
-  );
+  return new Engraving(data['Name'], weaponStatsFromDict(data, '', '+'));
 }
 
 export function readAllEngravings(data: StringDictDict): EngravingDict {

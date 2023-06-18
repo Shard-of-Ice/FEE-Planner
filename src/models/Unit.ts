@@ -111,13 +111,14 @@ export class Unit {
   get atk(): number {
     // Placeholder until proper phys/mag separation is added
     return (
-      (this.weapon?.might || 100) + Math.max(this.stats.str, this.stats.mag)
+      (this.weapon?.stats.might || 100) +
+      Math.max(this.stats.str, this.stats.mag)
     );
   }
 
   get hit(): number {
     return (
-      (this.weapon?.hit || 100) +
+      (this.weapon?.stats.hit || 100) +
       2 * this.stats.dex +
       Math.floor(this.stats.lck / 2)
     );
@@ -125,18 +126,18 @@ export class Unit {
 
   get avo(): number {
     return (
-      (this.weapon?.avoid || 0) +
+      (this.weapon?.stats.avoid || 0) +
       2 * this.stats.spd +
       Math.floor(this.stats.lck / 2)
     );
   }
 
   get crit(): number {
-    return (this.weapon?.critical || 0) + Math.floor(this.stats.dex / 2);
+    return (this.weapon?.stats.critical || 0) + Math.floor(this.stats.dex / 2);
   }
 
   get ddg(): number {
-    return (this.weapon?.dodge || 0) + this.stats.lck;
+    return (this.weapon?.stats.dodge || 0) + this.stats.lck;
   }
 
   canEquip(weapon: WeaponData): boolean {

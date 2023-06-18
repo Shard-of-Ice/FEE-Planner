@@ -1,7 +1,6 @@
 type NumberDict = { [key: string]: number };
 
 interface Factory<T> {
-  makeEmpty(): T;
   make(data: NumberDict): T;
 }
 
@@ -29,10 +28,7 @@ abstract class FactoryAndGetSetable<T>
   extends GetSetAble
   implements Factory<T>
 {
-  makeEmpty(): T {
-    return this.make({});
-  }
-  abstract make(data: NumberDict): T;
+  abstract make(data?: NumberDict): T;
 }
 
 abstract class BaseStatBlock<
@@ -43,7 +39,7 @@ abstract class BaseStatBlock<
     b: T,
     operator: (a: number, b: number) => number
   ): T {
-    const res = a.makeEmpty();
+    const res = a.make();
     Object.getOwnPropertyNames(a).forEach((statName) => {
       res.set(statName, operator(a.get(statName), b.get(statName)));
     });
@@ -54,7 +50,7 @@ abstract class BaseStatBlock<
     a: T,
     operator: (a: number) => number
   ): T {
-    const res = a.makeEmpty();
+    const res = a.make();
     Object.getOwnPropertyNames(a).forEach((statName) => {
       res.set(statName, operator(a.get(statName)));
     });
@@ -90,21 +86,17 @@ export class CharacterStats extends BaseStatBlock<CharacterStats> {
   bld = 0;
   mov = 0;
 
-  constructor(data: NumberDict) {
+  constructor(data: NumberDict = {}) {
     super();
     this.setAll(data);
   }
 
-  makeEmpty(): CharacterStats {
-    return this.make({});
-  }
-
-  make(data: NumberDict): CharacterStats {
+  make(data: NumberDict = {}): CharacterStats {
     return new CharacterStats(data);
   }
 
   static getStatNames(): string[] {
-    return new CharacterStats({}).getStatNames();
+    return new CharacterStats().getStatNames();
   }
 
   get rating() {
@@ -129,16 +121,12 @@ export class WeaponStats extends BaseStatBlock<WeaponStats> {
   avoid = 0;
   dodge = 0;
 
-  constructor(data: NumberDict) {
+  constructor(data: NumberDict = {}) {
     super();
     this.setAll(data);
   }
 
-  makeEmpty(): WeaponStats {
-    return this.make({});
-  }
-
-  make(data: NumberDict): WeaponStats {
+  make(data: NumberDict = {}): WeaponStats {
     return new WeaponStats(data);
   }
 

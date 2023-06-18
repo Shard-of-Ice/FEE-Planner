@@ -1,3 +1,5 @@
+import { WeaponStats } from './StatBlock';
+
 export class Weapon {
   data: WeaponData;
   forgingLevel: number;
@@ -17,38 +19,11 @@ export class Weapon {
     return this.data.forgingUpgrades[this.forgingLevel];
   }
 
-  get might(): number {
-    return (
-      this.data.might + this.forgingUpgrade.might + (this.engraving?.might || 0)
+  get stats(): WeaponStats {
+    return WeaponStats.add(
+      WeaponStats.add(this.data.stats, this.forgingUpgrade.stats),
+      this.engraving?.stats || new WeaponStats({})
     );
-  }
-
-  get hit(): number {
-    return this.data.hit + this.forgingUpgrade.hit + (this.engraving?.hit || 0);
-  }
-
-  get critical(): number {
-    return (
-      this.data.critical +
-      this.forgingUpgrade.critical +
-      (this.engraving?.critical || 0)
-    );
-  }
-
-  get weight(): number {
-    return (
-      this.data.weight +
-      this.forgingUpgrade.weight +
-      (this.engraving?.weight || 0)
-    );
-  }
-
-  get avoid(): number {
-    return this.data.avoid + (this.engraving?.avoid || 0);
-  }
-
-  get dodge(): number {
-    return this.data.dodge + (this.engraving?.dodge || 0);
   }
 }
 
@@ -56,12 +31,7 @@ export class WeaponData {
   id: string;
   name: string;
   type: WeaponType;
-  might: number;
-  hit: number;
-  critical: number;
-  weight: number;
-  avoid: number;
-  dodge: number;
+  stats: WeaponStats;
   rank: ProficiencyLevel;
   isPlayable = false;
   exclusiveCharacterName: string;
@@ -71,12 +41,7 @@ export class WeaponData {
     id: string,
     name: string,
     type: WeaponType,
-    might: number,
-    hit: number,
-    critical: number,
-    weight: number,
-    avoid: number,
-    dodge: number,
+    stats: WeaponStats,
     rank: ProficiencyLevel,
     isPlayable: boolean,
     exclusiveCharacterName: string,
@@ -85,12 +50,7 @@ export class WeaponData {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.might = might;
-    this.hit = hit;
-    this.critical = critical;
-    this.weight = weight;
-    this.avoid = avoid;
-    this.dodge = dodge;
+    this.stats = stats;
     this.rank = rank;
     this.isPlayable = isPlayable;
     this.exclusiveCharacterName = exclusiveCharacterName;
@@ -203,50 +163,20 @@ export class ProficiencyLevel {
 
 export class ForgingUpgrade {
   level: number;
-  might: number;
-  weight: number;
-  hit: number;
-  critical: number;
+  stats: WeaponStats;
 
-  constructor(
-    level: number,
-    might: number,
-    weight: number,
-    hit: number,
-    critical: number
-  ) {
+  constructor(level: number, stats: WeaponStats) {
     this.level = level;
-    this.might = might;
-    this.weight = weight;
-    this.hit = hit;
-    this.critical = critical;
+    this.stats = stats;
   }
 }
 
 export class Engraving {
   name: string;
-  might: number;
-  hit: number;
-  critical: number;
-  avoid: number;
-  dodge: number;
+  stats: WeaponStats;
 
-  constructor(
-    name: string,
-    might: number,
-    weight: number,
-    hit: number,
-    critical: number,
-    avoid: number,
-    dodge: number
-  ) {
+  constructor(name: string, stats: WeaponStats) {
     this.name = name;
-    this.might = might;
-    this.weight = weight;
-    this.hit = hit;
-    this.critical = critical;
-    this.avoid = avoid;
-    this.dodge = dodge;
+    this.stats = stats;
   }
-  weight: number;
 }
