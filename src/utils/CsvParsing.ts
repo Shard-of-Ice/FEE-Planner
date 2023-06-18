@@ -259,3 +259,18 @@ export function readAllEngravings(data: StringDictDict): EngravingDict {
   }
   return engravings;
 }
+
+export function readAll(
+  classesData: Iterable<StringDict>,
+  charactersData: Iterable<StringDict>,
+  weaponsData: Iterable<StringDict>,
+  forgingData: Iterable<StringDict>,
+  engravingsData: Iterable<StringDict>
+): [ClassDict, CharacterDict, WeaponDataDict, EngravingDict] {
+  const classes = readAllClasses(csvToDict(classesData));
+  const characters = readAllCharacters(csvToDict(charactersData), classes);
+  const forgingUpgrades = readAllForgingUpgrades(forgingData);
+  const weapons = readAllWeapons(csvToDict(weaponsData), forgingUpgrades);
+  const engravings = readAllEngravings(csvToDict(engravingsData));
+  return [classes, characters, weapons, engravings];
+}

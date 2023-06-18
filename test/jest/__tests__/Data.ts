@@ -4,12 +4,7 @@ import {
   ClassDict,
   EngravingDict,
   WeaponDataDict,
-  csvToDict,
-  readAllCharacters,
-  readAllClasses,
-  readAllEngravings,
-  readAllForgingUpgrades,
-  readAllWeapons,
+  readAll,
   readCsv,
 } from 'src/utils/CsvParsing';
 
@@ -37,11 +32,13 @@ class Data {
       (b) => readCsv(b.toString())
     );
 
-    this.classes = readAllClasses(csvToDict(classes));
-    this.characters = readAllCharacters(csvToDict(characters), this.classes);
-    const forgingUpgrades = readAllForgingUpgrades(forging);
-    this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
-    this.engravings = readAllEngravings(csvToDict(engravings));
+    [this.classes, this.characters, this.weapons, this.engravings] = readAll(
+      classes,
+      characters,
+      weapons,
+      forging,
+      engravings
+    );
 
     this.loaded = true;
   }

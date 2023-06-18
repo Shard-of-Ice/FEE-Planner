@@ -5,12 +5,7 @@ import {
   ClassDict,
   EngravingDict,
   WeaponDataDict,
-  csvToDict,
-  readAllCharacters,
-  readAllClasses,
-  readAllEngravings,
-  readAllForgingUpgrades,
-  readAllWeapons,
+  readAll,
   readCsvFromUrl,
 } from 'src/utils/CsvParsing';
 
@@ -56,14 +51,16 @@ export const useStaticStore = defineStore('static', {
           readCsvFromUrl('data/engravings.csv'),
         ]);
 
-      this.classes = readAllClasses(csvToDict(classes));
-      this.characters = readAllCharacters(csvToDict(characters), this.classes);
+      [this.classes, this.characters, this.weapons, this.engravings] = readAll(
+        classes,
+        characters,
+        weapons,
+        forging,
+        engravings
+      );
       this.playableCharacters = Object.keys(this.characters).filter((key) =>
         isPlayable(key, this.characters[key])
       );
-      const forgingUpgrades = readAllForgingUpgrades(forging);
-      this.weapons = readAllWeapons(csvToDict(weapons), forgingUpgrades);
-      this.engravings = readAllEngravings(csvToDict(engravings));
     },
   },
 });
