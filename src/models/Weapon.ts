@@ -22,7 +22,7 @@ export class Weapon {
   get stats(): WeaponStats {
     return WeaponStats.add(
       WeaponStats.add(this.data.stats, this.forgingUpgrade.stats),
-      this.engraving?.stats || new WeaponStats({})
+      this.engraving?.stats || new WeaponStats()
     );
   }
 }

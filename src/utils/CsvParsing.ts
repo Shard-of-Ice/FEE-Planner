@@ -1,5 +1,7 @@
+import { EmblemDict } from './CsvParsing';
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
+import { BondLevel, Emblem } from 'src/models/Emblem';
 import { CharacterStats, WeaponStats } from 'src/models/StatBlock';
 import {
   Engraving,
@@ -18,6 +20,7 @@ export type CharacterDict = { [key: string]: Character };
 export type WeaponDataDict = { [key: string]: WeaponData };
 export type ForgingUpgradeListDict = { [key: string]: ForgingUpgrade[] };
 export type EngravingDict = { [key: string]: Engraving };
+export type EmblemDict = { [key: string]: Emblem };
 
 export function readCsvFromUrl(url: string): Promise<Iterable<StringDict>> {
   return new Promise<Iterable<StringDict>>(function (resolve) {
@@ -260,17 +263,48 @@ export function readAllEngravings(data: StringDictDict): EngravingDict {
   return engravings;
 }
 
+function bondLevelFromDict(data: StringDict): BondLevel {
+  return new BondLevel();
+}
+
+export function readAllEmblems(
+  bondsData: Iterable<StringDict>,
+  engravings: EngravingDict
+): EmblemDict {
+  const emblems: EmblemDict = {};
+
+  // Key to name (generated from engravings, no keys in bonds. Might be changed later)
+  const keys = Object.fromEntries(
+    Object.keys(engravings).map((key) => [engravings[key].name, key])
+  );
+
+  for (const lineDict of bondsData) {
+    const emblemName = lineDict['Emblem'];
+    const emblemKey = keys[emblemName];
+    const bondLevel = Number(lineDict['Bond Lv']);
+    if (bondLevel === 0) {
+      // We add level 0 to make our life easier
+      emblems[emblemKey] = new Emblem(emblemName);
+    }
+    emblems[emblemKey].bondLevels.push(bondLevelFromDict(lineDict));
+  }
+
+  return emblems;
+}
+
 export function readAll(
   classesData: Iterable<StringDict>,
   charactersData: Iterable<StringDict>,
   weaponsData: Iterable<StringDict>,
   forgingData: Iterable<StringDict>,
-  engravingsData: Iterable<StringDict>
-): [ClassDict, CharacterDict, WeaponDataDict, EngravingDict] {
+  engravingsData: Iterable<StringDict>,
+  bondsData: Iterable<StringDict>
+): [ClassDict, CharacterDict, WeaponDataDict, EngravingDict, EmblemDict] {
   const classes = readAllClasses(csvToDict(classesData));
   const characters = readAllCharacters(csvToDict(charactersData), classes);
   const forgingUpgrades = readAllForgingUpgrades(forgingData);
   const weapons = readAllWeapons(csvToDict(weaponsData), forgingUpgrades);
   const engravings = readAllEngravings(csvToDict(engravingsData));
-  return [classes, characters, weapons, engravings];
+  const emblems = readAllEmblems(bondsData, engravings);
+  return [classes, characters, weapons, engravings, emblems];
 }

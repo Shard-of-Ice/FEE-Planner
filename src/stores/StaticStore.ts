@@ -3,6 +3,7 @@ import { Character } from 'src/models/Character';
 import {
   CharacterDict,
   ClassDict,
+  EmblemDict,
   EngravingDict,
   WeaponDataDict,
   readAll,
@@ -15,6 +16,7 @@ interface StaticStoreState {
   playableCharacters: string[];
   weapons: WeaponDataDict;
   engravings: EngravingDict;
+  emblems: EmblemDict;
 }
 
 function isPlayable(key: string, character: Character) {
@@ -29,6 +31,7 @@ export const useStaticStore = defineStore('static', {
     playableCharacters: [],
     weapons: {},
     engravings: {},
+    emblems: {},
   }),
 
   getters: {
@@ -42,22 +45,23 @@ export const useStaticStore = defineStore('static', {
 
   actions: {
     async loadStaticStore() {
-      const [classes, characters, weapons, forging, engravings] =
+      const [classes, characters, weapons, forging, engravings, bonds] =
         await Promise.all([
           readCsvFromUrl('data/classes.csv'),
           readCsvFromUrl('data/characters.csv'),
           readCsvFromUrl('data/weapons.csv'),
           readCsvFromUrl('data/forging.csv'),
           readCsvFromUrl('data/engravings.csv'),
+          readCsvFromUrl('data/bonds.csv'),
         ]);
 
-      [this.classes, this.characters, this.weapons, this.engravings] = readAll(
-        classes,
-        characters,
-        weapons,
-        forging,
-        engravings
-      );
+      [
+        this.classes,
+        this.characters,
+        this.weapons,
+        this.engravings,
+        this.emblems,
+      ] = readAll(classes, characters, weapons, forging, engravings, bonds);
       this.playableCharacters = Object.keys(this.characters).filter((key) =>
         isPlayable(key, this.characters[key])
       );

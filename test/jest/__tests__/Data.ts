@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import {
   CharacterDict,
   ClassDict,
+  EmblemDict,
   EngravingDict,
   WeaponDataDict,
   readAll,
@@ -13,6 +14,7 @@ class Data {
   characters: CharacterDict = {};
   weapons: WeaponDataDict = {};
   engravings: EngravingDict = {};
+  emblems: EmblemDict = {};
   loaded = false;
 
   async loadFromDisk() {
@@ -26,19 +28,19 @@ class Data {
       fs.readFile('public/data/weapons.csv'),
       fs.readFile('public/data/forging.csv'),
       fs.readFile('public/data/engravings.csv'),
+      fs.readFile('public/data/bonds.csv'),
     ]);
 
-    const [classes, characters, weapons, forging, engravings] = buffers.map(
-      (b) => readCsv(b.toString())
-    );
+    const [classes, characters, weapons, forging, engravings, bonds] =
+      buffers.map((b) => readCsv(b.toString()));
 
-    [this.classes, this.characters, this.weapons, this.engravings] = readAll(
-      classes,
-      characters,
-      weapons,
-      forging,
-      engravings
-    );
+    [
+      this.classes,
+      this.characters,
+      this.weapons,
+      this.engravings,
+      this.emblems,
+    ] = readAll(classes, characters, weapons, forging, engravings, bonds);
 
     this.loaded = true;
   }
