@@ -1,5 +1,6 @@
 import { Character } from './Character';
 import { Class, ClassTier } from './Class';
+import { SyncedEmblem } from './Emblem';
 import { CharacterStats } from './StatBlock';
 import { Weapon, WeaponData } from './Weapon';
 
@@ -9,18 +10,21 @@ export class Unit {
   level: number;
   sp: number;
   weapon: Weapon | null;
+  emblem: SyncedEmblem | null;
 
   constructor(
     character: Character,
     level: number | null = null,
     clss: Class | null = null,
-    weapon: Weapon | null = null
+    weapon: Weapon | null = null,
+    emblem: SyncedEmblem | null = null
   ) {
     this.character = character;
     this.class = clss || character.startingClass;
     this.level = level || character.startingLevel;
     this.sp = character.startingSP;
     this.weapon = weapon;
+    this.emblem = emblem;
   }
 
   get totalBases(): CharacterStats {
@@ -58,6 +62,19 @@ export class Unit {
   get totalLevel(): number {
     // If internal lvl > 0, we take away 1 because promotion lvl is not a real lvl
     return Math.max(0, this.internalLevel - 1) + this.level;
+  }
+
+  get bonusStats(): CharacterStats {
+    // Speed penalty from heavy weapons
+    const speedPenalty = Math.min(
+      0,
+      this.stats.bld - (this.weapon?.stats.weight || 0)
+    );
+    // Total
+    return CharacterStats.add(
+      this.emblem?.bondLevelData.bonusStats || new CharacterStats(),
+      new CharacterStats({ spd: speedPenalty })
+    );
   }
 
   get stats(): CharacterStats {
@@ -106,6 +123,10 @@ export class Unit {
     );
 
     return cappedStats;
+  }
+
+  get statsWithBonuses(): CharacterStats {
+    return CharacterStats.add(this.stats, this.bonusStats);
   }
 
   get atk(): number {

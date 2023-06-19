@@ -19,3 +19,17 @@ export class BondLevel {
     this.bonusStats = bonusStats;
   }
 }
+
+export class SyncedEmblem {
+  emblem: Emblem;
+  bondLevel: number;
+
+  constructor(emblem: Emblem, bondLevel: number) {
+    this.emblem = emblem;
+    this.bondLevel = bondLevel;
+  }
+
+  get bondLevelData(): BondLevel {
+    return this.emblem.bondLevels[this.bondLevel];
+  }
+}

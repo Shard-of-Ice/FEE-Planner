@@ -4,6 +4,7 @@ import { CharacterStats } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
 import data from './Data';
 import { Weapon } from 'src/models/Weapon';
+import { SyncedEmblem } from 'src/models/Emblem';
 
 beforeAll(() => {
   return data.loadFromDisk();
@@ -228,5 +229,63 @@ describe('Unit', () => {
       ddg: alearUnit.ddg,
     };
     expect(actual).toEqual(expected);
+  });
+
+  it('sould be slowed dosn by heavy weapons', () => {
+    const alear = data.characters['PID_リュール'];
+    const ironBlade = data.weapons['IID_鉄の大剣'];
+    const alearUnit = new Unit(alear, null, null, new Weapon(ironBlade, 0));
+    expect(alearUnit.bonusStats).toEqual(
+      new CharacterStats({
+        spd: -3,
+      })
+    );
+    expect(alearUnit.statsWithBonuses).toEqual(
+      new CharacterStats({
+        hp: 22,
+        str: 6,
+        mag: 0,
+        dex: 5,
+        spd: 4,
+        def: 5,
+        res: 3,
+        lck: 5,
+        bld: 4,
+        mov: 4,
+      })
+    );
+  });
+
+  it('sould benefit from emblems', () => {
+    const alear = data.characters['PID_リュール'];
+    const marthEmblem = data.emblems['GID_マルス'];
+    const alearUnit = new Unit(
+      alear,
+      null,
+      null,
+      null,
+      new SyncedEmblem(marthEmblem, 2)
+    );
+    expect(alearUnit.bonusStats).toEqual(
+      new CharacterStats({
+        str: 1,
+        dex: 2,
+        spd: 1,
+      })
+    );
+    expect(alearUnit.statsWithBonuses).toEqual(
+      new CharacterStats({
+        hp: 22,
+        str: 7,
+        mag: 0,
+        dex: 7,
+        spd: 8,
+        def: 5,
+        res: 3,
+        lck: 5,
+        bld: 4,
+        mov: 4,
+      })
+    );
   });
 });
