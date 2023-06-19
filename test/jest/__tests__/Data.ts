@@ -32,7 +32,7 @@ class Data {
     ]);
 
     const [classes, characters, weapons, forging, engravings, bonds] =
-      buffers.map((b) => readCsv(b.toString()));
+      buffers.map((b) => b.toString());
 
     [
       this.classes,

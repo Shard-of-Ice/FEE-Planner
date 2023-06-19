@@ -7,7 +7,6 @@ import {
   EngravingDict,
   WeaponDataDict,
   readAll,
-  readCsvFromUrl,
 } from 'src/utils/CsvParsing';
 
 interface StaticStoreState {
@@ -22,6 +21,15 @@ interface StaticStoreState {
 function isPlayable(key: string, character: Character) {
   // The second check is for Nel and Rafal transformed, otherwise they appear 2 times
   return character.startingSP > 0 && !key.endsWith('竜化');
+}
+
+function readFileFromUrl(url: string) {
+  return fetch(url, {
+    method: 'get',
+    headers: {
+      'content-type': 'text/csv;charset=UTF-8',
+    },
+  }).then((data) => data.text());
 }
 
 export const useStaticStore = defineStore('static', {
@@ -47,12 +55,12 @@ export const useStaticStore = defineStore('static', {
     async loadStaticStore() {
       const [classes, characters, weapons, forging, engravings, bonds] =
         await Promise.all([
-          readCsvFromUrl('data/classes.csv'),
-          readCsvFromUrl('data/characters.csv'),
-          readCsvFromUrl('data/weapons.csv'),
-          readCsvFromUrl('data/forging.csv'),
-          readCsvFromUrl('data/engravings.csv'),
-          readCsvFromUrl('data/bonds.csv'),
+          readFileFromUrl('data/classes.csv'),
+          readFileFromUrl('data/characters.csv'),
+          readFileFromUrl('data/weapons.csv'),
+          readFileFromUrl('data/forging.csv'),
+          readFileFromUrl('data/engravings.csv'),
+          readFileFromUrl('data/bonds.csv'),
         ]);
 
       [

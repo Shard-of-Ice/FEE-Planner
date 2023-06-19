@@ -72,6 +72,14 @@ abstract class BaseStatBlock<
   static floor<T extends FactoryAndGetSetable<T>>(a: T): T {
     return BaseStatBlock.unaryOperator<T>(a, Math.floor);
   }
+
+  static min<T extends FactoryAndGetSetable<T>>(a: T, b: T): T {
+    return BaseStatBlock.binaryOperator<T>(a, b, (a, b) => Math.max(a, b));
+  }
+
+  static max<T extends FactoryAndGetSetable<T>>(a: T, b: T): T {
+    return BaseStatBlock.binaryOperator<T>(a, b, (a, b) => Math.max(a, b));
+  }
 }
 
 export class CharacterStats extends BaseStatBlock<CharacterStats> {

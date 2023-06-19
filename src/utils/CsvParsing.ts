@@ -1,4 +1,3 @@
-import { EmblemDict } from './CsvParsing';
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { BondLevel, Emblem } from 'src/models/Emblem';
@@ -14,6 +13,7 @@ import {
 
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
+export type StringListDict = { [id: string]: string[] };
 
 export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
@@ -47,6 +47,26 @@ export function* readCsv(text: string): Generator<StringDict> {
         const lineDict: StringDict = {};
         for (let i = 0; i < header.length; ++i) {
           lineDict[header[i]] = values[i];
+        }
+        yield lineDict;
+      }
+    }
+  }
+}
+
+export function* readCsvWithDuplicates(
+  text: string
+): Generator<StringListDict> {
+  const lines = text.split('\n');
+  const header = lines[0].split(';');
+
+  for (const line of lines.slice(1)) {
+    if (!(line.startsWith('Name') || line.length < 20)) {
+      const values = line.split(';');
+      if (values.length == header.length) {
+        const lineDict: StringListDict = {};
+        for (let i = 0; i < header.length; ++i) {
+          lineDict[header[i]] = [...(lineDict[header[i]] || []), values[i]];
         }
         yield lineDict;
       }
@@ -263,12 +283,63 @@ export function readAllEngravings(data: StringDictDict): EngravingDict {
   return engravings;
 }
 
-function bondLevelFromDict(data: StringDict): BondLevel {
-  return new BondLevel();
+function shortenStatName(statName: string): string {
+  const lowerStatName = statName.toLocaleLowerCase();
+  if (lowerStatName.startsWith('str')) {
+    return 'str';
+  }
+  if (lowerStatName.startsWith('hp')) {
+    return 'hp';
+  }
+  if (lowerStatName.startsWith('mag')) {
+    return 'mag';
+  }
+  if (lowerStatName.startsWith('dex')) {
+    return 'dex';
+  }
+  if (lowerStatName.startsWith('sp')) {
+    return 'spd';
+  }
+  if (lowerStatName.startsWith('def')) {
+    return 'def';
+  }
+  if (lowerStatName.startsWith('r')) {
+    return 'res';
+  }
+  if (lowerStatName.startsWith('l')) {
+    return 'lck';
+  }
+  if (lowerStatName.startsWith('b')) {
+    return 'bld';
+  }
+  if (lowerStatName.startsWith('mo')) {
+    return 'mov';
+  }
+  // Error case
+  console.warn(`Unknown stat name : ${statName}`);
+  return 'none';
+}
+
+function bondLevelFromDict(data: StringListDict, emblem: Emblem): BondLevel {
+  // We read stat upgrade among the sync skills
+  const readStats = new CharacterStats({});
+  data['Sync Skills'].forEach((syncSkill) => {
+    const match = syncSkill.match('^(\\w+) ?\\+(\\d+)$');
+    if (match) {
+      readStats.set(shortenStatName(match[1]), Number(match[2]));
+    }
+  });
+  // Only the new stats are written in the file, we must keep the stats from the previous level
+  const lastBondLevelStats =
+    emblem.bondLevels[emblem.bondLevels.length - 1]?.bonusStats ||
+    new CharacterStats();
+  const stats = CharacterStats.max(lastBondLevelStats, readStats);
+
+  return new BondLevel(Number(data['Bond Lv'][0]), stats);
 }
 
 export function readAllEmblems(
-  bondsData: Iterable<StringDict>,
+  bondsData: Iterable<StringListDict>,
   engravings: EngravingDict
 ): EmblemDict {
   const emblems: EmblemDict = {};
@@ -279,32 +350,40 @@ export function readAllEmblems(
   );
 
   for (const lineDict of bondsData) {
-    const emblemName = lineDict['Emblem'];
+    const emblemName = lineDict['Emblem'][0];
     const emblemKey = keys[emblemName];
-    const bondLevel = Number(lineDict['Bond Lv']);
+    const bondLevel = Number(lineDict['Bond Lv'][0]);
     if (bondLevel === 0) {
       // We add level 0 to make our life easier
       emblems[emblemKey] = new Emblem(emblemName);
     }
-    emblems[emblemKey].bondLevels.push(bondLevelFromDict(lineDict));
+    emblems[emblemKey].bondLevels.push(
+      bondLevelFromDict(lineDict, emblems[emblemKey])
+    );
   }
 
   return emblems;
 }
 
 export function readAll(
-  classesData: Iterable<StringDict>,
-  charactersData: Iterable<StringDict>,
-  weaponsData: Iterable<StringDict>,
-  forgingData: Iterable<StringDict>,
-  engravingsData: Iterable<StringDict>,
-  bondsData: Iterable<StringDict>
+  classesData: string,
+  charactersData: string,
+  weaponsData: string,
+  forgingData: string,
+  engravingsData: string,
+  bondsData: string
 ): [ClassDict, CharacterDict, WeaponDataDict, EngravingDict, EmblemDict] {
-  const classes = readAllClasses(csvToDict(classesData));
-  const characters = readAllCharacters(csvToDict(charactersData), classes);
-  const forgingUpgrades = readAllForgingUpgrades(forgingData);
-  const weapons = readAllWeapons(csvToDict(weaponsData), forgingUpgrades);
-  const engravings = readAllEngravings(csvToDict(engravingsData));
-  const emblems = readAllEmblems(bondsData, engravings);
+  const classes = readAllClasses(csvToDict(readCsv(classesData)));
+  const characters = readAllCharacters(
+    csvToDict(readCsv(charactersData)),
+    classes
+  );
+  const forgingUpgrades = readAllForgingUpgrades(readCsv(forgingData));
+  const weapons = readAllWeapons(
+    csvToDict(readCsv(weaponsData)),
+    forgingUpgrades
+  );
+  const engravings = readAllEngravings(csvToDict(readCsv(engravingsData)));
+  const emblems = readAllEmblems(readCsvWithDuplicates(bondsData), engravings);
   return [classes, characters, weapons, engravings, emblems];
 }
