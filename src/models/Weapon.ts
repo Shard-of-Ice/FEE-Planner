@@ -1,13 +1,13 @@
 import { WeaponStats } from './StatBlock';
 
 export class Weapon {
-  data: WeaponData;
+  data: WeaponData | null;
   forgingLevel: number;
   engraving: Engraving | null;
 
   constructor(
-    data: WeaponData,
-    forgingLevel: number,
+    data: WeaponData | null = null,
+    forgingLevel = 0,
     engraving: Engraving | null = null
   ) {
     this.data = data;
@@ -15,13 +15,20 @@ export class Weapon {
     this.engraving = engraving;
   }
 
-  private get forgingUpgrade(): ForgingUpgrade {
-    return this.data.forgingUpgrades[this.forgingLevel];
+  private get forgingUpgrade(): ForgingUpgrade | null {
+    return this.data?.forgingUpgrades[this.forgingLevel] || null;
   }
 
   get stats(): WeaponStats {
+    if (!this.data) {
+      return new WeaponStats();
+    }
+
     return WeaponStats.add(
-      WeaponStats.add(this.data.stats, this.forgingUpgrade.stats),
+      WeaponStats.add(
+        this.data.stats,
+        this.forgingUpgrade?.stats || new WeaponStats()
+      ),
       this.engraving?.stats || new WeaponStats()
     );
   }

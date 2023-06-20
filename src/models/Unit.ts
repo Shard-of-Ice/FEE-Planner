@@ -9,8 +9,8 @@ export class Unit {
   class: Class;
   level: number;
   sp: number;
-  weapon: Weapon | null;
-  emblem: SyncedEmblem | null;
+  weapon: Weapon;
+  emblem: SyncedEmblem;
 
   constructor(
     character: Character,
@@ -23,8 +23,8 @@ export class Unit {
     this.class = clss || character.startingClass;
     this.level = level || character.startingLevel;
     this.sp = character.startingSP;
-    this.weapon = weapon;
-    this.emblem = emblem;
+    this.weapon = weapon || new Weapon();
+    this.emblem = emblem || new SyncedEmblem();
   }
 
   get totalBases(): CharacterStats {
@@ -68,16 +68,16 @@ export class Unit {
     // Speed penalty from heavy weapons
     const speedPenalty = Math.min(
       0,
-      this.stats.bld - (this.weapon?.stats.weight || 0)
+      this.statsWithoutBonuses.bld - (this.weapon?.stats.weight || 0)
     );
     // Total
     return CharacterStats.add(
-      this.emblem?.bondLevelData.bonusStats || new CharacterStats(),
+      this.emblem.bondLevelData?.bonusStats || new CharacterStats(),
       new CharacterStats({ spd: speedPenalty })
     );
   }
 
-  get stats(): CharacterStats {
+  get statsWithoutBonuses(): CharacterStats {
     // Innate growth points
     const startingGrowthPoints = this.character.growths;
 
@@ -125,8 +125,8 @@ export class Unit {
     return cappedStats;
   }
 
-  get statsWithBonuses(): CharacterStats {
-    return CharacterStats.add(this.stats, this.bonusStats);
+  get stats(): CharacterStats {
+    return CharacterStats.add(this.statsWithoutBonuses, this.bonusStats);
   }
 
   get atk(): number {

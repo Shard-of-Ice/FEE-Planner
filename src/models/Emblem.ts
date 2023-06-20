@@ -21,15 +21,15 @@ export class BondLevel {
 }
 
 export class SyncedEmblem {
-  emblem: Emblem;
+  emblem: Emblem | null;
   bondLevel: number;
 
-  constructor(emblem: Emblem, bondLevel: number) {
+  constructor(emblem: Emblem | null = null, bondLevel = 1) {
     this.emblem = emblem;
     this.bondLevel = bondLevel;
   }
 
-  get bondLevelData(): BondLevel {
-    return this.emblem.bondLevels[this.bondLevel];
+  get bondLevelData(): BondLevel | null {
+    return this.emblem?.bondLevels[this.bondLevel] || null;
   }
 }

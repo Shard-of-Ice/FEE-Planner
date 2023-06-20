@@ -213,12 +213,19 @@ describe('Unit', () => {
   it('sould calculate battle statistics correctly', () => {
     const alear = data.characters['PID_リュール'];
     const ironSword = data.weapons['IID_鉄の剣'];
-    const alearUnit = new Unit(alear, null, null, new Weapon(ironSword, 0));
+    const marthEmblem = data.emblems['GID_マルス'];
+    const alearUnit = new Unit(
+      alear,
+      null,
+      null,
+      new Weapon(ironSword, 0),
+      new SyncedEmblem(marthEmblem, 1)
+    );
     const expected = {
-      atk: 11,
-      hit: 102,
+      atk: 12,
+      hit: 104,
       avo: 16,
-      crit: 2,
+      crit: 3,
       ddg: 5,
     };
     const actual = {
@@ -240,7 +247,7 @@ describe('Unit', () => {
         spd: -3,
       })
     );
-    expect(alearUnit.statsWithBonuses).toEqual(
+    expect(alearUnit.stats).toEqual(
       new CharacterStats({
         hp: 22,
         str: 6,
@@ -273,7 +280,7 @@ describe('Unit', () => {
         spd: 1,
       })
     );
-    expect(alearUnit.statsWithBonuses).toEqual(
+    expect(alearUnit.stats).toEqual(
       new CharacterStats({
         hp: 22,
         str: 7,
