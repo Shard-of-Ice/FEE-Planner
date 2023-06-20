@@ -3,9 +3,18 @@
     <div class="col-5 stats-label">{{ statName }}</div>
     <div class="col-5 text-right stats-value">
       <span v-if="statName == 'HP'">{{ statValue }}/</span>
-      <span :class="statValue == maxValue && 'text-positive'">{{
-        statValue
-      }}</span>
+      <span
+        :class="
+          bonusValue > 0
+            ? 'text-info'
+            : bonusValue < 0
+            ? 'text-negative'
+            : statValue == maxValue
+            ? 'text-positive'
+            : ''
+        "
+        >{{ statValue }}</span
+      >
     </div>
   </div>
 </template>
@@ -23,6 +32,10 @@ export default defineComponent({
     statValue: {
       type: Number,
       required: true,
+    },
+    bonusValue: {
+      type: Number,
+      default: 0,
     },
     maxValue: {
       type: Number,

@@ -1,10 +1,31 @@
 <template>
   <div class="col-auto column" v-if="unit">
     <div class="stats-column q-pa-sm" />
-    <div class="character-name-header">
-      <h2 class="col-3 character-name-text q-mx-md">
+    <div class="character-name-header items-center row">
+      <h2 class="col-auto character-name-text q-ml-md">
         {{ unit.character.name }}
       </h2>
+      <p class="character-name-and-text q-mx-sm">&</p>
+      <q-select
+        class="col-auto emblem-name-text"
+        borderless
+        dark
+        dense
+        v-model="unit.emblem.emblem"
+        :options="allowedEmblems"
+        :option-label="(e) => e?.name || '(no emblem)'"
+        :display-value="unit.emblem.emblem?.name || '(no emblem)'"
+      />
+      <q-select
+        v-if="unit.emblem.emblem"
+        class="col-auto emblem-name-text"
+        borderless
+        dark
+        dense
+        v-model="unit.emblem.bondLevel"
+        :options="allowedEmblemLevels"
+        :option-label="(l) => '(' + l + ')'"
+      />
     </div>
     <div class="col stats-column">
       <div class="column background-blue-gray text-medium q-my-md q-px-md">
@@ -46,11 +67,13 @@
           stat-name="HP"
           :stat-value="unit.stats.hp"
           :max-value="unit.totalCaps.hp"
+          :bonus-value="unit.bonusStats.hp"
         />
         <stat-display
           stat-name="Bld"
           :stat-value="unit.stats.bld"
           :max-value="unit.totalCaps.bld"
+          :bonus-value="unit.bonusStats.bld"
         />
         <stat-display stat-name="SP" :stat-value="unit.sp" />
         <h3 class="stats-header">Combat Stats</h3>
@@ -67,11 +90,13 @@
           :stat-name="statName"
           :stat-value="unit.stats.get(statName.toLowerCase())"
           :max-value="unit.totalCaps.get(statName.toLowerCase())"
+          :bonus-value="unit.bonusStats.get(statName.toLowerCase())"
         />
         <stat-display
           class="q-mt-sm"
           stat-name="Rating"
           :stat-value="unit.stats.rating"
+          :bonus-value="unit.bonusRating"
         />
       </div>
     </div>
@@ -140,6 +165,13 @@ export default defineComponent({
         }
         return Array.from({ length: max - min + 1 }, (_, i) => min + i);
       }),
+      allowedEmblems: computed(() => [
+        null,
+        ...Object.values(staticStore.emblems),
+      ]),
+      allowedEmblemLevels: computed(
+        () => [...Array(20).keys()].map((x) => x + 1) // 1 .. 20
+      ),
       bust_url: computed(() => {
         let char_name_url = unit.value?.character.name;
         if (char_name_url == 'Alear') {

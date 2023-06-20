@@ -77,6 +77,10 @@ export class Unit {
     );
   }
 
+  get bonusRating(): number {
+    return Object.values(this.bonusStats).reduce((sum, cur) => sum + cur, 0);
+  }
+
   get statsWithoutBonuses(): CharacterStats {
     // Innate growth points
     const startingGrowthPoints = this.character.growths;
