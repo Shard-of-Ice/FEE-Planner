@@ -295,4 +295,44 @@ describe('Unit', () => {
       })
     );
   });
+
+  it('sould never have negative critical', () => {
+    const alear = data.characters['PID_リュール'];
+    const ironSword = data.weapons['IID_鉄の剣'];
+    const veronicaEngraving = data.engravings['GID_ヴェロニカ'];
+    const alearUnit = new Unit(
+      alear,
+      null,
+      null,
+      new Weapon(ironSword, 0, veronicaEngraving)
+    );
+    expect(alearUnit.crit).toEqual(0);
+  });
+
+  it('sould never have negative avoid or dodge', () => {
+    const alear = data.characters['PID_リュール'];
+    const ironSword = data.weapons['IID_鉄の剣'];
+    const hectorEngraving = data.engravings['GID_ヘクトル'];
+    const alearUnit = new Unit(
+      alear,
+      null,
+      null,
+      new Weapon(ironSword, 0, hectorEngraving)
+    );
+    expect(alearUnit.avo).toEqual(0);
+    expect(alearUnit.ddg).toEqual(0);
+  });
+
+  it('sould never have negative speed', () => {
+    const alear = data.characters['PID_リュール'];
+    const steelGreataxe = data.weapons['IID_鋼の大斧'];
+    const veronicaEngraving = data.engravings['GID_ヴェロニカ'];
+    const alearUnit = new Unit(
+      alear,
+      null,
+      null,
+      new Weapon(steelGreataxe, 0, veronicaEngraving)
+    );
+    expect(alearUnit.stats.spd).toEqual(0);
+  });
 });

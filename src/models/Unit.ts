@@ -65,10 +65,14 @@ export class Unit {
   }
 
   get bonusStats(): CharacterStats {
-    // Speed penalty from heavy weapons
+    // Speed penalty from heavy weapons.
+    // Can never bring speed lower than 0.
     const speedPenalty = Math.min(
-      0,
-      this.statsWithoutBonuses.bld - (this.weapon?.stats.weight || 0)
+      0, // maximum
+      Math.max(
+        -this.statsWithoutBonuses.spd, // minimum
+        this.statsWithoutBonuses.bld - (this.weapon?.stats.weight || 0)
+      )
     );
     // Total
     return CharacterStats.add(
@@ -136,8 +140,7 @@ export class Unit {
   get atk(): number {
     // Placeholder until proper phys/mag separation is added
     return (
-      (this.weapon?.stats.might || 100) +
-      Math.max(this.stats.str, this.stats.mag)
+      (this.weapon?.stats.might || 0) + Math.max(this.stats.str, this.stats.mag)
     );
   }
 
@@ -150,19 +153,23 @@ export class Unit {
   }
 
   get avo(): number {
-    return (
+    return Math.max(
+      0,
       (this.weapon?.stats.avoid || 0) +
-      2 * this.stats.spd +
-      Math.floor(this.stats.lck / 2)
+        2 * this.stats.spd +
+        Math.floor(this.stats.lck / 2)
     );
   }
 
   get crit(): number {
-    return (this.weapon?.stats.critical || 0) + Math.floor(this.stats.dex / 2);
+    return Math.max(
+      0,
+      (this.weapon?.stats.critical || 0) + Math.floor(this.stats.dex / 2)
+    );
   }
 
   get ddg(): number {
-    return (this.weapon?.stats.dodge || 0) + this.stats.lck;
+    return Math.max(0, (this.weapon?.stats.dodge || 0) + this.stats.lck);
   }
 
   canEquip(weapon: WeaponData): boolean {

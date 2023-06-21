@@ -3,7 +3,6 @@ import { beforeAll } from '@jest/globals';
 import data from './Data';
 import {
   Engraving,
-  ForgingUpgrade,
   ProficiencyLevel,
   Weapon,
   WeaponType,
@@ -54,7 +53,32 @@ describe('WeaponData', () => {
       expect(actual).toEqual(expected);
     }
   });
+});
 
+describe('Engraving', () => {
+  it('should load', () => {
+    expect(Object.keys(data.engravings).length).toBeGreaterThan(0);
+  });
+
+  it('should have correct data for Marth', () => {
+    const marthEngraving = data.engravings['GID_マルス'];
+    expect(marthEngraving).toEqual(
+      new Engraving(
+        'Marth',
+        new WeaponStats({
+          might: 1,
+          weight: 0,
+          hit: 10,
+          critical: 10,
+          avoid: 5,
+          dodge: 5,
+        })
+      )
+    );
+  });
+});
+
+describe('Weapon', () => {
   it('should calculate final stats correctly', () => {
     const steelSword = data.weapons['IID_鋼の剣'];
     const alearEngraving = data.engravings['GID_リュール'];
@@ -79,27 +103,12 @@ describe('WeaponData', () => {
 
     expect(actual).toEqual(expected);
   });
-});
 
-describe('Engraving', () => {
-  it('should load', () => {
-    expect(Object.keys(data.engravings).length).toBeGreaterThan(0);
-  });
+  it('should be able to have negative might', () => {
+    const ironBodyArt = data.weapons['IID_鉄身の法'];
+    const lynEngraving = data.engravings['GID_リン'];
+    const upgradedIronBodyArt = new Weapon(ironBodyArt, 0, lynEngraving);
 
-  it('should have correct data for Marth', () => {
-    const marthEngraving = data.engravings['GID_マルス'];
-    expect(marthEngraving).toEqual(
-      new Engraving(
-        'Marth',
-        new WeaponStats({
-          might: 1,
-          weight: 0,
-          hit: 10,
-          critical: 10,
-          avoid: 5,
-          dodge: 5,
-        })
-      )
-    );
+    expect(upgradedIronBodyArt.stats.might).toEqual(-1);
   });
 });
