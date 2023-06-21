@@ -239,7 +239,11 @@ export default defineComponent({
       allowedWeapons: computed(() => [
         null,
         ...Object.values(staticStore.weapons).filter(
-          (w) => w.isPlayable && w.type != WeaponType.Staff
+          (w) =>
+            w.isPlayable &&
+            w.type != WeaponType.Staff &&
+            unit &&
+            unit.value?.canEquip(w)
         ),
       ]),
       allowedForgingLevels: computed(
