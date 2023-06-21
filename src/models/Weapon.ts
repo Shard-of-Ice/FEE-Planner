@@ -179,11 +179,11 @@ export class ForgingUpgrade {
 }
 
 export class Engraving {
-  name: string;
+  emblemName: string;
   stats: WeaponStats;
 
-  constructor(name: string, stats: WeaponStats) {
-    this.name = name;
+  constructor(emblemName: string, stats: WeaponStats) {
+    this.emblemName = emblemName;
     this.stats = stats;
   }
 }

@@ -5,9 +5,11 @@
       <h2 class="col-auto character-name-text q-ml-md">
         {{ unit.character.name }}
       </h2>
-      <p class="character-name-and-text q-mx-sm">&</p>
+      <p class="character-name-and-text q-mx-sm">
+        <span v-if="unit.emblem.emblem">&</span>
+      </p>
       <q-select
-        class="col-auto emblem-name-text"
+        class="col-auto emblem-name-text very-dense-qselect"
         borderless
         dark
         dense
@@ -18,7 +20,7 @@
       />
       <q-select
         v-if="unit.emblem.emblem"
-        class="col-auto emblem-name-text"
+        class="col-auto emblem-name-text very-dense-qselect"
         borderless
         dark
         dense
@@ -77,6 +79,67 @@
         />
         <stat-display stat-name="SP" :stat-value="unit.sp" />
         <h3 class="stats-header">Combat Stats</h3>
+        <div class="row items-center q-mb-sm">
+          <q-select
+            dark
+            dense
+            class="col-grow very-dense-qselect"
+            v-model="unit.weapon.data"
+            :options="allowedWeapons"
+            :option-label="(w) => w?.name || '(no weapon)'"
+            :display-value="unit.weapon.data?.name || '(no weapon)'"
+          />
+          <q-select
+            v-if="unit.weapon.data"
+            class="col-auto very-dense-qselect"
+            dark
+            dense
+            v-model="unit.weapon.forgingLevel"
+            :options="allowedForgingLevels"
+            :option-label="(l) => '+' + l"
+          />
+          <q-select
+            v-if="unit.weapon.data"
+            class="col-auto very-dense-qselect"
+            dark
+            dense
+            v-model="unit.weapon.engraving"
+            :options="allowedEngravings"
+          >
+            <template v-slot:selected>
+              <q-avatar v-if="unit.weapon.engraving" square size="20px">
+                <img
+                  :src="`img/engravings/Engrave-${
+                    unit.weapon.engraving.emblemName.charAt(0).toUpperCase() +
+                    unit.weapon.engraving.emblemName.slice(1).toLowerCase()
+                  }.png`"
+                />
+              </q-avatar>
+              <q-icon v-else name="block" size="20px" class="text-grey-7" />
+            </template>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps" class="q-px-md q-py-md">
+                <q-item-section avatar class="q-px-none min-width-0">
+                  <q-avatar square size="30px">
+                    <img
+                      v-if="scope.opt"
+                      :src="`img/engravings/Engrave-${
+                        scope.opt.emblemName.charAt(0).toUpperCase() +
+                        scope.opt.emblemName.slice(1).toLowerCase()
+                      }.png`"
+                    />
+                    <q-icon
+                      v-else
+                      name="block"
+                      size="30px"
+                      class="text-grey-7"
+                    />
+                  </q-avatar>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
         <stat-display
           v-for="(statValue, statName) in combatStats"
           :key="statName"
@@ -110,6 +173,7 @@ import { useStaticStore } from 'src/stores/StaticStore';
 import { Unit } from 'src/models/Unit';
 import { ClassTier } from 'src/models/Class';
 import StatDisplay from 'src/components/StatDisplay.vue';
+import { WeaponType } from 'src/models/Weapon';
 
 export default defineComponent({
   name: 'UnitSummary',
@@ -172,6 +236,19 @@ export default defineComponent({
       allowedEmblemLevels: computed(
         () => [...Array(20).keys()].map((x) => x + 1) // 1 .. 20
       ),
+      allowedWeapons: computed(() => [
+        null,
+        ...Object.values(staticStore.weapons).filter(
+          (w) => w.isPlayable && w.type != WeaponType.Staff
+        ),
+      ]),
+      allowedForgingLevels: computed(
+        () => [...Array(6).keys()] // 0 .. 5
+      ),
+      allowedEngravings: computed(() => [
+        null,
+        ...Object.values(staticStore.engravings),
+      ]),
       bust_url: computed(() => {
         let char_name_url = unit.value?.character.name;
         if (char_name_url == 'Alear') {

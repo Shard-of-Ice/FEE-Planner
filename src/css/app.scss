@@ -35,6 +35,14 @@
   border-width: 2px 0 0 0;
 }
 
+.min-width-0 {
+  min-width: 0;
+}
+
+.min-height-0 {
+  min-height: 0;
+}
+
 .character-name-header {
   background: $title-gradient;
   color: white;
@@ -63,7 +71,7 @@
   font-weight: 200;
 }
 
-.emblem-name-text > .q-field__inner > .q-field__control > .q-field__append {
+.very-dense-qselect > .q-field__inner > .q-field__control > .q-field__append {
   padding: 0;
 }
 

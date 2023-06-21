@@ -8,7 +8,7 @@
           bonusValue > 0
             ? 'text-info'
             : bonusValue < 0
-            ? 'text-negative'
+            ? 'text-red-5'
             : statValue == maxValue
             ? 'text-positive'
             : ''

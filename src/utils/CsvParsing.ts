@@ -226,7 +226,7 @@ function weaponFromDict(
     WeaponType.fromString(data['Type']),
     weaponStatsFromDict(data),
     ProficiencyLevel.fromString(data['Rank']),
-    data['Playable'] != '0',
+    data['Playable'] === '1',
     data['Exclusive User'] || '',
     forgingUpgrades
   );
@@ -346,7 +346,7 @@ export function readAllEmblems(
 
   // Key to name (generated from engravings, no keys in bonds. Might be changed later)
   const keys = Object.fromEntries(
-    Object.keys(engravings).map((key) => [engravings[key].name, key])
+    Object.keys(engravings).map((key) => [engravings[key].emblemName, key])
   );
 
   for (const lineDict of bondsData) {
