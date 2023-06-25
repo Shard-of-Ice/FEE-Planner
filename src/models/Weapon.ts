@@ -74,6 +74,7 @@ export class WeaponType {
   static Tome = new WeaponType('Tome');
   static Staff = new WeaponType('Staff');
   static Arts = new WeaponType('Arts');
+  static Canonball = new WeaponType('Canonball');
   static Special = new WeaponType('Special');
   static None = new WeaponType('None');
 
@@ -86,6 +87,7 @@ export class WeaponType {
     WeaponType.Tome,
     WeaponType.Staff,
     WeaponType.Arts,
+    WeaponType.Canonball,
     WeaponType.Special,
   ];
 
