@@ -158,10 +158,9 @@ describe('Unit', () => {
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 1, promotedClass);
 
-    expect(alearUnit.weaponProficiencies).toContainEqual({
-      weaponType: WeaponType.Arts,
-      level: ProficiencyLevel.B,
-    });
+    expect(alearUnit.weaponProficiencies.get(WeaponType.Arts).level).toEqual(
+      ProficiencyLevel.B
+    );
   });
 
   it('sould increase weapon proficiencies if innate and the class allows it', () => {
@@ -169,10 +168,9 @@ describe('Unit', () => {
     const griffinKnightClass = data.classes['JID_グリフォンナイト'];
     const alearUnit = new Unit(alear, 1, griffinKnightClass);
 
-    expect(alearUnit.weaponProficiencies).toContainEqual({
-      weaponType: WeaponType.Sword,
-      level: ProficiencyLevel.S,
-    });
+    expect(alearUnit.weaponProficiencies.get(WeaponType.Sword).level).toEqual(
+      ProficiencyLevel.S
+    );
   });
 
   it('sould not increase weapon proficiencies without an innate proficiency', () => {
@@ -180,10 +178,9 @@ describe('Unit', () => {
     const griffinKnightClass = data.classes['JID_グリフォンナイト'];
     const veyleUnit = new Unit(veyle, 1, griffinKnightClass);
 
-    expect(veyleUnit.weaponProficiencies).toContainEqual({
-      weaponType: WeaponType.Sword,
-      level: ProficiencyLevel.Aplus,
-    });
+    expect(veyleUnit.weaponProficiencies.get(WeaponType.Sword).level).toEqual(
+      ProficiencyLevel.Aplus
+    );
   });
 
   it('sould not increase weapon proficiencies if the class forbids it', () => {
@@ -191,10 +188,9 @@ describe('Unit', () => {
     const promotedClass = data.classes['JID_神竜ノ王'];
     const alearUnit = new Unit(alear, 1, promotedClass);
 
-    expect(alearUnit.weaponProficiencies).toContainEqual({
-      weaponType: WeaponType.Sword,
-      level: ProficiencyLevel.A,
-    });
+    expect(alearUnit.weaponProficiencies.get(WeaponType.Sword).level).toEqual(
+      ProficiencyLevel.A
+    );
   });
 
   it('should not let a player character equip an unplayable weapon', () => {

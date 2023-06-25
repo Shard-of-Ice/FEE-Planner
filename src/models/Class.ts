@@ -1,5 +1,5 @@
 import { CharacterStats } from './StatBlock';
-import { WeaponProficiency } from './Weapon';
+import { WeaponProficiencies } from './Weapon';
 
 export class ClassTier {
   static Base = new ClassTier('Base');
@@ -103,7 +103,7 @@ export class Class {
   bases: CharacterStats;
   growths: CharacterStats;
   caps: CharacterStats;
-  weaponProficiencies: WeaponProficiency[];
+  weaponProficiencies: WeaponProficiencies;
   isPlayable: boolean;
   femaleOnly: boolean;
   exclusiveCharacterName: string;
@@ -116,7 +116,7 @@ export class Class {
     bases: CharacterStats,
     growths: CharacterStats,
     caps: CharacterStats,
-    weaponProficiencies: WeaponProficiency[],
+    weaponProficiencies: WeaponProficiencies,
     isPlayable: boolean,
     femaleOnly: boolean,
     exclusiveCharacterName: string

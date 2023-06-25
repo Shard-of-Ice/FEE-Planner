@@ -7,6 +7,7 @@ import {
   ForgingUpgrade,
   ProficiencyLevel,
   WeaponData,
+  WeaponProficiencies,
   WeaponProficiency,
   WeaponType,
 } from 'src/models/Weapon';
@@ -121,22 +122,24 @@ function weaponStatsFromDict(
   });
 }
 
-function weaponProficienciesFromString(str: string): WeaponProficiency[] {
+function weaponProficienciesFromString(str: string): WeaponProficiencies {
   if (str.length < 4) {
-    return [];
+    return new WeaponProficiencies();
   }
   // else
-  return str.split(', ').map(weaponProficiencyFromString);
+  return new WeaponProficiencies(
+    str.split(', ').map(weaponProficiencyFromString)
+  );
 }
 
 function weaponProficiencyFromString(str: string): WeaponProficiency {
   const splits = str.split(' ');
   if (splits.length === 2) {
     const [typeStr, levelStr] = splits;
-    return {
-      weaponType: WeaponType.fromString(typeStr),
-      level: ProficiencyLevel.fromString(levelStr),
-    };
+    return new WeaponProficiency(
+      WeaponType.fromString(typeStr),
+      ProficiencyLevel.fromString(levelStr)
+    );
   }
   // else
   console.warn(`Could not parse weapon proficiency : ${str}`);

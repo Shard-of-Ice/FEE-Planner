@@ -2,7 +2,13 @@ import { Character } from './Character';
 import { Class, ClassTier } from './Class';
 import { SyncedEmblem } from './Emblem';
 import { CharacterStats } from './StatBlock';
-import { Weapon, WeaponData, WeaponProficiency } from './Weapon';
+import {
+  Weapon,
+  WeaponData,
+  WeaponProficiencies,
+  WeaponProficiency,
+  WeaponType,
+} from './Weapon';
 
 export class Unit {
   character: Character;
@@ -137,16 +143,18 @@ export class Unit {
     return CharacterStats.add(this.statsWithoutBonuses, this.bonusStats);
   }
 
-  get weaponProficiencies(): WeaponProficiency[] {
-    return this.class.weaponProficiencies.map((p) => {
-      if (this.canIncreaseProficiency(p)) {
-        return {
-          weaponType: p.weaponType,
-          level: p.level.getHigherLevel(),
-        };
-      } // else
-      return p;
-    });
+  get weaponProficiencies(): WeaponProficiencies {
+    return new WeaponProficiencies(
+      this.class.weaponProficiencies.list.map((p) => {
+        if (this.canIncreaseProficiency(p)) {
+          return {
+            weaponType: p.weaponType,
+            level: p.level.getHigherLevel(),
+          };
+        } // else
+        return p;
+      })
+    );
   }
 
   private canIncreaseProficiency(
@@ -159,6 +167,12 @@ export class Unit {
       this.character.innateProficiencies.some((wp) =>
         wp.equals(weaponProficiency.weaponType)
       )
+    );
+  }
+
+  increasesProficiency(weaponType: WeaponType): boolean {
+    return this.canIncreaseProficiency(
+      this.class.weaponProficiencies.get(weaponType)
     );
   }
 
@@ -205,10 +219,9 @@ export class Unit {
       (weapon.exclusiveCharacterName == '' ||
         weapon.exclusiveCharacterName == this.character.name) &&
       // This character has enough proficiency to use the weapon
-      this.weaponProficiencies.filter(
-        (p) =>
-          p.weaponType == weapon.type && p.level.greaterOrEqualTo(weapon.rank)
-      ).length > 0
+      this.weaponProficiencies
+        .get(weapon.type)
+        .level.greaterOrEqualTo(weapon.rank)
     );
   }
 }

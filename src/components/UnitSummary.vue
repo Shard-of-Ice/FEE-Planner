@@ -65,7 +65,7 @@
         </div>
         <div class="row full-width q-mb-xs">
           <q-item
-            v-for="p in unit.weaponProficiencies"
+            v-for="p in unit.weaponProficiencies.list"
             :key="p.weaponType.name"
             class="q-pa-none min-height-0 q-mr-md"
           >
@@ -76,28 +76,15 @@
               <q-avatar square size="25px">
                 <img
                   :src="`/img/icons/weapon-types/${p.weaponType.name}${
-                    !(
-                      unit.class.weaponProficiencies.find(
-                        (ip) => ip.weaponType === p.weaponType
-                      )?.level || p.level
-                    ).greaterOrEqualTo(p.level)
-                      ? 'Blue'
-                      : ''
+                    unit.increasesProficiency(p.weaponType) ? 'Blue' : ''
                   }.png`"
                 />
               </q-avatar>
             </q-item-section>
             <q-item-section
-              :class="
-                'text-big' +
-                (!(
-                  unit.class.weaponProficiencies.find(
-                    (ip) => ip.weaponType === p.weaponType
-                  )?.level || p.level
-                ).greaterOrEqualTo(p.level)
-                  ? ' text-info'
-                  : '')
-              "
+              :class="`text-big ${
+                unit.increasesProficiency(p.weaponType) ? ' text-info' : ''
+              }`"
             >
               {{ p.level.shortName }}
             </q-item-section>

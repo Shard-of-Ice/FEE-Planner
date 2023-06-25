@@ -112,9 +112,37 @@ export class WeaponType {
   }
 }
 
-export interface WeaponProficiency {
+export class WeaponProficiency {
   weaponType: WeaponType;
   level: ProficiencyLevel;
+
+  constructor(weaponType: WeaponType, level: ProficiencyLevel) {
+    this.weaponType = weaponType;
+    this.level = level;
+  }
+}
+
+export class WeaponProficiencies {
+  list: WeaponProficiency[];
+
+  constructor(proficiencies: WeaponProficiency[] = []) {
+    this.list = proficiencies;
+  }
+
+  get length(): number {
+    return this.list.length;
+  }
+
+  add(proficiency: WeaponProficiency): void {
+    this.list.push(proficiency);
+  }
+
+  get(weaponType: WeaponType): WeaponProficiency {
+    return (
+      this.list.find((p) => p.weaponType.equals(weaponType)) ||
+      new WeaponProficiency(weaponType, ProficiencyLevel.None)
+    );
+  }
 }
 
 export class ProficiencyLevel {
