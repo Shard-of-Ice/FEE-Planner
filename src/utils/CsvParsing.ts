@@ -189,19 +189,28 @@ function getClassByName(
   classes: ClassDict,
   characterName: string
 ) {
-  for (const classId in classes) {
-    const clss = classes[classId];
-    // We filter out classes with the same name, but for the wrong character
-    if (
-      clss.name == className &&
+  // We search for possible matches
+  const possbileResults = Object.values(classes).filter(
+    (clss) =>
+      clss.name === className &&
+      // We filter out classes with the same name, but for the wrong character
       (clss.exclusiveCharacterName == '' ||
         clss.exclusiveCharacterName == characterName)
-    ) {
-      return clss;
-    }
-  }
-  // default
-  return classes[Object.keys(classes)[0]];
+  );
+  // Preference for playable classes
+  const playableResults = possbileResults.filter((clss) => clss.isPlayable);
+  // Preference for exclusive classes
+  const exclusiveResults = playableResults.filter(
+    (clss) => clss.exclusiveCharacterName === characterName
+  );
+
+  // Results by order of preference
+  return (
+    exclusiveResults[0] ||
+    playableResults[0] ||
+    possbileResults[0] ||
+    classes[Object.keys(classes)[0]]
+  );
 }
 
 function characterFromDict(data: StringDict, classes: ClassDict): Character {
