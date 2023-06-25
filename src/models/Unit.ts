@@ -177,13 +177,29 @@ export class Unit {
   }
 
   get atk(): number {
-    // Placeholder until proper phys/mag separation is added
+    if (this.weapon?.data?.type === WeaponType.Canonball) {
+      // Special calculation for canonball
+      return this.stats.dex + this.weapon.stats.might;
+    }
+    // else
     return (
-      (this.weapon?.stats.might || 0) + Math.max(this.stats.str, this.stats.mag)
+      (this.weapon?.stats.might || 0) +
+      (this.weapon.data?.usesMagicStat ? this.stats.mag : this.stats.str)
     );
   }
 
   get hit(): number {
+    if (this.weapon?.data?.type === WeaponType.Canonball) {
+      // Special calculation for canonball
+      return (
+        this.stats.dex +
+        this.stats.str +
+        this.stats.bld +
+        this.stats.lck / 2 +
+        this.weapon.stats.hit
+      );
+    }
+    // else
     return (
       (this.weapon?.stats.hit || 100) +
       2 * this.stats.dex +

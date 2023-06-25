@@ -250,6 +250,7 @@ function weaponFromDict(
     WeaponType.fromString(data['Type']),
     weaponStatsFromDict(data),
     ProficiencyLevel.fromString(data['Rank']),
+    data['Uses Mag'] === '1',
     data['Playable'] === '1',
     data['Exclusive User'] || '',
     forgingUpgrades

@@ -40,7 +40,8 @@ export class WeaponData {
   type: WeaponType;
   stats: WeaponStats;
   rank: ProficiencyLevel;
-  isPlayable = false;
+  usesMagicStat: boolean;
+  isPlayable: boolean;
   exclusiveCharacterName: string;
   forgingUpgrades: ForgingUpgrade[];
 
@@ -50,6 +51,7 @@ export class WeaponData {
     type: WeaponType,
     stats: WeaponStats,
     rank: ProficiencyLevel,
+    usesMagicStat: boolean,
     isPlayable: boolean,
     exclusiveCharacterName: string,
     forgingUpgrades: ForgingUpgrade[]
@@ -59,6 +61,7 @@ export class WeaponData {
     this.type = type;
     this.stats = stats;
     this.rank = rank;
+    this.usesMagicStat = usesMagicStat;
     this.isPlayable = isPlayable;
     this.exclusiveCharacterName = exclusiveCharacterName;
     this.forgingUpgrades = forgingUpgrades;

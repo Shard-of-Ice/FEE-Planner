@@ -278,6 +278,67 @@ describe('Unit', () => {
     expect(actual).toEqual(expected);
   });
 
+  it('sould use strength for physical weapons', () => {
+    const alear = data.characters['PID_リュール'];
+
+    const physWeapons: string[] = [
+      'IID_鉄の剣', // Iron Sword
+      'IID_鋼の槍', // Steel Lance
+      'IID_手槍', // Javelin
+    ];
+
+    physWeapons.forEach((weaponID) => {
+      const weapon = data.weapons[weaponID];
+      const alearUnit = new Unit(alear, null, null, new Weapon(weapon, 0));
+      expect(alearUnit.atk).toEqual(alearUnit.stats.str + weapon.stats.might);
+    });
+  });
+
+  it('sould use magic for magic weapons', () => {
+    const alear = data.characters['PID_リュール'];
+
+    const magWeapons: string[] = [
+      'IID_いかづちの剣', // Levin Sword
+      'IID_ほのおの槍', // Flame Lance
+      'IID_かぜの大斧', // Hurricane Axe
+      'IID_光の弓', // Radiant Bow
+      'IID_ミセリコルデ', // Misericorde
+      'IID_ファイアー', // Fire
+      'IID_邪竜石', // Fell Stone
+    ];
+
+    magWeapons.forEach((weaponID) => {
+      const weapon = data.weapons[weaponID];
+      const alearUnit = new Unit(alear, null, null, new Weapon(weapon, 0));
+      expect(alearUnit.atk).toEqual(alearUnit.stats.mag + weapon.stats.might);
+    });
+  });
+
+  it('sould calculate correct stats for canonball weapons', () => {
+    const alear = data.characters['PID_リュール'];
+
+    const someCanonballWeapons: string[] = [
+      'IID_弾_魔法', // Magic Blast
+      'IID_弾_フリーズ', // Freeze Blast
+      'IID_弾_魔法_強', // Eldritch Blast
+      'IID_弾_物理', // Standard Blast
+      'IID_弾_物理_強', // Mighty Blast
+    ];
+
+    someCanonballWeapons.forEach((weaponID) => {
+      const weapon = data.weapons[weaponID];
+      const alearUnit = new Unit(alear, null, null, new Weapon(weapon, 0));
+      expect(alearUnit.atk).toEqual(alearUnit.stats.dex + weapon.stats.might);
+      expect(alearUnit.hit).toEqual(
+        alearUnit.stats.dex +
+          alearUnit.stats.str +
+          alearUnit.stats.bld +
+          alearUnit.stats.lck / 2 +
+          weapon.stats.hit
+      );
+    });
+  });
+
   it('sould be slowed dosn by heavy weapons', () => {
     const alear = data.characters['PID_リュール'];
     const ironBlade = data.weapons['IID_鉄の大剣'];
