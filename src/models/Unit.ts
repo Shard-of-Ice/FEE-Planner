@@ -12,7 +12,7 @@ import {
 
 export class Unit {
   character: Character;
-  class: Class;
+  private _class: Class;
   level: number;
   sp: number;
   weapon: Weapon;
@@ -26,11 +26,23 @@ export class Unit {
     emblem: SyncedEmblem | null = null
   ) {
     this.character = character;
-    this.class = clss || character.startingClass;
+    this._class = clss || character.startingClass;
     this.level = level || character.startingLevel;
     this.sp = character.startingSP;
     this.weapon = weapon || new Weapon();
     this.emblem = emblem || new SyncedEmblem();
+  }
+
+  get class(): Class {
+    return this._class;
+  }
+
+  set class(clss: Class) {
+    this._class = clss;
+    // Check if we should unequip weapon (if we can no longer weild it)
+    if (this.weapon.data && !this.canEquip(this.weapon.data)) {
+      this.weapon.data = null;
+    }
   }
 
   get totalBases(): CharacterStats {

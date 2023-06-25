@@ -436,4 +436,18 @@ describe('Unit', () => {
     );
     expect(alearUnit.stats.spd).toEqual(0);
   });
+
+  it('sould unequip weapon on class change if necessary', () => {
+    const alear = data.characters['PID_リュール'];
+    const ironSword = data.weapons['IID_鉄の剣'];
+    const alearUnit = new Unit(alear, null, null, new Weapon(ironSword));
+    const promotedClass = data.classes['JID_神竜ノ王'];
+    const mageClass = data.classes['JID_マージ'];
+
+    expect(alearUnit.weapon.data).toEqual(ironSword);
+    alearUnit.class = promotedClass;
+    expect(alearUnit.weapon.data).toEqual(ironSword);
+    alearUnit.class = mageClass;
+    expect(alearUnit.weapon.data).toBeNull();
+  });
 });
