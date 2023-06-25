@@ -24,6 +24,8 @@
           Engage Planner
         </q-toolbar-title>
 
+        <div class="text-blue-grey-3 text-italic text-big">V1.2</div>
+
         <!-- <q-btn dense flat round icon="menu" @click="toggleRightDrawer" /> -->
       </q-toolbar>
 
@@ -75,9 +77,30 @@
 
     <q-footer
       elevated
-      class="page-footer text-white q-py-sm q-px-lg text-right"
+      class="page-footer text-white q-py-sm q-px-md text-right"
     >
-      Thanks to VincentASM and their co-contributors who provided the data.
+      <p class="q-ma-none" v-if="$q.screen.lt.md">
+        <span class="q-mr-sm"
+          >Submit feedback :
+          <a class="text-white" href="mailto:contact@feplanner.com"
+            >contact@feplanner.com</a
+          >
+        </span>
+        <br v-if="$q.screen.lt.sm" />
+        <span>Thanks to VincentASM co-contributors for the data.</span>
+      </p>
+      <p class="q-ma-none" v-else>
+        <span class="q-mr-sm"
+          >You can submit feedback at
+          <a class="text-white" href="mailto:contact@feplanner.com"
+            >contact@feplanner.com</a
+          >.</span
+        >
+        <span
+          >Thanks to VincentASM and their co-contributors who provided the
+          data.</span
+        >
+      </p>
     </q-footer>
   </q-layout>
 </template>
