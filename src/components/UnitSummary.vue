@@ -200,6 +200,71 @@
   </div>
 </template>
 
+<style lang="scss">
+.character-name-header {
+  background: $title-gradient;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 400;
+
+  border-width: 3px 0 3px 0;
+  border-style: solid;
+  border-image: 1 $title-border-gradient;
+}
+
+.character-name-text {
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 0;
+}
+
+.character-name-and-text {
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.emblem-name-text {
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+.stats-column {
+  background: $blue-medium;
+  color: white;
+  margin: 0 20px 0 20px;
+  min-width: 20em;
+
+  border-width: 0 2px 0 2px;
+  border-style: solid;
+  border-color: $blue-lightest;
+}
+
+.stats-header {
+  color: $gray-light;
+  font-size: 1rem;
+  margin: 8px 0 5px 0;
+  padding: 0 10px 0 10px;
+  line-height: 1.5rem;
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: $gray-light;
+}
+
+.stats-label {
+  color: $gray-light;
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+.stats-value {
+  color: white;
+  font-size: 1.2rem;
+  text-align: right;
+  margin-right: 10px;
+}
+</style>
+
 <script lang="ts">
 import { defineComponent, computed, ComputedRef } from 'vue';
 import { useAppStateStore } from 'src/stores/AppStateStore';
