@@ -30,7 +30,7 @@
       />
     </div>
     <div class="col stats-column">
-      <div class="column background-blue-gray text-medium q-my-md q-px-md">
+      <div class="column background-blue-gray text-medium q-my-sm q-px-md">
         <q-select
           class="q-mb-sm"
           dark
@@ -62,6 +62,46 @@
           <div class="col-1" />
           <div class="col-2">Mov</div>
           <div class="col-2 text-right">{{ unit.stats.mov }}</div>
+        </div>
+        <div class="row full-width q-mb-xs">
+          <q-item
+            v-for="p in unit.weaponProficiencies"
+            :key="p.weaponType.name"
+            class="q-pa-none min-height-0 q-mr-md"
+          >
+            <q-item-section
+              avatar
+              class="q-pa-none q-mr-xs min-height-0 min-width-0"
+            >
+              <q-avatar square size="25px">
+                <img
+                  :src="`/img/icons/weapon-types/${p.weaponType.name}${
+                    !(
+                      unit.class.weaponProficiencies.find(
+                        (ip) => ip.weaponType === p.weaponType
+                      )?.level || p.level
+                    ).greaterOrEqualTo(p.level)
+                      ? 'Blue'
+                      : ''
+                  }.png`"
+                />
+              </q-avatar>
+            </q-item-section>
+            <q-item-section
+              :class="
+                'text-big' +
+                (!(
+                  unit.class.weaponProficiencies.find(
+                    (ip) => ip.weaponType === p.weaponType
+                  )?.level || p.level
+                ).greaterOrEqualTo(p.level)
+                  ? ' text-info'
+                  : '')
+              "
+            >
+              {{ p.level.shortName }}
+            </q-item-section>
+          </q-item>
         </div>
       </div>
       <div class="column q-px-md">
@@ -173,7 +213,7 @@ import { useStaticStore } from 'src/stores/StaticStore';
 import { Unit } from 'src/models/Unit';
 import { ClassTier } from 'src/models/Class';
 import StatDisplay from 'src/components/StatDisplay.vue';
-import { WeaponType } from 'src/models/Weapon';
+import { ProficiencyLevel, WeaponType } from 'src/models/Weapon';
 
 export default defineComponent({
   name: 'UnitSummary',
