@@ -43,6 +43,19 @@
   min-height: 0;
 }
 
+.popup-custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.popup-custom-scrollbar::-webkit-scrollbar-track {
+  background: #333333;
+}
+
+.popup-custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #777777;
+  border-radius: 3px;
+}
+
 .character-name-header {
   background: $title-gradient;
   color: white;

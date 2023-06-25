@@ -10,6 +10,7 @@
       </p>
       <q-select
         class="col-auto emblem-name-text very-dense-qselect"
+        popup-content-class="popup-custom-scrollbar"
         borderless
         dark
         dense
@@ -21,6 +22,7 @@
       <q-select
         v-if="unit.emblem.emblem"
         class="col-auto emblem-name-text very-dense-qselect"
+        popup-content-class="popup-custom-scrollbar"
         borderless
         dark
         dense
@@ -33,6 +35,7 @@
       <div class="column background-blue-gray text-medium q-my-sm q-px-md">
         <q-select
           class="q-mb-sm"
+          popup-content-class="popup-custom-scrollbar"
           dark
           dense
           v-model="unit.class"
@@ -45,9 +48,10 @@
         <div class="row justify-between items-baseline full-width">
           <div class="col-2">Lvl</div>
           <q-select
+            class="col-5 q-mb-sm"
+            popup-content-class="popup-custom-scrollbar"
             dark
             dense
-            class="col-5 q-mb-sm"
             v-model="unit.level"
             :options="allowedLevels"
             :option-label="
@@ -108,9 +112,10 @@
         <h3 class="stats-header">Combat Stats</h3>
         <div class="row items-center q-mb-sm">
           <q-select
+            class="col-grow very-dense-qselect"
+            popup-content-class="popup-custom-scrollbar"
             dark
             dense
-            class="col-grow very-dense-qselect"
             v-model="unit.weapon.data"
             :options="allowedWeapons"
             :option-label="(w) => w?.name || '(no weapon)'"
@@ -119,6 +124,7 @@
           <q-select
             v-if="unit.weapon.data"
             class="col-auto very-dense-qselect"
+            popup-content-class="popup-custom-scrollbar"
             dark
             dense
             v-model="unit.weapon.forgingLevel"
@@ -128,6 +134,7 @@
           <q-select
             v-if="unit.weapon.data"
             class="col-auto very-dense-qselect"
+            popup-content-class="popup-custom-scrollbar"
             dark
             dense
             v-model="unit.weapon.engraving"
