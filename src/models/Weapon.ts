@@ -100,8 +100,10 @@ export class WeaponType {
         return type;
       }
     }
-    // default
-    console.warn('Unknown weapon type ' + str);
+    // default, we log a warning if the value is not a reasonable representation of None
+    if (str != '---') {
+      console.warn('Unknown weapon type ' + str);
+    }
     return WeaponType.None;
   }
 
@@ -139,16 +141,27 @@ export class ProficiencyLevel {
     ProficiencyLevel.S,
   ];
 
-  readonly name: string;
+  readonly fullName: string;
   readonly value: number;
-  private constructor(name: string, value: number) {
-    this.name = name;
+  private constructor(fullName: string, value: number) {
+    this.fullName = fullName;
     this.value = value;
+  }
+
+  get shortName(): string {
+    // The "+" should not be displayed, as it only indicates
+    // whether the level can be increased through innate proficiencies
+    return this.fullName[0];
+  }
+
+  get canBeIncreased(): boolean {
+    // Only levels with "+" can be increased through innate proficiencies
+    return this.fullName.length === 2;
   }
 
   static fromString(str: string): ProficiencyLevel {
     for (const type of ProficiencyLevel.all) {
-      if (type.name == str) {
+      if (type.fullName == str) {
         return type;
       }
     }
@@ -165,6 +178,13 @@ export class ProficiencyLevel {
 
   greaterOrEqualTo(other: ProficiencyLevel) {
     return this.value >= other.value;
+  }
+
+  getHigherLevel(): ProficiencyLevel {
+    return (
+      ProficiencyLevel.all.find((pl) => pl.value === this.value + 1) ||
+      ProficiencyLevel.None
+    );
   }
 }
 

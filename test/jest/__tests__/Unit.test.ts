@@ -3,7 +3,7 @@ import { beforeAll } from '@jest/globals';
 import { CharacterStats } from 'src/models/StatBlock';
 import { Unit } from 'src/models/Unit';
 import data from './Data';
-import { Weapon } from 'src/models/Weapon';
+import { ProficiencyLevel, Weapon, WeaponType } from 'src/models/Weapon';
 import { SyncedEmblem } from 'src/models/Emblem';
 
 beforeAll(() => {
@@ -151,6 +151,50 @@ describe('Unit', () => {
         alearUnit.totalCaps.get(statName)
       );
     }
+  });
+
+  it('sould have correct weapon proficiencies', () => {
+    const alear = data.characters['PID_リュール'];
+    const promotedClass = data.classes['JID_神竜ノ王'];
+    const alearUnit = new Unit(alear, 1, promotedClass);
+
+    expect(alearUnit.weaponProficiencies).toContainEqual({
+      weaponType: WeaponType.Arts,
+      level: ProficiencyLevel.B,
+    });
+  });
+
+  it('sould increase weapon proficiencies if innate and the class allows it', () => {
+    const alear = data.characters['PID_リュール'];
+    const griffinKnightClass = data.classes['JID_グリフォンナイト'];
+    const alearUnit = new Unit(alear, 1, griffinKnightClass);
+
+    expect(alearUnit.weaponProficiencies).toContainEqual({
+      weaponType: WeaponType.Sword,
+      level: ProficiencyLevel.S,
+    });
+  });
+
+  it('sould not increase weapon proficiencies without an innate proficiency', () => {
+    const veyle = data.characters['PID_ヴェイル'];
+    const griffinKnightClass = data.classes['JID_グリフォンナイト'];
+    const veyleUnit = new Unit(veyle, 1, griffinKnightClass);
+
+    expect(veyleUnit.weaponProficiencies).toContainEqual({
+      weaponType: WeaponType.Sword,
+      level: ProficiencyLevel.Aplus,
+    });
+  });
+
+  it('sould not increase weapon proficiencies if the class forbids it', () => {
+    const alear = data.characters['PID_リュール'];
+    const promotedClass = data.classes['JID_神竜ノ王'];
+    const alearUnit = new Unit(alear, 1, promotedClass);
+
+    expect(alearUnit.weaponProficiencies).toContainEqual({
+      weaponType: WeaponType.Sword,
+      level: ProficiencyLevel.A,
+    });
   });
 
   it('should not let a player character equip an unplayable weapon', () => {

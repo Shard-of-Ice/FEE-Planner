@@ -1,21 +1,27 @@
 import { Class } from './Class';
 import { CharacterStats } from './StatBlock';
+import { WeaponType } from './Weapon';
 
 export class Character {
   name: string;
   id: string;
+  isFemale: boolean;
+
   startingClass: Class;
   startingLevel: number;
   startingInternalLevel: number;
   startingSP: number;
+
   bases: CharacterStats;
   growths: CharacterStats;
   caps: CharacterStats;
-  isFemale: boolean;
+
+  innateProficiencies: WeaponType[];
 
   constructor(
     id: string,
     name: string,
+    isFemale: boolean,
     startingClass: Class,
     startingLevel: number,
     startingInternalLevel: number,
@@ -23,7 +29,7 @@ export class Character {
     bases: CharacterStats,
     growths: CharacterStats,
     caps: CharacterStats,
-    isFemale: boolean
+    innateProficiencies: WeaponType[]
   ) {
     this.id = id;
     this.name = name;
@@ -35,6 +41,7 @@ export class Character {
     this.growths = growths;
     this.caps = caps;
     this.isFemale = isFemale;
+    this.innateProficiencies = innateProficiencies;
   }
 
   get startingTotalLevel(): number {

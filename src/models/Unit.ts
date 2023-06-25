@@ -2,7 +2,7 @@ import { Character } from './Character';
 import { Class, ClassTier } from './Class';
 import { SyncedEmblem } from './Emblem';
 import { CharacterStats } from './StatBlock';
-import { Weapon, WeaponData } from './Weapon';
+import { Weapon, WeaponData, WeaponProficiency } from './Weapon';
 
 export class Unit {
   character: Character;
@@ -137,6 +137,31 @@ export class Unit {
     return CharacterStats.add(this.statsWithoutBonuses, this.bonusStats);
   }
 
+  get weaponProficiencies(): WeaponProficiency[] {
+    return this.class.weaponProficiencies.map((p) => {
+      if (this.canIncreaseProficiency(p)) {
+        return {
+          weaponType: p.weaponType,
+          level: p.level.getHigherLevel(),
+        };
+      } // else
+      return p;
+    });
+  }
+
+  private canIncreaseProficiency(
+    weaponProficiency: WeaponProficiency
+  ): boolean {
+    return (
+      // Technically, only the second check has value in practice
+      // The first check is kept to prevent misunderstandings
+      weaponProficiency.level.canBeIncreased &&
+      this.character.innateProficiencies.some((wp) =>
+        wp.equals(weaponProficiency.weaponType)
+      )
+    );
+  }
+
   get atk(): number {
     // Placeholder until proper phys/mag separation is added
     return (
@@ -180,7 +205,7 @@ export class Unit {
       (weapon.exclusiveCharacterName == '' ||
         weapon.exclusiveCharacterName == this.character.name) &&
       // This character has enough proficiency to use the weapon
-      this.class.weaponProficiencies.filter(
+      this.weaponProficiencies.filter(
         (p) =>
           p.weaponType == weapon.type && p.level.greaterOrEqualTo(weapon.rank)
       ).length > 0

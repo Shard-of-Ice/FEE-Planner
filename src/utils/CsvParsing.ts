@@ -146,6 +146,17 @@ function weaponProficiencyFromString(str: string): WeaponProficiency {
   };
 }
 
+function weaponTypesFromString(str: string): WeaponType[] {
+  if (str.length < 4) {
+    return [];
+  }
+  // else
+  return str
+    .split(', ')
+    .map((s) => WeaponType.fromString(s))
+    .filter((wt) => wt != WeaponType.None);
+}
+
 function classFromDict(data: StringDict): Class {
   return new Class(
     data['ID'],
@@ -194,6 +205,7 @@ function characterFromDict(data: StringDict, classes: ClassDict): Character {
   return new Character(
     data['ID'],
     data['Name'],
+    data['Gender'] == 'Female',
     getClassByName(data['Initial Class'], classes, data['Name']),
     Number(data['Level']),
     Number(data['Internal Level']),
@@ -201,7 +213,7 @@ function characterFromDict(data: StringDict, classes: ClassDict): Character {
     characterStatsFromDict(data, '', ' Base'),
     characterStatsFromDict(data, '', ' Growth'),
     characterStatsFromDict(data, '', ' Cap+'),
-    data['Gender'] == 'Female'
+    weaponTypesFromString(data['Innate Prof.'])
   );
 }
 
