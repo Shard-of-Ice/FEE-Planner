@@ -340,7 +340,7 @@ export default defineComponent({
         ...Object.values(staticStore.weapons).filter(
           (w) =>
             w.isPlayable &&
-            w.type != WeaponType.Staff &&
+            !w.type.equals(WeaponType.Staff) &&
             unit &&
             unit.value?.canEquip(w)
         ),
