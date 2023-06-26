@@ -16,7 +16,10 @@
       <!-- </div> -->
     </div>
     <div class="col column self-center items-center" v-else>
-      <div class="row items-end" style="font-size: 42px; opacity: 0.1">
+      <div
+        class="row items-end"
+        style="font-size: 42px; opacity: 0.1; min-width: 345px"
+      >
         <img
           src="img/misc/Fire_Emblem_logo.png"
           style="
