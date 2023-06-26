@@ -5,7 +5,7 @@
 <script lang="ts">
 import { useStaticStore } from './stores/StaticStore';
 import { useUnitStore } from './stores/UnitStore';
-import { useRankingsStore } from './stores/RankingsStore';
+//import { useRankingsStore } from './stores/RankingsStore';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
@@ -19,7 +19,7 @@ export default {
 
     const staticStore = useStaticStore();
     const unitStore = useUnitStore();
-    const rankingsStore = useRankingsStore();
+    //const rankingsStore = useRankingsStore();
 
     await staticStore.loadStaticStore();
     await router.isReady(); // needed to use route.query
