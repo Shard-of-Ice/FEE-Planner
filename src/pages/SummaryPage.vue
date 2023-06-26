@@ -8,9 +8,16 @@
     >
       <q-img
         fit="contain"
-        class="row bust-img"
-        position="50% 100%"
-        translate="-50% 0%"
+        class="row"
+        :position="$q.screen.lt.sm ? '50% 100%' : '0% 0%'"
+        :translate="$q.screen.lt.sm ? '-50% 0%' : '0% 0%'"
+        :style="`
+          height: 70vh;
+          width: 1000px;
+          position: relative;
+          ${$q.screen.lt.sm && 'left: 50%;'}
+          ${$q.screen.lt.sm && 'translate: -50% 0;'}
+          `"
         :src="bust_url"
       />
       <!-- </div> -->
@@ -34,16 +41,6 @@
     </div>
   </q-page>
 </template>
-
-<style lang="scss">
-.bust-img {
-  height: 70vh;
-  width: 1000px;
-  position: relative;
-  left: 50%;
-  translate: -50% 0;
-}
-</style>
 
 <script lang="ts">
 import { computed, ComputedRef } from 'vue';
