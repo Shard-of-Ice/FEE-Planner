@@ -1,20 +1,19 @@
 <template>
   <q-page class="row">
-    <unit-summary />
+    <unit-summary style="z-index: 1" />
     <div
-      class="col column"
+      class="col column justify-end"
       style="overflow-x: hidden; margin-left: -20px"
       v-if="unit"
     >
-      <div class="col row items-end" v-if="unit">
-        <q-img
-          fit="contain"
-          position="0% 0%"
-          class="col"
-          style="height: 70vh; width: 3000px"
-          :src="bust_url"
-        />
-      </div>
+      <q-img
+        fit="contain"
+        class="row bust-img"
+        position="50% 100%"
+        translate="-50% 0%"
+        :src="bust_url"
+      />
+      <!-- </div> -->
     </div>
     <div class="col column self-center items-center" v-else>
       <div class="row items-end" style="font-size: 42px; opacity: 0.1">
@@ -32,6 +31,16 @@
     </div>
   </q-page>
 </template>
+
+<style lang="scss">
+.bust-img {
+  height: 70vh;
+  width: 1000px;
+  position: relative;
+  left: 50%;
+  translate: -50% 0;
+}
+</style>
 
 <script lang="ts">
 import { computed, ComputedRef } from 'vue';
