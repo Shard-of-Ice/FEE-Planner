@@ -1,0 +1,461 @@
+Base Weapon;Upgrade Level;New Weapon;Iron;Steel;Silver;Price;Might+;Weight+;Hit+;Critical+
+Slim Sword;1;Slim Sword+1;5;--;--;100;1;--;--;--
+Slim Sword;2;Slim Sword+2;10;--;--;100;1;--;5;--
+Slim Sword;3;Slim Sword+3;15;--;--;300;2;--;10;--
+Slim Sword;4;Slim Sword+4;20;--;--;300;2;--;15;5
+Slim Sword;5;Slim Sword+5;100;--;--;1000;4;--;15;5
+Iron Sword;1;Iron Sword+1;10;--;--;300;2;--;--;--
+Iron Sword;2;Iron Sword+2;30;--;--;300;2;--;5;--
+Iron Sword;3;Iron Sword+3;60;5;--;500;4;--;5;--
+Iron Sword;4;Iron Sword+4;100;10;--;500;4;--;10;--
+Iron Sword;5;Iron Sword+5;200;15;1;1400;6;--;10;--
+Steel Sword;1;Steel Sword+1;50;1;--;500;2;--;--;--
+Steel Sword;2;Steel Sword+2;60;2;--;500;2;--;5;--
+Steel Sword;3;Steel Sword+3;70;3;1;800;4;-1;5;--
+Steel Sword;4;Steel Sword+4;80;4;1;1000;4;-1;10;5
+Steel Sword;5;Steel Sword+5;340;40;3;2200;6;-2;10;5
+Silver Sword;1;Silver Sword+1;50;5;1;1000;2;--;--;--
+Silver Sword;2;Silver Sword+2;100;10;1;1000;2;--;5;--
+Silver Sword;3;Silver Sword+3;150;15;3;1500;4;-1;5;--
+Silver Sword;4;Silver Sword+4;500;20;5;1500;4;-1;10;--
+Silver Sword;5;Silver Sword+5;--;50;10;5000;6;-2;10;--
+Armorslayer;1;Armorslayer+1;30;--;--;500;1;--;5;--
+Armorslayer;2;Armorslayer+2;50;3;--;1000;2;--;5;--
+Armorslayer;3;Armorslayer+3;70;5;--;1500;3;--;5;--
+Armorslayer;4;Armorslayer+4;--;7;2;2000;4;--;5;--
+Armorslayer;5;Armorslayer+5;--;35;3;2500;5;--;10;--
+Killing Edge;1;Killing Edge+1;30;--;--;500;1;--;--;--
+Killing Edge;2;Killing Edge+2;50;3;--;1000;2;--;--;5
+Killing Edge;3;Killing Edge+3;70;5;--;1500;3;--;--;5
+Killing Edge;4;Killing Edge+4;--;7;2;2000;4;--;--;5
+Killing Edge;5;Killing Edge+5;--;35;3;2500;5;--;--;10
+Levin Sword;1;Levin Sword+1;30;--;--;500;1;--;5;--
+Levin Sword;2;Levin Sword+2;50;3;--;1000;2;--;5;--
+Levin Sword;3;Levin Sword+3;70;5;--;1500;3;--;5;--
+Levin Sword;4;Levin Sword+4;--;7;2;2000;4;--;5;--
+Levin Sword;5;Levin Sword+5;--;35;3;2500;5;--;10;--
+Wo Dao;1;Wo Dao+1;30;--;--;500;--;--;--;5
+Wo Dao;2;Wo Dao+2;50;3;--;1000;1;--;--;5
+Wo Dao;3;Wo Dao+3;70;5;--;1500;2;--;--;10
+Wo Dao;4;Wo Dao+4;--;7;2;2000;3;--;--;10
+Wo Dao;5;Wo Dao+5;--;35;3;2500;4;--;--;15
+Wyrmslayer;1;Wyrmslayer+1;30;--;--;500;1;--;5;--
+Wyrmslayer;2;Wyrmslayer+2;50;3;--;1000;2;--;5;--
+Wyrmslayer;3;Wyrmslayer+3;70;5;--;1500;3;--;5;--
+Wyrmslayer;4;Wyrmslayer+4;--;7;2;2000;4;--;5;--
+Wyrmslayer;5;Wyrmslayer+5;--;35;3;2500;5;--;10;--
+Brave Sword;1;Brave Sword+1;--;--;1;1000;1;--;--;--
+Brave Sword;2;Brave Sword+2;--;--;3;1000;2;--;--;--
+Brave Sword;3;Brave Sword+3;--;--;6;1500;3;--;5;--
+Brave Sword;4;Brave Sword+4;--;--;10;1500;4;--;5;--
+Brave Sword;5;Brave Sword+5;--;--;15;5000;5;--;10;--
+Libération;1;Libération+1;30;--;--;300;2;--;--;--
+Libération;2;Libération+2;40;1;--;500;3;--;5;--
+Libération;3;Libération+3;50;2;1;800;4;--;5;--
+Libération;4;Libération+4;60;3;1;1200;5;--;10;--
+Libération;5;Libération+5;70;4;1;1500;6;--;15;5
+Wille Glanz;1;Wille Glanz+1;--;--;1;1000;1;--;--;--
+Wille Glanz;2;Wille Glanz+2;--;--;3;1000;2;--;--;--
+Wille Glanz;3;Wille Glanz+3;--;--;6;1500;3;--;5;--
+Wille Glanz;4;Wille Glanz+4;--;--;10;1500;4;--;5;--
+Wille Glanz;5;Wille Glanz+5;--;--;15;5000;5;--;10;--
+Caladbolg;1;Caladbolg+1;--;--;3;3000;1;--;5;--
+Caladbolg;2;Caladbolg+2;--;--;5;4000;2;--;5;--
+Caladbolg;3;Caladbolg+3;--;--;7;5000;3;--;5;5
+Caladbolg;4;Caladbolg+4;--;--;15;6000;4;--;5;5
+Caladbolg;5;Caladbolg+5;--;--;20;7000;5;--;10;10
+Iron Blade;1;Iron Blade+1;10;--;--;300;2;--;--;--
+Iron Blade;2;Iron Blade+2;30;--;--;300;2;--;5;--
+Iron Blade;3;Iron Blade+3;60;5;--;500;4;-1;5;--
+Iron Blade;4;Iron Blade+4;100;10;--;500;4;-1;10;--
+Iron Blade;5;Iron Blade+5;200;15;1;1400;6;-2;10;--
+Steel Blade;1;Steel Blade+1;50;1;--;500;2;--;--;--
+Steel Blade;2;Steel Blade+2;60;2;--;500;2;--;5;--
+Steel Blade;3;Steel Blade+3;70;3;1;800;4;-1;5;--
+Steel Blade;4;Steel Blade+4;80;4;1;1000;4;-1;10;5
+Steel Blade;5;Steel Blade+5;340;40;3;2200;6;-2;10;5
+Silver Blade;1;Silver Blade+1;50;5;1;1000;2;--;--;--
+Silver Blade;2;Silver Blade+2;100;10;1;1000;2;--;5;--
+Silver Blade;3;Silver Blade+3;150;15;3;1500;4;-1;5;--
+Silver Blade;4;Silver Blade+4;500;20;5;1500;4;-1;10;--
+Silver Blade;5;Silver Blade+5;--;50;10;5000;6;-2;10;--
+Georgios;1;Georgios+1;--;--;3;3000;1;--;5;--
+Georgios;2;Georgios+2;--;--;5;4000;2;--;5;--
+Georgios;3;Georgios+3;--;--;7;5000;3;--;5;5
+Georgios;4;Georgios+4;--;--;15;6000;4;--;5;5
+Georgios;5;Georgios+5;--;--;20;7000;5;--;10;10
+Slim Lance;1;Slim Lance+1;5;--;--;100;1;--;--;--
+Slim Lance;2;Slim Lance+2;10;--;--;100;1;--;5;--
+Slim Lance;3;Slim Lance+3;15;--;--;300;2;--;10;--
+Slim Lance;4;Slim Lance+4;20;--;--;300;2;--;15;5
+Slim Lance;5;Slim Lance+5;100;--;--;1000;4;--;15;5
+Iron Lance;1;Iron Lance+1;10;--;--;300;2;--;--;--
+Iron Lance;2;Iron Lance+2;30;--;--;300;2;--;5;--
+Iron Lance;3;Iron Lance+3;60;5;--;500;4;--;5;--
+Iron Lance;4;Iron Lance+4;100;10;--;500;4;--;10;--
+Iron Lance;5;Iron Lance+5;200;15;1;1400;6;--;10;--
+Steel Lance;1;Steel Lance+1;50;1;--;500;2;--;--;--
+Steel Lance;2;Steel Lance+2;60;2;--;500;2;--;5;--
+Steel Lance;3;Steel Lance+3;70;3;1;800;4;-1;5;--
+Steel Lance;4;Steel Lance+4;80;4;1;1000;4;-1;10;5
+Steel Lance;5;Steel Lance+5;340;40;3;2200;6;-2;10;5
+Silver Lance;1;Silver Lance+1;50;5;1;1000;2;--;--;--
+Silver Lance;2;Silver Lance+2;100;10;1;1000;2;--;5;--
+Silver Lance;3;Silver Lance+3;150;15;3;1500;4;-1;5;--
+Silver Lance;4;Silver Lance+4;500;20;5;1500;4;-1;10;--
+Silver Lance;5;Silver Lance+5;--;50;10;5000;6;-2;10;--
+Javelin;1;Javelin+1;30;--;--;500;1;--;5;--
+Javelin;2;Javelin+2;50;3;--;1000;2;--;5;--
+Javelin;3;Javelin+3;70;5;--;1500;3;--;5;--
+Javelin;4;Javelin+4;--;7;2;2000;4;--;5;--
+Javelin;5;Javelin+5;--;35;3;2500;5;--;10;--
+Ridersbane;1;Ridersbane+1;30;--;--;500;1;--;5;--
+Ridersbane;2;Ridersbane+2;50;3;--;1000;2;--;5;--
+Ridersbane;3;Ridersbane+3;70;5;--;1500;3;--;5;--
+Ridersbane;4;Ridersbane+4;--;7;2;2000;4;--;5;--
+Ridersbane;5;Ridersbane+5;--;35;3;2500;5;--;10;--
+Killer Lance;1;Killer Lance+1;30;--;--;500;1;--;--;--
+Killer Lance;2;Killer Lance+2;50;3;--;1000;2;--;--;5
+Killer Lance;3;Killer Lance+3;70;5;--;1500;3;--;--;5
+Killer Lance;4;Killer Lance+4;--;7;2;2000;4;--;--;5
+Killer Lance;5;Killer Lance+5;--;35;3;2500;5;--;--;10
+Flame Lance;1;Flame Lance+1;30;--;--;500;1;--;5;--
+Flame Lance;2;Flame Lance+2;50;3;--;1000;2;--;5;--
+Flame Lance;3;Flame Lance+3;70;5;--;1500;3;--;5;--
+Flame Lance;4;Flame Lance+4;--;7;2;2000;4;--;5;--
+Flame Lance;5;Flame Lance+5;--;35;3;2500;5;--;10;--
+Spear;1;Spear+1;--;--;1;1000;1;--;5;--
+Spear;2;Spear+2;--;--;3;1000;2;--;5;--
+Spear;3;Spear+3;--;--;5;1500;3;--;5;--
+Spear;4;Spear+4;--;--;7;1500;4;--;5;--
+Spear;5;Spear+5;--;--;10;5000;5;--;10;--
+Brave Lance;1;Brave Lance+1;--;--;1;1000;1;--;5;--
+Brave Lance;2;Brave Lance+2;--;--;3;1000;2;--;5;--
+Brave Lance;3;Brave Lance+3;--;--;5;1500;3;--;5;--
+Brave Lance;4;Brave Lance+4;--;--;7;1500;4;--;5;--
+Brave Lance;5;Brave Lance+5;--;--;10;5000;5;--;10;--
+Brionac;1;Brionac+1;--;--;3;3000;1;--;5;--
+Brionac;2;Brionac+2;--;--;5;4000;2;--;5;--
+Brionac;3;Brionac+3;--;--;7;5000;3;--;5;5
+Brionac;4;Brionac+4;--;--;15;6000;4;--;5;5
+Brionac;5;Brionac+5;--;--;20;7000;5;--;10;10
+Iron Greatlance;1;Iron Greatlance+1;10;--;--;300;2;--;--;--
+Iron Greatlance;2;Iron Greatlance+2;30;--;--;300;2;--;5;--
+Iron Greatlance;3;Iron Greatlance+3;60;5;--;500;4;-1;5;--
+Iron Greatlance;4;Iron Greatlance+4;100;10;--;500;4;-1;10;--
+Iron Greatlance;5;Iron Greatlance+5;200;15;1;1400;6;-2;10;--
+Steel Greatlance;1;Steel Greatlance+1;50;1;--;500;2;--;--;--
+Steel Greatlance;2;Steel Greatlance+2;60;2;--;500;2;--;5;--
+Steel Greatlance;3;Steel Greatlance+3;70;3;1;800;4;-1;5;--
+Steel Greatlance;4;Steel Greatlance+4;80;4;1;1000;4;-1;10;5
+Steel Greatlance;5;Steel Greatlance+5;340;40;3;2200;6;-2;10;5
+Silver Greatlance;1;Silver Greatlance+1;50;5;1;1000;2;--;--;--
+Silver Greatlance;2;Silver Greatlance+2;100;10;1;1000;2;--;5;--
+Silver Greatlance;3;Silver Greatlance+3;150;15;3;1500;4;-1;5;--
+Silver Greatlance;4;Silver Greatlance+4;500;20;5;1500;4;-1;10;--
+Silver Greatlance;5;Silver Greatlance+5;--;50;10;5000;6;-2;10;--
+Venomous;1;Venomous+1;--;--;3;3000;1;--;5;--
+Venomous;2;Venomous+2;--;--;5;4000;2;--;5;--
+Venomous;3;Venomous+3;--;--;7;5000;3;--;5;5
+Venomous;4;Venomous+4;--;--;15;6000;4;--;5;5
+Venomous;5;Venomous+5;--;--;20;7000;5;--;10;10
+Compact Axe;1;Compact Axe+1;5;--;--;100;1;--;--;--
+Compact Axe;2;Compact Axe+2;10;--;--;100;1;--;5;--
+Compact Axe;3;Compact Axe+3;15;--;--;300;2;--;10;--
+Compact Axe;4;Compact Axe+4;20;--;--;300;2;--;15;5
+Compact Axe;5;Compact Axe+5;100;--;--;1000;4;--;15;5
+Iron Axe;1;Iron Axe+1;10;--;--;300;2;--;--;--
+Iron Axe;2;Iron Axe+2;30;--;--;300;2;--;5;--
+Iron Axe;3;Iron Axe+3;60;5;--;500;4;--;5;--
+Iron Axe;4;Iron Axe+4;100;10;--;500;4;--;10;--
+Iron Axe;5;Iron Axe+5;200;15;1;1400;6;--;10;--
+Steel Axe;1;Steel Axe+1;50;1;--;500;2;--;--;--
+Steel Axe;2;Steel Axe+2;60;2;--;500;2;--;5;--
+Steel Axe;3;Steel Axe+3;70;3;1;800;4;-1;5;--
+Steel Axe;4;Steel Axe+4;80;4;1;1000;4;-1;10;5
+Steel Axe;5;Steel Axe+5;340;40;3;2200;6;-2;10;5
+Silver Axe;1;Silver Axe+1;50;5;1;1000;2;--;--;--
+Silver Axe;2;Silver Axe+2;100;10;1;1000;2;--;5;--
+Silver Axe;3;Silver Axe+3;150;15;3;1500;4;-1;5;--
+Silver Axe;4;Silver Axe+4;500;20;5;1500;4;-1;10;--
+Silver Axe;5;Silver Axe+5;--;50;10;5000;6;-2;10;--
+Hand Axe;1;Hand Axe+1;30;--;--;500;1;--;5;--
+Hand Axe;2;Hand Axe+2;50;3;--;1000;2;--;5;--
+Hand Axe;3;Hand Axe+3;70;5;--;1500;3;--;5;--
+Hand Axe;4;Hand Axe+4;--;7;2;2000;4;--;5;--
+Hand Axe;5;Hand Axe+5;--;35;3;2500;5;--;10;--
+Hammer;1;Hammer+1;30;--;--;500;1;--;5;--
+Hammer;2;Hammer+2;50;3;--;1000;2;--;5;--
+Hammer;3;Hammer+3;70;5;--;1500;3;--;5;--
+Hammer;4;Hammer+4;--;7;2;2000;4;--;5;--
+Hammer;5;Hammer+5;--;35;3;2500;5;--;10;--
+Poleaxe;1;Poleaxe+1;30;--;--;500;1;--;5;--
+Poleaxe;2;Poleaxe+2;50;3;--;1000;2;--;5;--
+Poleaxe;3;Poleaxe+3;70;5;--;1500;3;--;5;--
+Poleaxe;4;Poleaxe+4;--;7;2;2000;4;--;5;--
+Poleaxe;5;Poleaxe+5;--;35;3;2500;5;--;10;--
+Killer Axe;1;Killer Axe+1;30;--;--;500;1;--;--;--
+Killer Axe;2;Killer Axe+2;50;3;--;1000;2;--;--;5
+Killer Axe;3;Killer Axe+3;70;5;--;1500;3;--;--;5
+Killer Axe;4;Killer Axe+4;--;7;2;2000;4;--;--;5
+Killer Axe;5;Killer Axe+5;--;35;3;2500;5;--;--;10
+Tomahawk;1;Tomahawk+1;--;--;1;1000;1;--;5;--
+Tomahawk;2;Tomahawk+2;--;--;3;1000;2;--;5;--
+Tomahawk;3;Tomahawk+3;--;--;5;1500;3;--;5;--
+Tomahawk;4;Tomahawk+4;--;--;7;1500;4;--;5;--
+Tomahawk;5;Tomahawk+5;--;--;10;5000;5;--;10;--
+Brave Axe;1;Brave Axe+1;--;--;1;1000;1;--;5;--
+Brave Axe;2;Brave Axe+2;--;--;3;1000;2;--;5;--
+Brave Axe;3;Brave Axe+3;--;--;5;1500;3;--;5;--
+Brave Axe;4;Brave Axe+4;--;--;7;1500;4;--;5;--
+Brave Axe;5;Brave Axe+5;--;--;10;5000;5;--;10;--
+Fragarach;1;Fragarach+1;--;--;3;3000;1;--;5;--
+Fragarach;2;Fragarach+2;--;--;5;4000;2;--;5;--
+Fragarach;3;Fragarach+3;--;--;7;5000;3;--;5;5
+Fragarach;4;Fragarach+4;--;--;15;6000;4;--;5;5
+Fragarach;5;Fragarach+5;--;--;20;7000;5;--;10;10
+Iron Greataxe;1;Iron Greataxe+1;10;--;--;300;2;--;--;--
+Iron Greataxe;2;Iron Greataxe+2;30;--;--;300;2;--;5;--
+Iron Greataxe;3;Iron Greataxe+3;60;5;--;500;4;-1;5;--
+Iron Greataxe;4;Iron Greataxe+4;100;10;--;500;4;-1;10;--
+Iron Greataxe;5;Iron Greataxe+5;200;15;1;1400;6;-2;10;--
+Steel Greataxe;1;Steel Greataxe+1;50;1;--;500;2;--;--;--
+Steel Greataxe;2;Steel Greataxe+2;60;2;--;500;2;--;5;--
+Steel Greataxe;3;Steel Greataxe+3;70;3;1;800;4;-1;5;--
+Steel Greataxe;4;Steel Greataxe+4;80;4;1;1000;4;-1;10;5
+Steel Greataxe;5;Steel Greataxe+5;340;40;3;2200;6;-2;10;5
+Silver Greataxe;1;Silver Greataxe+1;50;5;1;1000;2;--;--;--
+Silver Greataxe;2;Silver Greataxe+2;100;10;1;1000;2;--;5;--
+Silver Greataxe;3;Silver Greataxe+3;150;15;3;1500;4;-1;5;--
+Silver Greataxe;4;Silver Greataxe+4;500;20;5;1500;4;-1;10;--
+Silver Greataxe;5;Silver Greataxe+5;--;50;10;5000;6;-2;10;--
+Hurricane Axe;1;Hurricane Axe+1;30;--;--;500;1;--;5;--
+Hurricane Axe;2;Hurricane Axe+2;50;3;--;1000;2;--;5;--
+Hurricane Axe;3;Hurricane Axe+3;70;5;--;1500;3;--;5;--
+Hurricane Axe;4;Hurricane Axe+4;--;7;2;2000;4;--;5;--
+Hurricane Axe;5;Hurricane Axe+5;--;35;3;2500;5;--;10;--
+Ukonvasara;1;Ukonvasara+1;--;--;3;3000;1;--;5;--
+Ukonvasara;2;Ukonvasara+2;--;--;5;4000;2;--;5;--
+Ukonvasara;3;Ukonvasara+3;--;--;7;5000;3;--;5;5
+Ukonvasara;4;Ukonvasara+4;--;--;15;6000;4;--;5;5
+Ukonvasara;5;Ukonvasara+5;--;--;20;7000;5;--;10;10
+Mini Bow;1;Mini Bow+1;5;--;--;100;1;--;--;--
+Mini Bow;2;Mini Bow+2;10;--;--;100;1;--;5;--
+Mini Bow;3;Mini Bow+3;15;--;--;300;2;--;10;--
+Mini Bow;4;Mini Bow+4;20;--;--;300;2;--;15;5
+Mini Bow;5;Mini Bow+5;100;--;--;1000;4;--;15;5
+Iron Bow;1;Iron Bow+1;10;--;--;300;2;--;--;--
+Iron Bow;2;Iron Bow+2;30;--;--;300;2;--;5;--
+Iron Bow;3;Iron Bow+3;60;5;--;500;4;--;5;--
+Iron Bow;4;Iron Bow+4;100;10;--;500;4;--;10;--
+Iron Bow;5;Iron Bow+5;200;15;1;1400;6;--;10;--
+Steel Bow;1;Steel Bow+1;50;1;--;500;2;--;--;--
+Steel Bow;2;Steel Bow+2;60;2;--;500;2;--;5;--
+Steel Bow;3;Steel Bow+3;70;3;1;800;4;-1;5;--
+Steel Bow;4;Steel Bow+4;80;4;1;1000;4;-1;10;5
+Steel Bow;5;Steel Bow+5;340;40;3;2200;6;-2;10;5
+Silver Bow;1;Silver Bow+1;50;5;1;1000;2;--;--;--
+Silver Bow;2;Silver Bow+2;100;10;1;1000;2;--;5;--
+Silver Bow;3;Silver Bow+3;150;15;3;1500;4;-1;5;--
+Silver Bow;4;Silver Bow+4;500;20;5;1500;4;-1;10;--
+Silver Bow;5;Silver Bow+5;--;50;10;5000;6;-2;10;--
+Longbow;1;Longbow+1;--;10;1;1000;1;--;5;--
+Longbow;2;Longbow+2;--;20;1;1000;2;--;5;--
+Longbow;3;Longbow+3;--;15;3;1500;3;--;5;--
+Longbow;4;Longbow+4;--;20;5;1500;4;--;5;--
+Longbow;5;Longbow+5;--;50;10;5000;5;--;10;--
+Killer Bow;1;Killer Bow+1;30;--;--;500;1;--;--;--
+Killer Bow;2;Killer Bow+2;50;3;--;1000;2;--;--;5
+Killer Bow;3;Killer Bow+3;70;5;--;1500;3;--;--;5
+Killer Bow;4;Killer Bow+4;--;7;2;2000;4;--;--;5
+Killer Bow;5;Killer Bow+5;--;35;3;2500;5;--;--;10
+Radiant Bow;1;Radiant Bow+1;30;--;--;500;1;--;5;--
+Radiant Bow;2;Radiant Bow+2;50;3;--;1000;2;--;5;--
+Radiant Bow;3;Radiant Bow+3;70;5;--;1500;3;--;5;--
+Radiant Bow;4;Radiant Bow+4;--;7;2;2000;4;--;5;--
+Radiant Bow;5;Radiant Bow+5;--;35;3;2500;5;--;10;--
+Brave Bow;1;Brave Bow+1;--;--;1;1000;1;--;5;--
+Brave Bow;2;Brave Bow+2;--;--;3;1000;2;--;5;--
+Brave Bow;3;Brave Bow+3;--;--;5;1500;3;--;5;--
+Brave Bow;4;Brave Bow+4;--;--;7;1500;4;--;5;--
+Brave Bow;5;Brave Bow+5;--;--;10;5000;5;--;10;--
+Lendabair;1;Lendabair+1;--;--;3;3000;1;--;5;--
+Lendabair;2;Lendabair+2;--;--;5;4000;2;--;5;--
+Lendabair;3;Lendabair+3;--;--;7;5000;3;--;5;5
+Lendabair;4;Lendabair+4;--;--;15;6000;4;--;5;5
+Lendabair;5;Lendabair+5;--;--;20;7000;5;--;10;10
+Short Knife;1;Short Knife+1;5;--;--;100;2;--;--;--
+Short Knife;2;Short Knife+2;10;--;--;100;3;--;5;--
+Short Knife;3;Short Knife+3;15;--;--;300;4;--;10;--
+Short Knife;4;Short Knife+4;20;--;--;300;5;--;15;5
+Short Knife;5;Short Knife+5;100;--;--;1000;6;--;15;5
+Iron Dagger;1;Iron Dagger+1;10;--;--;300;2;--;--;--
+Iron Dagger;2;Iron Dagger+2;30;--;--;300;4;--;5;--
+Iron Dagger;3;Iron Dagger+3;60;5;--;500;6;--;5;--
+Iron Dagger;4;Iron Dagger+4;100;10;--;500;8;--;10;--
+Iron Dagger;5;Iron Dagger+5;200;15;1;1400;9;--;10;--
+Steel Dagger;1;Steel Dagger+1;50;1;--;500;2;--;--;--
+Steel Dagger;2;Steel Dagger+2;60;2;--;500;4;--;5;--
+Steel Dagger;3;Steel Dagger+3;70;3;1;800;6;-1;5;--
+Steel Dagger;4;Steel Dagger+4;80;4;1;1000;8;-1;10;5
+Steel Dagger;5;Steel Dagger+5;340;40;3;2200;9;-2;10;5
+Silver Dagger;1;Silver Dagger+1;50;5;1;1000;2;--;--;--
+Silver Dagger;2;Silver Dagger+2;100;10;1;1000;4;--;5;--
+Silver Dagger;3;Silver Dagger+3;150;15;3;1500;6;-1;5;--
+Silver Dagger;4;Silver Dagger+4;500;20;5;1500;8;-1;10;--
+Silver Dagger;5;Silver Dagger+5;--;50;10;5000;9;-2;10;--
+Kard;1;Kard+1;10;--;--;300;2;--;--;--
+Kard;2;Kard+2;30;--;--;300;4;--;5;--
+Kard;3;Kard+3;60;5;--;500;6;--;5;--
+Kard;4;Kard+4;100;10;--;500;8;--;10;5
+Kard;5;Kard+5;200;15;1;1400;9;--;10;10
+Stiletto;1;Stiletto+1;50;1;--;500;2;--;--;--
+Stiletto;2;Stiletto+2;60;2;--;500;4;--;5;--
+Stiletto;3;Stiletto+3;70;3;--;800;6;-1;5;--
+Stiletto;4;Stiletto+4;80;4;3;1000;8;-1;10;5
+Stiletto;5;Stiletto+5;340;30;5;2200;9;-2;10;10
+Peshkatz;1;Peshkatz+1;50;5;1;1000;2;--;--;--
+Peshkatz;2;Peshkatz+2;100;10;1;1000;4;--;5;--
+Peshkatz;3;Peshkatz+3;150;15;3;1500;6;-1;5;--
+Peshkatz;4;Peshkatz+4;500;20;5;1500;8;-1;10;5
+Peshkatz;5;Peshkatz+5;--;50;10;5000;9;-2;10;10
+Misericorde;1;Misericorde+1;--;5;--;1000;2;--;5;--
+Misericorde;2;Misericorde+2;--;10;--;1000;4;--;5;--
+Misericorde;3;Misericorde+3;--;15;3;1500;6;--;5;--
+Misericorde;4;Misericorde+4;--;20;5;1500;8;--;5;--
+Misericorde;5;Misericorde+5;--;50;10;5000;9;--;10;--
+Cinquedea;1;Cinquedea+1;--;--;3;3000;2;--;5;--
+Cinquedea;2;Cinquedea+2;--;--;5;4000;4;--;5;--
+Cinquedea;3;Cinquedea+3;--;--;7;5000;6;--;5;5
+Cinquedea;4;Cinquedea+4;--;--;15;6000;8;--;5;5
+Cinquedea;5;Cinquedea+5;--;--;20;7000;9;--;10;10
+Carnwenhan;1;Carnwenhan+1;--;--;3;3000;2;--;5;--
+Carnwenhan;2;Carnwenhan+2;--;--;5;4000;4;--;5;--
+Carnwenhan;3;Carnwenhan+3;--;--;7;5000;6;--;5;5
+Carnwenhan;4;Carnwenhan+4;--;--;15;6000;8;--;5;5
+Carnwenhan;5;Carnwenhan+5;--;--;20;7000;9;--;10;10
+Surge;1;Surge+1;30;--;--;500;1;--;--;--
+Surge;2;Surge+2;50;3;--;1000;2;--;--;--
+Surge;3;Surge+3;70;5;--;1500;3;-1;--;--
+Surge;4;Surge+4;--;7;2;2000;4;-1;--;--
+Surge;5;Surge+5;--;35;3;2500;5;-2;--;--
+Fire;1;Fire+1;30;--;--;500;1;--;5;--
+Fire;2;Fire+2;50;3;--;1000;2;--;5;--
+Fire;3;Fire+3;70;5;--;1500;3;--;5;--
+Fire;4;Fire+4;--;7;2;2000;4;--;5;--
+Fire;5;Fire+5;--;35;3;2500;5;--;10;--
+Thunder;1;Thunder+1;30;--;--;500;1;--;5;--
+Thunder;2;Thunder+2;50;3;--;1000;2;--;5;--
+Thunder;3;Thunder+3;70;5;--;1500;3;--;5;--
+Thunder;4;Thunder+4;--;7;2;2000;4;--;5;--
+Thunder;5;Thunder+5;--;35;3;2500;5;--;10;--
+Wind;1;Wind+1;30;--;--;500;1;--;5;--
+Wind;2;Wind+2;50;3;--;1000;2;--;5;--
+Wind;3;Wind+3;70;5;--;1500;3;--;5;--
+Wind;4;Wind+4;--;7;2;2000;4;--;5;--
+Wind;5;Wind+5;--;35;3;2500;5;--;10;--
+Elsurge;1;Elsurge+1;50;5;1;1000;1;--;--;--
+Elsurge;2;Elsurge+2;100;10;1;1000;2;--;--;--
+Elsurge;3;Elsurge+3;150;15;3;1500;3;-1;--;--
+Elsurge;4;Elsurge+4;500;20;5;1500;4;-1;--;--
+Elsurge;5;Elsurge+5;--;50;10;5000;5;-2;--;--
+Elfire;1;Elfire+1;50;5;1;1000;1;--;--;--
+Elfire;2;Elfire+2;100;10;1;1000;2;--;5;--
+Elfire;3;Elfire+3;150;15;3;1500;3;-1;5;--
+Elfire;4;Elfire+4;500;20;5;1500;4;-1;10;--
+Elfire;5;Elfire+5;--;50;10;5000;5;-2;10;--
+Elthunder;1;Elthunder+1;50;5;1;1000;1;--;--;--
+Elthunder;2;Elthunder+2;100;10;1;1000;2;--;5;--
+Elthunder;3;Elthunder+3;150;15;3;1500;3;-1;5;--
+Elthunder;4;Elthunder+4;500;20;5;1500;4;-1;10;--
+Elthunder;5;Elthunder+5;--;50;10;5000;5;-2;10;--
+Elwind;1;Elwind+1;50;5;1;1000;1;--;--;--
+Elwind;2;Elwind+2;100;10;1;1000;2;--;5;--
+Elwind;3;Elwind+3;150;15;3;1500;3;-1;5;--
+Elwind;4;Elwind+4;500;20;5;1500;4;-1;10;--
+Elwind;5;Elwind+5;--;50;10;5000;5;-2;10;--
+Bolganone;1;Bolganone+1;--;--;1;1000;1;--;5;--
+Bolganone;2;Bolganone+2;--;--;3;1000;2;--;5;--
+Bolganone;3;Bolganone+3;--;--;5;1500;3;--;5;--
+Bolganone;4;Bolganone+4;--;--;7;1500;4;--;5;--
+Bolganone;5;Bolganone+5;--;--;10;5000;5;--;10;--
+Thoron;1;Thoron+1;--;--;1;1000;1;--;5;--
+Thoron;2;Thoron+2;--;--;3;1000;2;--;5;--
+Thoron;3;Thoron+3;--;--;5;1500;3;--;5;--
+Thoron;4;Thoron+4;--;--;7;1500;4;--;5;--
+Thoron;5;Thoron+5;--;--;10;5000;5;--;10;--
+Excalibur;1;Excalibur+1;--;--;1;1000;1;--;5;--
+Excalibur;2;Excalibur+2;--;--;3;1000;2;--;5;--
+Excalibur;3;Excalibur+3;--;--;5;1500;3;--;5;--
+Excalibur;4;Excalibur+4;--;--;7;1500;4;--;5;--
+Excalibur;5;Excalibur+5;--;--;10;5000;5;--;10;--
+Obscurité;1;Obscurité+1;--;--;1;1000;1;--;5;--
+Obscurité;2;Obscurité+2;--;--;3;1000;2;--;5;--
+Obscurité;3;Obscurité+3;--;--;5;1500;3;--;5;--
+Obscurité;4;Obscurité+4;--;--;7;1500;4;--;5;--
+Obscurité;5;Obscurité+5;--;--;10;5000;5;--;10;--
+Nova;1;Nova+1;--;--;3;3000;1;--;5;--
+Nova;2;Nova+2;--;--;5;4000;2;--;5;--
+Nova;3;Nova+3;--;--;7;5000;3;--;5;5
+Nova;4;Nova+4;--;--;15;6000;4;--;5;5
+Nova;5;Nova+5;--;--;20;7000;5;--;10;10
+Initiate Art;1;Initiate Art+1;5;--;--;100;1;--;--;--
+Initiate Art;2;Initiate Art+2;10;--;--;100;1;--;5;--
+Initiate Art;3;Initiate Art+3;15;--;--;300;2;--;10;--
+Initiate Art;4;Initiate Art+4;20;--;--;300;2;--;15;5
+Initiate Art;5;Initiate Art+5;100;--;--;1000;4;--;15;5
+Iron-Body Art;1;Iron-Body Art+1;10;--;--;300;2;--;--;--
+Iron-Body Art;2;Iron-Body Art+2;30;--;--;300;2;--;5;--
+Iron-Body Art;3;Iron-Body Art+3;60;5;--;500;4;--;5;--
+Iron-Body Art;4;Iron-Body Art+4;100;10;--;500;4;--;10;--
+Iron-Body Art;5;Iron-Body Art+5;200;15;1;1400;6;--;10;--
+Steel-Hand Art;1;Steel-Hand Art+1;50;1;--;500;2;--;--;--
+Steel-Hand Art;2;Steel-Hand Art+2;60;2;--;500;2;--;5;--
+Steel-Hand Art;3;Steel-Hand Art+3;70;3;1;800;4;-1;5;--
+Steel-Hand Art;4;Steel-Hand Art+4;80;4;1;1000;4;-1;10;5
+Steel-Hand Art;5;Steel-Hand Art+5;340;40;3;2200;6;-2;10;5
+Silver-Spirit Art;1;Silver-Spirit Art+1;50;5;1;1000;2;--;--;--
+Silver-Spirit Art;2;Silver-Spirit Art+2;100;10;1;1000;2;--;5;--
+Silver-Spirit Art;3;Silver-Spirit Art+3;150;15;3;1500;4;-1;5;--
+Silver-Spirit Art;4;Silver-Spirit Art+4;500;20;5;1500;4;-1;10;--
+Silver-Spirit Art;5;Silver-Spirit Art+5;--;50;10;5000;6;-2;10;--
+Shielding Art;1;Shielding Art+1;30;--;--;500;1;--;5;--
+Shielding Art;2;Shielding Art+2;50;3;--;1000;2;--;5;--
+Shielding Art;3;Shielding Art+3;70;5;--;1500;3;--;5;--
+Shielding Art;4;Shielding Art+4;--;7;2;2000;4;--;5;--
+Shielding Art;5;Shielding Art+5;--;35;3;2500;5;--;10;--
+Flashing Fist Art;1;Flashing Fist Art+1;30;--;--;500;1;--;5;--
+Flashing Fist Art;2;Flashing Fist Art+2;50;3;--;1000;2;--;5;--
+Flashing Fist Art;3;Flashing Fist Art+3;70;5;--;1500;3;--;5;--
+Flashing Fist Art;4;Flashing Fist Art+4;--;7;2;2000;4;--;5;--
+Flashing Fist Art;5;Flashing Fist Art+5;--;35;3;2500;5;--;10;--
+Divine Fist Art;1;Divine Fist Art+1;--;--;3;3000;1;--;5;--
+Divine Fist Art;2;Divine Fist Art+2;--;--;5;4000;2;--;5;--
+Divine Fist Art;3;Divine Fist Art+3;--;--;7;5000;3;--;5;5
+Divine Fist Art;4;Divine Fist Art+4;--;--;15;6000;4;--;5;5
+Divine Fist Art;5;Divine Fist Art+5;--;--;20;7000;5;--;10;10
+Fólkvangr;1;Fólkvangr+1;--;5;--;300;2;--;--;--
+Fólkvangr;2;Fólkvangr+2;--;3;1;500;3;--;5;--
+Fólkvangr;3;Fólkvangr+3;--;7;2;800;4;-1;5;--
+Fólkvangr;4;Fólkvangr+4;--;6;5;1000;5;-1;10;5
+Fólkvangr;5;Fólkvangr+5;--;--;8;1700;6;-2;10;10
+Fensalir;1;Fensalir+1;--;5;--;300;1;--;--;--
+Fensalir;2;Fensalir+2;--;3;1;500;2;--;--;--
+Fensalir;3;Fensalir+3;--;7;2;800;3;-2;5;--
+Fensalir;4;Fensalir+4;--;6;5;1000;4;-3;10;--
+Fensalir;5;Fensalir+5;--;--;8;1700;5;-4;15;--
+Nóatún;1;Nóatún+1;--;5;--;300;1;--;--;--
+Nóatún;2;Nóatún+2;--;3;1;500;2;--;--;--
+Nóatún;3;Nóatún+3;--;7;2;800;3;-1;--;--
+Nóatún;4;Nóatún+4;--;6;5;1000;5;-2;5;--
+Nóatún;5;Nóatún+5;--;--;8;1700;7;-2;10;--
+Représailles ;1;Représailles +1;--;--;1;300;1;--;5;--
+Représailles ;2;Représailles +2;30;--;3;500;2;--;5;--
+Représailles ;3;Représailles +3;50;--;5;1000;3;-1;10;--
+Représailles ;4;Représailles +4;--;--;15;3000;5;-2;10;--
+Représailles ;5;Représailles +5;--;--;20;5000;7;-3;15;--
+Revanche ;1;Revanche +1;--;--;1;300;2;--;--;5
+Revanche ;2;Revanche +2;30;--;3;500;4;--;--;5
+Revanche ;3;Revanche +3;50;--;5;1000;6;--;--;10
+Revanche ;4;Revanche +4;--;--;15;3000;10;-1;--;10
+Revanche ;5;Revanche +5;--;--;20;5000;14;-2;--;15

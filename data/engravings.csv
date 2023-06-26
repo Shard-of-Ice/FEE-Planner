@@ -1,0 +1,21 @@
+Name;ID;Emblem Name;Might+;Weight+;Hit+;Critical+;Avoid+;Dodge+
+Marth;GID_マルス;Beginnings;1;--;10;10;5;5
+Sigurd;GID_シグルド;Holy;1;-1;--;--;20;--
+Celica;GID_セリカ;Echoes;-1;-1;--;--;--;50
+Micaiah;GID_ミカヤ;Dawn;-3;-1;--;--;40;20
+Roy;GID_ロイ;Binding;2;8;--;--;-30;--
+Leif;GID_リーフ;Genealogy;1;1;20;--;10;--
+Lucina;GID_ルキナ;Awakening;-1;-1;30;--;30;--
+Lyn;GID_リン;Blazing;-3;-2;40;20;--;--
+Ike;GID_アイク;Radiance;3;15;--;--;--;--
+Byleth;GID_ベレト;Academy;--;2;30;10;10;30
+Corrin;GID_カムイ;Fates;-2;--;--;30;10;30
+Eirika;GID_エイリーク;Sacred;--;--;40;20;-20;-20
+Alear;GID_リュール;Fire;-1;-1;20;20;20;20
+Edelgard;GID_エーデルガルト;Rivals;1;1;10;10;10;--
+Tiki;GID_チキ;Dragons;2;--;--;--;-20;-20
+Hector;GID_ヘクトル;Strength;3;3;--;--;-30;-30
+Veronica;GID_ヴェロニカ;Heroes;1;-2;-20;-20;20;20
+Soren;GID_セネリオ;Acumen;2;--;--;--;-10;-20
+Camilla;GID_カミラ;Revelation;1;1;--;30;-20;-20
+Chrom;GID_クロム;Bonds;1;-1;--;--;20;20
