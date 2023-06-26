@@ -272,7 +272,7 @@ import { useStaticStore } from 'src/stores/StaticStore';
 import { Unit } from 'src/models/Unit';
 import { ClassTier } from 'src/models/Class';
 import StatDisplay from 'src/components/StatDisplay.vue';
-import { ProficiencyLevel, WeaponType } from 'src/models/Weapon';
+import { WeaponType } from 'src/models/Weapon';
 
 export default defineComponent({
   name: 'UnitSummary',
