@@ -18,7 +18,9 @@ class GetSetAble {
   }
 
   setAll(data: NumberDict) {
-    for (const key in data) {
+    for (const key of Object.keys(data).filter((k) =>
+      this.getStatNames().includes(k)
+    )) {
       this.set(key, data[key]);
     }
   }

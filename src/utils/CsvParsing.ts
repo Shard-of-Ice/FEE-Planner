@@ -1,6 +1,7 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { BondLevel, Emblem } from 'src/models/Emblem';
+import { Skill } from 'src/models/Skill';
 import { CharacterStats, WeaponStats } from 'src/models/StatBlock';
 import {
   Engraving,
@@ -15,6 +16,7 @@ import {
 export type StringDict = { [key: string]: string };
 export type StringDictDict = { [id: string]: StringDict };
 export type StringListDict = { [id: string]: string[] };
+export type NumberDict = { [key: string]: number };
 
 export type ClassDict = { [key: string]: Class };
 export type CharacterDict = { [key: string]: Character };
@@ -22,6 +24,7 @@ export type WeaponDataDict = { [key: string]: WeaponData };
 export type ForgingUpgradeListDict = { [key: string]: ForgingUpgrade[] };
 export type EngravingDict = { [key: string]: Engraving };
 export type EmblemDict = { [key: string]: Emblem };
+export type SkillDict = { [key: string]: Skill };
 
 export function readCsvFromUrl(url: string): Promise<Iterable<StringDict>> {
   return new Promise<Iterable<StringDict>>(function (resolve) {
@@ -340,6 +343,21 @@ function shortenStatName(statName: string): string {
   if (lowerStatName.startsWith('mo')) {
     return 'mov';
   }
+  if (lowerStatName.startsWith('avo')) {
+    return 'avoid';
+  }
+  if (lowerStatName.startsWith('hit')) {
+    return 'hit';
+  }
+  if (lowerStatName.startsWith('dod') || lowerStatName.startsWith('ddg')) {
+    return 'dodge';
+  }
+  if (lowerStatName.startsWith('cr')) {
+    return 'critical';
+  }
+  if (lowerStatName.startsWith('atk')) {
+    return 'might';
+  }
   // Error case
   console.warn(`Unknown stat name : ${statName}`);
   return 'none';
@@ -390,14 +408,59 @@ export function readAllEmblems(
   return emblems;
 }
 
+function readBonusesFromSkillDescription(
+  description: string
+): [CharacterStats, WeaponStats] {
+  const matches = description.match(/\w+[\+-]\d+/g) || [];
+  const pairs: string[][] = matches.map((match) => match.split(/(?=[\+-])/));
+  const bonuses: NumberDict = {};
+  for (const pair of pairs) {
+    bonuses[shortenStatName(pair[0])] = Number(pair[1]);
+  }
+  return [new CharacterStats(bonuses), new WeaponStats(bonuses)];
+}
+
+function skillFromDict(data: StringDict): Skill {
+  const [characterBonus, weaponBonus] = readBonusesFromSkillDescription(
+    data['Description']
+  );
+
+  return new Skill(
+    data['Name'],
+    data['ID'],
+    data['Description'],
+    Number(data['SP']),
+    characterBonus,
+    weaponBonus
+  );
+}
+
+function readAllSkills(skillsData: Iterable<StringDict>): SkillDict {
+  const result: SkillDict = {};
+
+  for (const lineDict of skillsData) {
+    result[lineDict['ID']] = skillFromDict(lineDict);
+  }
+
+  return result;
+}
+
 export function readAll(
   classesData: string,
   charactersData: string,
   weaponsData: string,
   forgingData: string,
   engravingsData: string,
-  bondsData: string
-): [ClassDict, CharacterDict, WeaponDataDict, EngravingDict, EmblemDict] {
+  bondsData: string,
+  skillsData: string
+): [
+  ClassDict,
+  CharacterDict,
+  WeaponDataDict,
+  EngravingDict,
+  EmblemDict,
+  SkillDict
+] {
   const classes = readAllClasses(csvToDict(readCsv(classesData)));
   const characters = readAllCharacters(
     csvToDict(readCsv(charactersData)),
@@ -410,5 +473,6 @@ export function readAll(
   );
   const engravings = readAllEngravings(csvToDict(readCsv(engravingsData)));
   const emblems = readAllEmblems(readCsvWithDuplicates(bondsData), engravings);
-  return [classes, characters, weapons, engravings, emblems];
+  const skills = readAllSkills(readCsv(skillsData));
+  return [classes, characters, weapons, engravings, emblems, skills];
 }
