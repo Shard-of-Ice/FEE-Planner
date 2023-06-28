@@ -39,7 +39,7 @@ export function readCsvFromUrl(url: string): Promise<Iterable<StringDict>> {
 }
 
 export function* readCsv(text: string): Generator<StringDict> {
-  const lines = text.split('\n');
+  const lines = text.split(/[\r\n]+/);
   const header = lines[0].split(';');
   for (const line of lines.slice(1)) {
     if (!(line.startsWith('Name') || line.length < 20)) {
