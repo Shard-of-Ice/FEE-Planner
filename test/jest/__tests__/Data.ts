@@ -4,9 +4,9 @@ import {
   ClassDict,
   EmblemDict,
   EngravingDict,
+  SkillDict,
   WeaponDataDict,
   readAll,
-  readCsv,
 } from 'src/utils/CsvParsing';
 
 class Data {
@@ -15,6 +15,7 @@ class Data {
   weapons: WeaponDataDict = {};
   engravings: EngravingDict = {};
   emblems: EmblemDict = {};
+  skills: SkillDict = {};
   loaded = false;
 
   async loadFromDisk() {
@@ -29,9 +30,10 @@ class Data {
       fs.readFile('public/data/forging.csv'),
       fs.readFile('public/data/engravings.csv'),
       fs.readFile('public/data/bonds.csv'),
+      fs.readFile('public/data/skills.csv'),
     ]);
 
-    const [classes, characters, weapons, forging, engravings, bonds] =
+    const [classes, characters, weapons, forging, engravings, bonds, skills] =
       buffers.map((b) => b.toString());
 
     [
@@ -40,7 +42,16 @@ class Data {
       this.weapons,
       this.engravings,
       this.emblems,
-    ] = readAll(classes, characters, weapons, forging, engravings, bonds);
+      this.skills,
+    ] = readAll(
+      classes,
+      characters,
+      weapons,
+      forging,
+      engravings,
+      bonds,
+      skills
+    );
 
     this.loaded = true;
   }
