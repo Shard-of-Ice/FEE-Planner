@@ -5,6 +5,7 @@ import {
   ClassDict,
   EmblemDict,
   EngravingDict,
+  SkillDict,
   WeaponDataDict,
   readAll,
 } from 'src/utils/CsvParsing';
@@ -16,6 +17,7 @@ interface StaticStoreState {
   weapons: WeaponDataDict;
   engravings: EngravingDict;
   emblems: EmblemDict;
+  skills: SkillDict;
 }
 
 function isPlayable(key: string, character: Character) {
@@ -40,6 +42,7 @@ export const useStaticStore = defineStore('static', {
     weapons: {},
     engravings: {},
     emblems: {},
+    skills: {},
   }),
 
   getters: {
@@ -53,7 +56,7 @@ export const useStaticStore = defineStore('static', {
 
   actions: {
     async loadStaticStore() {
-      const [classes, characters, weapons, forging, engravings, bonds] =
+      const [classes, characters, weapons, forging, engravings, bonds, skills] =
         await Promise.all([
           readFileFromUrl('data/classes.csv'),
           readFileFromUrl('data/characters.csv'),
@@ -61,6 +64,7 @@ export const useStaticStore = defineStore('static', {
           readFileFromUrl('data/forging.csv'),
           readFileFromUrl('data/engravings.csv'),
           readFileFromUrl('data/bonds.csv'),
+          readFileFromUrl('data/skills.csv'),
         ]);
 
       [
@@ -69,7 +73,16 @@ export const useStaticStore = defineStore('static', {
         this.weapons,
         this.engravings,
         this.emblems,
-      ] = readAll(classes, characters, weapons, forging, engravings, bonds);
+        this.skills,
+      ] = readAll(
+        classes,
+        characters,
+        weapons,
+        forging,
+        engravings,
+        bonds,
+        skills
+      );
       this.playableCharacters = Object.keys(this.characters).filter((key) =>
         isPlayable(key, this.characters[key])
       );
