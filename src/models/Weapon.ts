@@ -100,8 +100,9 @@ export class WeaponType {
   }
 
   static fromString(str: string): WeaponType {
+    const formattedStr = str && str[0].toUpperCase() + str.slice(1); // First letter uppercase, rest lowercase
     for (const type of WeaponType.all) {
-      if (type.name == str) {
+      if (type.name === formattedStr) {
         return type;
       }
     }
