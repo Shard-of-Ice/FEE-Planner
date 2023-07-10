@@ -1,7 +1,7 @@
 import { Character } from 'src/models/Character';
 import { Class, ClassTier, ClassType } from 'src/models/Class';
 import { BondLevel, Emblem } from 'src/models/Emblem';
-import { Skill } from 'src/models/Skill';
+import { ActivationCondition, Skill } from 'src/models/Skill';
 import { CharacterStats, WeaponStats } from 'src/models/StatBlock';
 import {
   Engraving,
@@ -411,17 +411,45 @@ export function readAllEmblems(
 function readBonusesFromSkillDescription(
   description: string
 ): [CharacterStats, WeaponStats] {
-  const matches = description.match(/\w+[\+-]\d+/g) || [];
+  const matches = description.match(/[/\w]+[\+-]\d+/g) || [];
   const pairs: string[][] = matches.map((match) => match.split(/(?=[\+-])/));
   const bonuses: NumberDict = {};
   for (const pair of pairs) {
-    bonuses[shortenStatName(pair[0])] = Number(pair[1]);
+    const stats = pair[0].split('/'); // For multiple stats, for example, Atk/Def+1
+    const bonus = Number(pair[1]);
+    for (const stat of stats) {
+      bonuses[shortenStatName(stat)] = bonus;
+    }
   }
   return [new CharacterStats(bonuses), new WeaponStats(bonuses)];
 }
 
+function readConditionFromSkillDescription(
+  description: string
+): ActivationCondition {
+  // Weapon type
+  let match = description.match(
+    WeaponType.all.map((wt) => wt.name.toLocaleLowerCase()).join('|')
+  );
+  if (match) {
+    return ActivationCondition.weaponType(WeaponType.fromString(match[0]));
+  }
+
+  // Never
+  match = description.match('all[yi]|foe');
+  if (match) {
+    return ActivationCondition.never;
+  }
+
+  // default
+  return ActivationCondition.always;
+}
+
 function skillFromDict(data: StringDict): Skill {
   const [characterBonus, weaponBonus] = readBonusesFromSkillDescription(
+    data['Description']
+  );
+  const activationCondition = readConditionFromSkillDescription(
     data['Description']
   );
 
@@ -431,7 +459,8 @@ function skillFromDict(data: StringDict): Skill {
     data['Description'],
     Number(data['SP']),
     characterBonus,
-    weaponBonus
+    weaponBonus,
+    activationCondition
   );
 }
 
